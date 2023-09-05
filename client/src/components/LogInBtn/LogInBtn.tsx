@@ -20,9 +20,7 @@ function LogInBtn() {
         Logga In
       </Button>
       <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open}>
-        <p>Redan medlem? Logga in här</p>
         <LogInForm></LogInForm>
-        <p>Bli Medlem Här</p>
       </Drawer>
     </>
   );
