@@ -4,7 +4,7 @@ import { Button } from 'antd';
 function ShoppingCartBtn() {
   return (
     <>
-    <Button type="primary">Shoppa</Button>
+    <Button className="menu--btn" type="primary">Shoppa</Button>
     </>
   )
 }

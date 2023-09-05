@@ -1,6 +1,7 @@
 import LogInBtn from "../LogInBtn/LogInBtn"
 import ShoppingCartBtn from "../ShoppingCartBtn/ShoppingCartBtn"
 import { Space } from "antd"
+import "./NavBar.css"
 
 function NavBar() {
   return (

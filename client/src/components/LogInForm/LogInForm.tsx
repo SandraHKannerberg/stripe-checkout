@@ -1,5 +1,5 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Divider } from 'antd';
 
 function LogInForm() {
 
@@ -38,6 +38,8 @@ function LogInForm() {
             </Button>
           </Form.Item>
         </Form>
+
+        <Divider />
 
         <p>Ny medlem? Registrera dig här</p>
 

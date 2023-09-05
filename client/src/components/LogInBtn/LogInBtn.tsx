@@ -1,6 +1,7 @@
 import { Button, Drawer } from 'antd';
-import { useState } from 'react'
+import { useState } from 'react';
 import LogInForm from '../LogInForm/LogInForm';
+import './LogInBtn.css';
 
 function LogInBtn() {
 
@@ -16,7 +17,7 @@ function LogInBtn() {
 
   return (
     <>
-      <Button type="primary" onClick={showLogInDrawer}>
+      <Button className="menu--btn" type="primary" onClick={showLogInDrawer}>
         Logga In
       </Button>
       <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open}>
