@@ -17,8 +17,8 @@ function LogInBtn() {
 
   return (
     <>
-      <Button className="menu--btn" type="primary" onClick={showLogInDrawer}>
-        Logga In
+      <Button className="login--btn" type="text" onClick={showLogInDrawer}>
+        Logga In/Bli Medlem
       </Button>
       <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open}>
         <LogInForm></LogInForm>
