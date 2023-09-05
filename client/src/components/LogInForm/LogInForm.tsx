@@ -15,26 +15,25 @@ function LogInForm() {
           onFinish={onFinish}
         >
           <Form.Item
-            name="username"
-            rules={[{ required: true, message: 'Please input your Username!' }]}
+            name="Användarnamn"
+            rules={[{ required: true, message: 'Användarnamn måste fyllas i' }]}
           >
-            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Användarnamn" />
           </Form.Item>
           <Form.Item
-            name="password"
-            rules={[{ required: true, message: 'Please input your Password!' }]}
+            name="Lösenord"
+            rules={[{ required: true, message: 'Lösenord måste fyllas i' }]}
           >
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
-              placeholder="Password"
+              placeholder="Lösenord"
             />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" className="login-form-button">
-              Log in
+              Logga in
             </Button>
-            Or <a href="">register now!</a>
           </Form.Item>
         </Form>
       );
