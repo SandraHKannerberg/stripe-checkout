@@ -1,10 +1,10 @@
 import { Button } from 'antd';
-import { ShoppingCartOutlined } from '@ant-design/icons';
+//import { ShoppingCartOutlined } from '@ant-design/icons';
 
 function ShoppingCartBtn() {
   return (
     <>
-    <Button type="primary"><ShoppingCartOutlined /></Button>
+    <Button type="primary">Shoppa</Button>
     </>
   )
 }
