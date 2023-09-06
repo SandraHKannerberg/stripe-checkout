@@ -1,16 +1,16 @@
-const express = require("express");
-const cors = require("cors");
-const cookieSession = require("cookie-session");
-require("express-async-errors");
-
+const express = require('express')
+const cors = require('cors')
 const { productRouter } = require("./resources/product/product.router");
 
-const app = express();
-app.use(express.json());
-app.use(cors({ origin: true, credentials: true }));
+const app = express()
+
+//Middlewares
+app.use(cors({
+    origin: '*'
+}))
+app.use(express.json())
 
 // Add routers
 app.use("/api", productRouter);
-app.use("/api", checkOutRouter);
 
-module.exports = { app };
+module.exports = { app }
