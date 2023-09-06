@@ -1,10 +1,10 @@
 import { useProductContext } from '../../context/ProductContext';
-import AddToCartBtn  from '../AddToCartBtn/AddToCartBtn';
-import { Row, Col, Space, Card  } from 'antd';
+//import AddToCartBtn  from '../AddToCartBtn/AddToCartBtn';
+import { Row, Col, Space, Card, Button  } from 'antd';
 
 function ProductList() {
  
-  const { products, fetchProducts } = useProductContext();
+  const { products, fetchProducts, addToCart } = useProductContext();
   
   fetchProducts();
 
@@ -26,7 +26,7 @@ function ProductList() {
               <h3>{product.name}</h3>
               <p>{product.description}</p>
               <p>{product.price.unit_amount} {product.price.currency}</p>
-            <AddToCartBtn></AddToCartBtn>
+              <Button type='primary' onClick={() => addToCart(product.price.id)}>Lägg till i kundkorgen</Button>
             </Card>
           </Col>
         ))}

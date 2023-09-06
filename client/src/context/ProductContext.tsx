@@ -21,15 +21,24 @@ interface Product {
 
 interface Price {
     id: string,
-    unit_amount: string,//math()
+    unit_amount: string,
     currency: string,
 }
+
+interface CartItem {
+    product: string, //price.........
+    quantity: number,
+}
+
 
 
 interface IProductContext {
     products: Product[];
     setProducts: Dispatch<SetStateAction<Product[]>>;
     fetchProducts:  () => void,
+    cart: CartItem[];
+    setCart: Dispatch<SetStateAction<CartItem[]>>;
+    addToCart: (productId: string) => void;
   }
   
 
@@ -37,6 +46,9 @@ const defaultValues = {
     products: [],
     setProducts: () => {},
     fetchProducts:  () => {},
+    cart: [],
+    setCart: () => {},
+    addToCart: (productId: string) => '',
 };
   
 export const ProductContext = createContext<IProductContext>(defaultValues);
@@ -45,6 +57,7 @@ export const useProductContext = () => useContext(ProductContext);
   
 export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
     const [products, setProducts] = useState<Product[]>([]);
+    const [cart, setCart] = useState<CartItem[]>([]);
 
     //BYGG PÅ MED FUNKTIONER HÄR!!!!!!!!
 
@@ -75,13 +88,39 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         fetchProducts()
       }, []);
 
+    function addToCart(productId:string) {
+        
+        console.log(productId)
+
+        // const itemInCart = cart.find((item) => item.product === productId);
+
+        // if(itemInCart) {
+        //     setCart((prevCart) =>
+        //     prevCart.map((item) =>
+        //         item.product === productId
+        //         ? {...item, quantity: item.quantity + 1}
+        //         :item
+        //     )
+        // );
+        // }
+        // console.log(cart)
+    }
+
+      // Use useEffect to log the updated cart after the state has been updated
+    useEffect(() => {
+        console.log('Updated Cart:', cart);
+    }, [cart]); // This will run whenever the cart state changes
+
 
     return (
       <ProductContext.Provider
         value={{
             products,
             setProducts,
-            fetchProducts
+            fetchProducts,
+            cart,
+            setCart,
+            addToCart,
         }}
       >
         {children}
