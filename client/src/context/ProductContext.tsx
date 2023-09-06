@@ -50,7 +50,7 @@ const defaultValues = {
     fetchProducts:  () => {},
     cartProducts: [],
     setCartProducts: () => {},
-    addToCart: (id: string) => '',
+    addToCart: (id : string) => '',
     getProductQuantity: (id: string) => '', 
 };
   
@@ -63,8 +63,6 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
 
     const [products, setProducts] = useState<Product[]>([]);
     const [cartProducts, setCartProducts] = useState<CartItem[]>([]);
-
-    //BYGG PÅ MED FUNKTIONER HÄR!!!!!!!!
 
     async function fetchProducts() {
 
