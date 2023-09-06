@@ -14,6 +14,7 @@ interface Product {
     name: string,
     price: DefaultPrice,
     description: string,
+    images: [],
   }
 
 
@@ -27,12 +28,14 @@ interface DefaultPrice {
 interface IProductContext {
     products: Product[];
     setProducts: Dispatch<SetStateAction<Product[]>>;
+    fetchProducts:  () => void,
   }
   
 
 const defaultValues = {
     products: [],
     setProducts: () => {},
+    fetchProducts:  () => {},
 };
   
 export const ProductContext = createContext<IProductContext>(defaultValues);
@@ -41,22 +44,26 @@ export const useProductContext = () => useContext(ProductContext);
   
 export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
     const [products, setProducts] = useState<Product[]>([]);
-    
-    //BYGG PÅ MED FUNKTIONER HÄR!!!!!!!!
-    useEffect(() => {
-        fetch('api/products')
-          .then((response) => response.json())
-          .then((data) => setProducts(data.data))
-          .catch((error) => {
-            console.error('Error fetching products:', error);
-          })
-      }, []);
 
+    //BYGG PÅ MED FUNKTIONER HÄR!!!!!!!!
+
+    function fetchProducts() {
+        useEffect(() => {
+            fetch('api/products')
+              .then((response) => response.json())
+              .then((data) => setProducts(data.data))
+              .catch((error) => {
+                console.error('Error fetching products:', error);
+              })
+          }, []);
+    }
+    
     return (
       <ProductContext.Provider
         value={{
             products,
-            setProducts
+            setProducts,
+            fetchProducts
         }}
       >
         {children}
