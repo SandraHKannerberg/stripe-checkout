@@ -6,6 +6,7 @@ import {
     useEffect,
     Dispatch,
     SetStateAction,
+    ReactNode
   } from "react";
 
 
@@ -26,7 +27,7 @@ interface Price {
 }
 
 interface CartItem {
-    product: string, //price.........
+    id: string, //price.........
     quantity: number,
 }
 
@@ -36,9 +37,10 @@ interface IProductContext {
     products: Product[];
     setProducts: Dispatch<SetStateAction<Product[]>>;
     fetchProducts:  () => void,
-    cart: CartItem[];
-    setCart: Dispatch<SetStateAction<CartItem[]>>;
-    addToCart: (productId: string) => void;
+    cartProducts: CartItem[];
+    setCartProducts: Dispatch<SetStateAction<CartItem[]>>;
+    addToCart: (id: string) => void;
+    getProductQuantity: (id: string) => void;
   }
   
 
@@ -46,18 +48,21 @@ const defaultValues = {
     products: [],
     setProducts: () => {},
     fetchProducts:  () => {},
-    cart: [],
-    setCart: () => {},
-    addToCart: (productId: string) => '',
+    cartProducts: [],
+    setCartProducts: () => {},
+    addToCart: (id: string) => '',
+    getProductQuantity: (id: string) => '', 
 };
   
 export const ProductContext = createContext<IProductContext>(defaultValues);
-  
+
+
 export const useProductContext = () => useContext(ProductContext);
   
 export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
+
     const [products, setProducts] = useState<Product[]>([]);
-    const [cart, setCart] = useState<CartItem[]>([]);
+    const [cartProducts, setCartProducts] = useState<CartItem[]>([]);
 
     //BYGG PÅ MED FUNKTIONER HÄR!!!!!!!!
 
@@ -88,28 +93,51 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         fetchProducts()
       }, []);
 
-    function addToCart(productId:string) {
-        
-        console.log(productId)
+    //Handle the quantity of every product in the shoppingcart
 
-        // const itemInCart = cart.find((item) => item.product === productId);
+    function getProductQuantity(id : string) {
 
-        // if(itemInCart) {
-        //     setCart((prevCart) =>
-        //     prevCart.map((item) =>
-        //         item.product === productId
-        //         ? {...item, quantity: item.quantity + 1}
-        //         :item
-        //     )
-        // );
-        // }
-        // console.log(cart)
+        const quantity = cartProducts.find(product => product.id === id)?.quantity //Check the quantity if the product are in the cart
+
+        if (quantity === undefined) {
+            return 0;
+        }
+
+        return quantity
     }
 
-      // Use useEffect to log the updated cart after the state has been updated
+    function addToCart(id : string) {
+        
+        const quantity = getProductQuantity(id); //Get the quantity
+
+        if (quantity === 0) {
+        //Product is not in cart
+        setCartProducts(
+            [
+                ...cartProducts,
+                {
+                    id: id,
+                    quantity: 1
+                }
+            ]
+        )
+        } else {
+            //Product is already in cart
+            setCartProducts(
+                cartProducts.map(
+                    product => 
+                    product.id === id 
+                    ? {...product, quantity: product.quantity + 1}  //if statement is true
+                    : product                                       //if statement is false
+                )
+            )
+        }
+    }
+
+    // Use useEffect to log the updated cart after the state has been updated
     useEffect(() => {
-        console.log('Updated Cart:', cart);
-    }, [cart]); // This will run whenever the cart state changes
+        console.log('Updated Cart:', cartProducts);
+    }, [cartProducts]); // This will run whenever the cart state changes
 
 
     return (
@@ -118,9 +146,10 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
             products,
             setProducts,
             fetchProducts,
-            cart,
-            setCart,
+            cartProducts,
+            setCartProducts,
             addToCart,
+            getProductQuantity,
         }}
       >
         {children}
