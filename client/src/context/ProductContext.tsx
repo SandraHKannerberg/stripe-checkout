@@ -12,15 +12,16 @@ import {
 interface Product {
     id: string,
     name: string,
-    price: DefaultPrice,
+    price: Price,
     description: string,
     images: [],
+    default_price: Price,
   }
 
 
-interface DefaultPrice {
+interface Price {
     id: string,
-    unit_amount: number,//math()
+    unit_amount: string,//math()
     currency: string,
 }
 
@@ -47,17 +48,34 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
 
     //BYGG PÅ MED FUNKTIONER HÄR!!!!!!!!
 
-    function fetchProducts() {
-        useEffect(() => {
-            fetch('api/products')
-              .then((response) => response.json())
-              .then((data) => setProducts(data.data))
-              .catch((error) => {
-                console.error('Error fetching products:', error);
-              })
-          }, []);
+    async function fetchProducts() {
+
+        const response = await fetch (
+            'http://localhost:3000/api/products'
+        );
+
+        const data = await response.json();
+
+        const productList = data.data.map((product : Product) => ({
+            name: product.name,
+            description: product.description,
+            images: product.images,
+            id: product.id,
+            price: {
+                currency: product.default_price.currency,
+                unit_amount: (parseFloat(product.default_price.unit_amount) / 100).toFixed(2),
+                id: product.default_price.id
+            } 
+        }));
+
+        setProducts(productList);
     }
-    
+
+    useEffect(() => {
+        fetchProducts()
+      }, []);
+
+
     return (
       <ProductContext.Provider
         value={{

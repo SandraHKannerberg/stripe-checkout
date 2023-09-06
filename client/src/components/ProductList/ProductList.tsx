@@ -9,29 +9,24 @@ function ProductList() {
   return (
     <div>
       <h1>Våra Produkter</h1>
+
       <ul>
-        {products.map((product) => (
-          <li key={product.id}>
+        {products.map((product, index) => (
+          <li key={index}>
             <h3>{product.name}</h3>
+            <p>{product.description}</p>
+            <p>{product.price.unit_amount} {product.price.currency}</p>
             <ul>
               {product.images.map((image, index) => (
                 <li key={index}>
-                  <img src={image} alt={`Product ${product.id} Image ${index}`} style={{'height' : '350px'}} />
+                  <img src={image} alt={`Product ${product.id} Image ${index}`} style={{'height':'350px'}} />
                 </li>
               ))}
             </ul>
-            <p>{product.description}</p>
-            {/* <ul>
-              {product.price.map((price) => (
-                <li key={price.id}>
-                  <p></p>
-                  <p></p>
-                </li>
-              ))}
-            </ul> */}
           </li>
         ))}
       </ul>
+
     </div>
   );
 }
