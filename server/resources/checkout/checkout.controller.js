@@ -1,4 +1,5 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const { initStripe } = require('../../stripe');
+const stripe = initStripe();
 const CLIENT_URL = 'http://localhost:5173'
 
 const createCheckOutSession = async (req,res) => {
