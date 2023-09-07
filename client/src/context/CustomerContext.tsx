@@ -1,20 +1,21 @@
 import { createContext, useState, useEffect, useContext, PropsWithChildren } from "react";
 
 export interface Customer {
-  username: string;
-  email: string;
-  password: string;
+    id: string;
+    username: string;
+    email: string;
+    password: string;
 };
 
 export type CustomerType = {
-  username: string;
-  password: string;
+    username: string;
+    password: string;
 };
 
 interface ICustomerContext {
-  loggedInCustomer?: Customer | null;
-  login: (customer: CustomerType) => Promise<void>;
-  logout: () => Promise<void>;
+    loggedInCustomer?: Customer | null;
+    login: (customer: CustomerType) => Promise<void>;
+    logout: () => Promise<void>;
 }
 
 const defaultValues = {
@@ -39,6 +40,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
         const data = await response.json();
         if (response.status === 200 || response.status === 304) {
           setloggedInCustomer(data);
+          console.log(loggedInCustomer)
         }
  
       } catch (err) {
@@ -51,6 +53,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   const login = async (customer : CustomerType) => {
     if (customer) {
       try {
+        console.log(customer)
         const response = await fetch("api/customers/login", {
           method: "POST",
           headers: {
@@ -58,7 +61,10 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
           },
           body: JSON.stringify(customer),
         });
+        console.log(response)
+
         const data = await response.json();
+        console.log(data)
  
         if (response.status === 200) {
           setloggedInCustomer(data);

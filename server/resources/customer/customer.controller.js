@@ -82,7 +82,7 @@ async function customerLogIn (req, res) {
     const correctPassword = await bcrypt.compare(password, customer.password);
 
     if(correctPassword) {
-        req.session = customer;
+        req.session = customer; // Save info about the customer to the session (an encrypted cookie stored on the client)
         console.log("req", req.session);
         res.json({Message: "Successfully logged in", customer: {username: customer.username, email: customer.email}});
     } else {
@@ -93,8 +93,25 @@ async function customerLogIn (req, res) {
     }
 }
 
+async function customerLogOut (req, res) {
+    if (!req.session._id) {
+      return res.status(400).json("Cannot logout when you are not logged in");
+    }
+    req.session = null;
+    res.status(204).json(null);
+  }
+  
+  async function authorize (req, res) {
+    if (!req.session._id) {
+      return res.status(401).json("You are not logged in");
+    }
+    res.status(200).json(req.session);
+  }
+
 module.exports = {
     registerNewCustomer,
     getAllCustomers, 
-    customerLogIn
+    customerLogIn,
+    customerLogOut,
+    authorize
 };

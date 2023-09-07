@@ -3,6 +3,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser');
 const { productRouter } = require("./resources/product/product.router");
 const { customerRouter } = require("./resources/customer/customer.router");
+const cookieSession = require("cookie-session");
 
 const app = express()
 
@@ -10,6 +11,18 @@ const app = express()
 app.use(cors({
     origin: '*'
 }))
+
+app.use(
+    cookieSession({
+      name: "session",
+      //keys: ["aVeryS3cr3tK3y"],
+      maxAge: 1000 * 60 * 60 * 24, // 24 Hours
+      sameSite: "strict",
+      httpOnly: true,
+      secure: false,
+    })
+  );
+
 app.use(express.json())
 app.use(bodyParser.json()); 
 

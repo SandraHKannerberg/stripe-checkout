@@ -26,10 +26,9 @@ interface Price {
 }
 
 interface CartItem {
-    id: string, //price.........
+    id: string,
     quantity: number,
 }
-
 
 
 interface IProductContext {
@@ -65,15 +64,14 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [cartProducts, setCartProducts] = useState<CartItem[]>([]);
 
-    async function fetchProducts() {
+    const fetchProducts = async () => {
+        try {
+          const response = await fetch(
+            "api/products"
+          );
+          const data = await response.json();
 
-        const response = await fetch (
-            'http://localhost:3000/api/products'
-        );
-
-        const data = await response.json();
-
-        const productList = data.data.map((product : Product) => ({
+          const productList = data.data.map((product : Product) => ({
             name: product.name,
             description: product.description,
             images: product.images,
@@ -86,7 +84,34 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         }));
 
         setProducts(productList);
-    }
+   
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+    // async function fetchProducts() {
+
+    //     const response = await fetch (
+    //         'http://localhost:3000/api/products'
+    //     );
+
+    //     const data = await response.json();
+
+    //     const productList = data.data.map((product : Product) => ({
+    //         name: product.name,
+    //         description: product.description,
+    //         images: product.images,
+    //         id: product.id,
+    //         price: {
+    //             currency: product.default_price.currency,
+    //             unit_amount: (parseFloat(product.default_price.unit_amount) / 100).toFixed(2),
+    //             id: product.default_price.id
+    //         } 
+    //     }));
+
+    //     setProducts(productList);
+    // }
 
     useEffect(() => {
         fetchProducts()
@@ -132,16 +157,6 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
             )
         }
     }
-
-    // Use useEffect to log the updated cart after the state has been updated
-    useEffect(() => {
-        console.log('Updated Cart:', cartProducts);
-    }, [cartProducts]); // This will run whenever the cart state changes
-
-    // const cartQuantity = cartProducts.reduce(
-    //     (quantity, item) => item.quantity + quantity,
-    //     0
-    //   );
 
     const cartQuantity = cartProducts.reduce(
         (quantity, item) => item.quantity + quantity,
