@@ -4,10 +4,12 @@ import './ShoppingCartBtn.css'
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
 import CheckoutBtn from '../CheckoutBtn/CheckoutBtn';
 import { useState } from "react";
+import { useProductContext } from '../../context/ProductContext';
 
 function ShoppingCartBtn() {
 
   const [open, setOpen] = useState(false);
+  const { cartQuantity } = useProductContext();
 
   const showShoppingCartDrawer = () => {
   setOpen(true);
@@ -20,7 +22,7 @@ function ShoppingCartBtn() {
 
   return (
     <>
-    <Badge count={5}>
+    <Badge count={cartQuantity}>
       <Button className="shopping--btn" type="text" onClick={showShoppingCartDrawer}>
         <ShoppingOutlined></ShoppingOutlined>
       </Button>

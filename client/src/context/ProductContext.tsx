@@ -40,7 +40,7 @@ interface IProductContext {
     setCartProducts: Dispatch<SetStateAction<CartItem[]>>;
     addToCart: (id: string) => void;
     getProductQuantity: (id: string) => void;
-    //cartQuantity: () => void,
+    cartQuantity: number,
   }
   
 
@@ -52,7 +52,7 @@ const defaultValues = {
     setCartProducts: () => {},
     addToCart: (id : string) => '',
     getProductQuantity: (id: string) => '', 
-    //cartQuantity: () => null,
+    cartQuantity: 0,
 };
   
 export const ProductContext = createContext<IProductContext>(defaultValues);
@@ -143,6 +143,11 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
     //     0
     //   );
 
+    const cartQuantity = cartProducts.reduce(
+        (quantity, item) => item.quantity + quantity,
+        0
+      );
+
 
     return (
       <ProductContext.Provider
@@ -154,6 +159,7 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
             setCartProducts,
             addToCart,
             getProductQuantity,
+            cartQuantity
         }}
       >
         {children}
