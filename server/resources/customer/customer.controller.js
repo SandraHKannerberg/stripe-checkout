@@ -42,7 +42,7 @@ async function registerNewCustomer(req, res) {
         //CHECK IF THE CUSTOMER ALREADY EXISTS
         const existingCustomer = customerData.find((customer) => customer.username === username || customer.email === email)
         if(existingCustomer) {
-            return res.status(409).json({Message: "The customer already exists"})
+            return res.status(409).json({Message: "Error - The customer already exists"})
         }
 
         //IF THE CUSTOMER DOESN'T EXISTS PUSH TO THE ARRAY AND UPDATE THE CUSTOMERS JSON-FILE
@@ -66,7 +66,35 @@ async function getAllCustomers(req, res) {
     }
 }
 
+async function customerLogIn (req, res) {
+    const { username, password } = req.body;
+
+    try{
+        const fileData = fs.readFileSync(filePath, "utf8");
+        const customerData = JSON.parse(fileData);
+
+        const customer = customerData.find((customer) => customer.username === username || customer.email === username)
+
+        if(!customer) {
+            return res.status(404).json({Message: "Error - Customer not found"});
+        }
+
+    const correctPassword = await bcrypt.compare(password, customer.password);
+
+    if(correctPassword) {
+        req.session = customer;
+        console.log("req", req.session);
+        res.json({Message: "Successfully logged in", customer: {username: customer.username, email: customer.email}});
+    } else {
+        res.status(401).json("Error - wrong username or password. Try again");
+    }
+    } catch (error) {
+        res.status(500).json({ error: error.message});
+    }
+}
+
 module.exports = {
     registerNewCustomer,
-    getAllCustomers
+    getAllCustomers, 
+    customerLogIn
 };
