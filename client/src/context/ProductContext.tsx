@@ -6,7 +6,6 @@ import {
     useEffect,
     Dispatch,
     SetStateAction,
-    ReactNode
   } from "react";
 
 
@@ -41,6 +40,7 @@ interface IProductContext {
     setCartProducts: Dispatch<SetStateAction<CartItem[]>>;
     addToCart: (id: string) => void;
     getProductQuantity: (id: string) => void;
+    //cartQuantity: () => void,
   }
   
 
@@ -52,6 +52,7 @@ const defaultValues = {
     setCartProducts: () => {},
     addToCart: (id : string) => '',
     getProductQuantity: (id: string) => '', 
+    //cartQuantity: () => null,
 };
   
 export const ProductContext = createContext<IProductContext>(defaultValues);
@@ -136,6 +137,11 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
     useEffect(() => {
         console.log('Updated Cart:', cartProducts);
     }, [cartProducts]); // This will run whenever the cart state changes
+
+    // const cartQuantity = cartProducts.reduce(
+    //     (quantity, item) => item.quantity + quantity,
+    //     0
+    //   );
 
 
     return (

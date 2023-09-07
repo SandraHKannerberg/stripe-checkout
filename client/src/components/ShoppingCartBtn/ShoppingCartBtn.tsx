@@ -1,4 +1,4 @@
-import { Button, Drawer } from 'antd';
+import { Button, Drawer, Badge } from 'antd';
 import { ShoppingOutlined } from '@ant-design/icons';
 import './ShoppingCartBtn.css'
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
@@ -20,9 +20,11 @@ function ShoppingCartBtn() {
 
   return (
     <>
-    <Button className="shopping--btn" type="text" onClick={showShoppingCartDrawer}>
-      <ShoppingOutlined></ShoppingOutlined>
-    </Button>
+    <Badge count={5}>
+      <Button className="shopping--btn" type="text" onClick={showShoppingCartDrawer}>
+        <ShoppingOutlined></ShoppingOutlined>
+      </Button>
+    </Badge>
 
     <Drawer title="Din Kundkorg" placement="right" onClose={onClose} open={open}>
       <ShoppingCart></ShoppingCart>

@@ -1,11 +1,10 @@
 import { useProductContext } from '../../context/ProductContext';
-//import AddToCartBtn  from '../AddToCartBtn/AddToCartBtn';
 import { Row, Col, Space, Card, Button  } from 'antd';
 
 function ProductList() {
  
   const { products, fetchProducts, addToCart } = useProductContext();
-  
+
   fetchProducts();
 
   return (
