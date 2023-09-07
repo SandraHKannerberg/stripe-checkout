@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const { productRouter } = require("./resources/product/product.router");
 const { customerRouter } = require("./resources/customer/customer.router");
 const cookieSession = require("cookie-session");
+const crypto = require("crypto");
 
 const app = express()
 
@@ -12,10 +13,13 @@ app.use(cors({
     origin: '*'
 }))
 
+
+const secretKey = process.env.COOKIE_SECRET_KEY;
+
 app.use(
     cookieSession({
       name: "session",
-      //keys: [],
+      keys: [secretKey],
       maxAge: 1000 * 60 * 60 * 24, // 24 Hours
       sameSite: "strict",
       httpOnly: true,
