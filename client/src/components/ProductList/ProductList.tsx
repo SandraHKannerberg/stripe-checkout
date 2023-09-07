@@ -1,36 +1,36 @@
-import { useEffect, useState } from 'react';
-
-interface Product {
-  id: string,
-  name: string,
-  price: string,
-  description: string,
-}
+import { useProductContext } from '../../context/ProductContext';
+import { Row, Col, Space, Card, Button  } from 'antd';
 
 function ProductList() {
-  const [products, setProducts] = useState<Product[]>([]);
+ 
+  const { products, fetchProducts, addToCart } = useProductContext();
 
-  useEffect(() => {
-    fetch('api/products')
-      .then((response) => response.json())
-      .then((data) => setProducts(data.data))
-      .catch((error) => {
-        console.error('Error fetching products:', error);
-      })
-  }, []);
+  fetchProducts();
 
   return (
     <div>
-      <h1>Products</h1>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            <h3>{product.name}</h3>
-            <p>{product.description}</p>
-            <p>{product.price}</p>
-          </li>
+      <h1>Våra Produkter</h1>
+
+      <Row gutter={[16, 16]} style={{'backgroundColor' : 'yellow'}}>
+        {products.map((product, index) => (
+          <Col key={index} span={6} style={{'backgroundColor' : 'orange'}}>
+            <Card>
+              <ul>
+                {product.images.map((image, index) => (
+                  <Space key={index}>
+                    <img src={image} alt={`Product ${product.id} Image ${index}`} style={{'height':'300px'}} />
+                  </Space>
+                ))}
+              </ul>
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+              <p>{product.price.unit_amount} {product.price.currency}</p>
+              <Button type='primary' onClick={() => addToCart(product.price.id)}>Lägg till i kundkorgen</Button>
+            </Card>
+          </Col>
         ))}
-      </ul>
+      </Row>
+
     </div>
   );
 }
