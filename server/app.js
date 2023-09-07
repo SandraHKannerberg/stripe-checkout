@@ -15,7 +15,7 @@ app.use(cors({
 app.use(
     cookieSession({
       name: "session",
-      //keys: ["aVeryS3cr3tK3y"],
+      //keys: [],
       maxAge: 1000 * 60 * 60 * 24, // 24 Hours
       sameSite: "strict",
       httpOnly: true,
