@@ -1,1 +1,20 @@
+//GET ALL PRODUCTS
 GET http://localhost:3000/api/products
+
+
+###
+
+//NEW CUSTOMER
+POST http://localhost:3000/api/customers/register
+Content-Type: application/json
+
+{
+  "email": "test@test.nu",
+  "username": "Test Testar",
+  "password": "test123"
+}
+
+###
+
+//GET ALL CUSTOMERS
+GET http://localhost:3000/api/customers
