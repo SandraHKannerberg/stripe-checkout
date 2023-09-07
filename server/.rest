@@ -1,6 +1,10 @@
 //GET ALL PRODUCTS
 GET http://localhost:3000/api/products
 
+###
+
+//GET ALL CUSTOMERS
+GET http://localhost:3000/api/customers
 
 ###
 
@@ -16,11 +20,6 @@ Content-Type: application/json
 
 ###
 
-//GET ALL CUSTOMERS
-GET http://localhost:3000/api/customers
-
-###
-
 //LOGIN CUSTOMER
 POST http://localhost:3000/api/customers/login
 Content-Type: application/json
@@ -29,3 +28,5 @@ Content-Type: application/json
   "username": "Test Testar",
   "password": "test123"
 }
+
+###
