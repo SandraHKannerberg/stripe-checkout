@@ -3,9 +3,7 @@ import { Row, Col, Space, Card, Button  } from 'antd';
 
 function ProductList() {
  
-  const { products, fetchProducts, addToCart } = useProductContext();
-
-  fetchProducts();
+  const { products, addToCart } = useProductContext();
 
   return (
     <div>

@@ -7,34 +7,34 @@ import {
 } from "../../context/CustomerContext";
 
 function LogInForm() {
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
-  };
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const { loggedInCustomer, login } = useCustomerContext();
+  const { username, setUsername, password, setPassword, isLoggedIn, handleLogin } = useCustomerContext();
 
-  const handleLogin = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
+  const onFinish = async (values: any) => {
+    console.log('Received values of form: ', values);
+
     const customer: CustomerType = {
-      username,
-      password,
-    };
+          username: values.username,
+          password: values.password,
+        };
 
-    await login(customer);
+    console.log(customer)
 
-    setUsername("");
-    setPassword("");
+    await handleLogin(customer)
+
   };
+
 
   return (
     <>
       <p>Already a customer? Please log in here</p>
+
+
       <Form
         name="login"
         className="login-form"
         initialValues={{ remember: true }}
+        onFinish={onFinish} 
       >
         <Form.Item
           name="username"
@@ -44,7 +44,6 @@ function LogInForm() {
             prefix={<UserOutlined className="site-form-item-icon" />}
             type="username"
             placeholder="Enter username"
-            onChange={(e) => setUsername(e.target.value)}
           />
         </Form.Item>
 
@@ -56,7 +55,6 @@ function LogInForm() {
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Enter password"
-            onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Item>
 
@@ -64,7 +62,7 @@ function LogInForm() {
           <Button
             type="primary"
             className="login-form-button"
-            onClick={handleLogin}
+            htmlType="submit"
           >
             Log In
           </Button>
@@ -73,13 +71,13 @@ function LogInForm() {
 
       <Divider />
 
-      <p>New customer? Please register here</p>
+      {/*<p>New customer? Please register here</p>
 
       <Form
         name="register"
         className="login-form"
         initialValues={{ remember: true }}
-        onFinish={onFinish}
+        onFinish={(values) => onFinish(values, "register")}
       >
         <Form.Item
           name="username"
@@ -121,7 +119,7 @@ function LogInForm() {
             Submit
           </Button>
         </Form.Item>
-      </Form>
+        </Form>*/}
     </>
   );
 }
