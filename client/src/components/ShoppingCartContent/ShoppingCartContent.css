@@ -1,9 +1,14 @@
-.shoppingcart--content--listitem {
-    list-style: none;
-    
+.shoppingcart--content--list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-.currency--text {
+.shoppingcart--content--listitem {
+    list-style: none;
+}
+
+.currency--cart {
     text-transform: uppercase;
     font-weight: bold;
 }

@@ -44,14 +44,13 @@ function LogInBtn() {
     <div className="logged--in--container">
       <p className="usericon"><UserOutlined /></p>
       <div className="logged--in--box">
-        <p className="logged--in--box--text">Välkommen</p> 
         <Button className="log--btn" type="text" onClick={showLogInDrawer}>
           Logga In/Bli Medlem
         </Button>
       </div> 
     </div>
 
-    <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open}>
+    <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open} style={{"backgroundColor":"whitesmoke", "color":" #3C6255"}}>
       <LogInForm></LogInForm>
     </Drawer>
     </>

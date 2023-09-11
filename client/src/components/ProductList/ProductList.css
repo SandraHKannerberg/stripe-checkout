@@ -1,0 +1,20 @@
+.add--to--cart--btn{
+    background-color: #3C6255;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0;
+}
+.ant-btn-block:hover{
+    background-color: #A6BB8D !important;
+}
+
+.product--card{
+    box-shadow: -5px -5px 9px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3);
+    background-color: whitesmoke;
+    color:  #3C6255;
+    border-radius: 15px;
+}
+
+.currency--text{
+    text-transform: uppercase;
+}

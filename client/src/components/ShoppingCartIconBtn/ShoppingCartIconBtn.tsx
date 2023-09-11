@@ -25,7 +25,7 @@ function ShoppingCartIconBtn() {
 
   return (
     <>
-    <Badge count={cartQuantity} style={{"marginRight": "2.8rem", "backgroundColor":"inherit", "color": "#3C6255", "fontSize":"1.3rem"}}>
+    <Badge count={cartQuantity} style={{"marginRight": "2.8rem", "backgroundColor":"#EAE7B1", "color": "#3C6255", "fontSize":"1.1rem"}}>
       <Button className="shopping--btn" type="text" onClick={showShoppingCartDrawer}>
         {cartQuantity === 0 &&
         <ShoppingOutlined></ShoppingOutlined>
@@ -37,7 +37,7 @@ function ShoppingCartIconBtn() {
       </Button>
     </Badge>
 
-    <Drawer title="Din Kundkorg" placement="right" onClose={onClose} open={open}>
+    <Drawer title="Din Kundkorg" placement="right" onClose={onClose} open={open} style={{"backgroundColor":"whitesmoke", "color":"#3C6255"}}>
 
       <ShoppingCartContent></ShoppingCartContent>
       
