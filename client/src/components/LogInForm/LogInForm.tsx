@@ -26,14 +26,8 @@ function LogInForm() {
   return (
     <>
 
-      {loggedInCustomer ? (
-            
-          <div>
-            <p className='messageDiv'>Du är inloggad som: {loggedInCustomer.username}</p>
-          </div>
+        
      
-          ) : (
-
           <div>
 
             <p>Redan registrerad? Vänligen logga in här:</p>
@@ -131,7 +125,7 @@ function LogInForm() {
         </Form>
       </div>
 
-        )}
+ 
       </>
     );
   }

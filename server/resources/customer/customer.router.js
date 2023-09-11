@@ -3,9 +3,9 @@ const { registerNewCustomer, getAllCustomers, customerLogIn, customerLogOut, aut
 
 const customerRouter = express.Router()
 
-  .post('/customers/register', registerNewCustomer)
-  .get('/customers', getAllCustomers)
-  .post('/customers/login', customerLogIn)
+  .post("/customers/register", registerNewCustomer)
+  .get("/customers", getAllCustomers)
+  .post("/customers/login", customerLogIn)
   .post("/customers/logout", customerLogOut)
   .get("/customers/authorize", authorize)
 

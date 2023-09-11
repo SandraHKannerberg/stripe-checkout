@@ -9,7 +9,7 @@ import {
 function LogInBtn() {
 
   const [open, setOpen] = useState(false);
-  const { loggedInCustomer } = useCustomerContext();
+  const { loggedInCustomer, handleLogout } = useCustomerContext();
 
   const showLogInDrawer = () => {
     setOpen(true);
@@ -19,26 +19,25 @@ function LogInBtn() {
     setOpen(false);
   };
 
+  
   return (
-    <>
-
-    { loggedInCustomer ? (
-
-      <Button className="logout--btn" type="text">
-        Logga Ut
-      </Button>
-
+  <>
+      {loggedInCustomer ? (
+        <Button className="logout--btn" type="text" onClick={handleLogout}>
+          Logga Ut
+        </Button>
       ) : (
-
-      <Button className="login--btn" type="text" onClick={showLogInDrawer}>
-        Logga In/Bli Medlem
-      </Button>
-    )}
-
-      <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open}>
-        <LogInForm></LogInForm>
-      </Drawer>
-    </>
+        <>
+        <Button className="login--btn" type="text" onClick={showLogInDrawer}>
+          Logga In/Bli Medlem
+        </Button>
+  
+        <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open}>
+          <LogInForm></LogInForm>
+        </Drawer>
+        </>
+      )}
+  </>
 );
 }
 

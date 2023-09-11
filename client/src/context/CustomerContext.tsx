@@ -43,14 +43,15 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   const [password, setPassword] = useState<string>('');
   const [loggedInCustomer, setLoggedInCustomer] = useState<Customer | null>(null);
 
+
   useEffect(() => {
     const authorization = async () => {
       try {
         const response = await fetch("/api/customers/authorize");
         const data = await response.json();
         if (response.status === 200 || response.status === 304) {
-          setLoggedInCustomer(data);
-          console.log("AUTH", data)
+          setLoggedInCustomer(data.customer || null );
+          console.log("AUTH LOG", data.customer);
         }
  
       } catch (err) {
@@ -73,14 +74,19 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
           body: JSON.stringify(customer),
         });
         const data = await response.json();
-        
+
         if (response.status === 200) {
-          setLoggedInCustomer(data);
-          console.log("CONTEXT", data)
+ 
+          setLoggedInCustomer(data.customer);
+          console.log("CONTEXT", data);
+
+          console.log("LOGGED IN CUSTOMER: ", data.customer);
         } 
       } catch (err) {
         console.log("ERROR-MESSAGE:", err);
       }
+        
+    
     }
   };
 
@@ -104,7 +110,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
   return (
     <CustomerContext.Provider
-      value={{ username, setUsername, password, setPassword, loggedInCustomer, handleLogin, handleLogout }}
+      value={{ username, setUsername, password, setPassword, loggedInCustomer,handleLogin, handleLogout }}
     >
       {children}
     </CustomerContext.Provider>
