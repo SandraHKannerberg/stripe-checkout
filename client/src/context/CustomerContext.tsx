@@ -69,7 +69,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
         if (response.status === 200) {
  
           setLoggedInCustomer(data);
-          console.log("CONTEXT", data);
+          console.log("CONTEXT", data.customer.username);
 
           console.log("LOGGED IN CUSTOMER: ", data);
         } 

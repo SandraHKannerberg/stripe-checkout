@@ -38,9 +38,10 @@ function ShoppingCartIconBtn() {
     </Badge>
 
     <Drawer title="Din Kundkorg" placement="right" onClose={onClose} open={open}>
-      <ShoppingCartContent></ShoppingCartContent>
 
-      {loggedInCustomer &&
+      <ShoppingCartContent></ShoppingCartContent>
+      
+      {loggedInCustomer && cartQuantity !== 0 &&
         <CheckoutBtn></CheckoutBtn>
       }
 

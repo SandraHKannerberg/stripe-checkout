@@ -1,7 +1,31 @@
 .log--btn{
     color: #3C6255;
-    font-size: 18px;
+    font-size: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-left: 0;
+}
+
+.logged--in--container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
+    gap: 0.5rem;
+}
+
+.logged--in--box{
+    display: flex;
+    flex-direction: column;
+}
+
+.logged--in--box--text{
+    color: #3C6255;
+    font-weight: bold;
+}
+
+.usericon{
+    font-size: 30px;
+    color: #3C6255;
 }

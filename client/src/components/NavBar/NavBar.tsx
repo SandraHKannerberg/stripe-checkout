@@ -5,7 +5,7 @@ import "./NavBar.css"
 
 function NavBar() {
   return (
-    <Space style={{'marginBottom' : '0.3rem', 'display':'flex', 'justifyContent':'flex-end'}}>
+    <Space style={{"marginBottom" : "0.3rem", "display":"flex", "justifyContent":"flex-end"}}>
         <LogInBtn></LogInBtn>
         <ShoppingCartIconBtn></ShoppingCartIconBtn>
     </Space>
