@@ -10,8 +10,13 @@ function ProductList() {
     <>
       <Row style={{"display":"flex", "justifyContent" : "center"}}>
         {products.map((product, index) => (
-          <Col key={index} span={4} style={{"margin" : "1rem"}}>
-            <Card className="product--card" style={{"width":"100%", "margin":"auto"}}>
+          <Col key={index} span={4} 
+          xs={{ span: 22 }}
+          sm={{ span: 12, offset: 6 }}  
+          md={{ span: 8, offset: 4 }}  
+          lg={{ span: 4, offset: 2 }}
+          style={{"margin" : "1rem"}}>
+            <Card className="product--card" style={{"width":"100%", "display":"flex", "justifyContent": "center"}}>
               <ul>
                 {product.images.map((image, index) => (
                   <Space key={index}>
