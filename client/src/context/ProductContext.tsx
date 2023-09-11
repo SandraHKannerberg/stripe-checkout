@@ -26,10 +26,11 @@ interface Price {
 }
 
 interface CartItem {
-    id: string, //price.........
-    quantity: number,
+    id: string, //Just for Stripe
+    quantity: number, //Stripe and cart UI
+    name: string, //Cart UI
+    price: Price, //Cart UI
 }
-
 
 
 interface IProductContext {
@@ -38,7 +39,7 @@ interface IProductContext {
     fetchProducts:  () => void,
     cartProducts: CartItem[];
     setCartProducts: Dispatch<SetStateAction<CartItem[]>>;
-    addToCart: (id: string) => void;
+    addToCart: (id: string, name: string, price: Price) => void;
     getProductQuantity: (id: string) => void;
     cartQuantity: number,
   }
@@ -50,8 +51,8 @@ const defaultValues = {
     fetchProducts:  () => {},
     cartProducts: [],
     setCartProducts: () => {},
-    addToCart: (id : string) => '',
-    getProductQuantity: (id: string) => '', 
+    addToCart: () => '',
+    getProductQuantity: () => {}, 
     cartQuantity: 0,
 };
   
@@ -65,15 +66,14 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [cartProducts, setCartProducts] = useState<CartItem[]>([]);
 
-    async function fetchProducts() {
+    const fetchProducts = async () => {
+        try {
+          const response = await fetch(
+            "api/products"
+          );
+          const data = await response.json();
 
-        const response = await fetch (
-            'http://localhost:3000/api/products'
-        );
-
-        const data = await response.json();
-
-        const productList = data.data.map((product : Product) => ({
+          const productList = data.data.map((product : Product) => ({
             name: product.name,
             description: product.description,
             images: product.images,
@@ -86,14 +86,18 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         }));
 
         setProducts(productList);
-    }
+   
+        } catch (err) {
+          console.log(err);
+        }
+      };
 
     useEffect(() => {
         fetchProducts()
       }, []);
 
-    //Handle the quantity of every product in the shoppingcart
 
+    //HANDLE THE QUANTITY OF EVERY CARTITEM IN THE SHOPPINGCART
     function getProductQuantity(id : string) {
 
         const quantity = cartProducts.find(product => product.id === id)?.quantity //Check the quantity if the product are in the cart
@@ -105,7 +109,12 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         return quantity
     }
 
-    function addToCart(id : string) {
+    //HANDLE ADD TO CART
+    function addToCart(
+      id: string,
+      name: string,
+      price: Price
+      ) {
         
         const quantity = getProductQuantity(id); //Get the quantity
 
@@ -116,6 +125,8 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
                 ...cartProducts,
                 {
                     id: id,
+                    name: name,
+                    price: price,
                     quantity: 1
                 }
             ]
@@ -132,16 +143,6 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
             )
         }
     }
-
-    // Use useEffect to log the updated cart after the state has been updated
-    useEffect(() => {
-        console.log('Updated Cart:', cartProducts);
-    }, [cartProducts]); // This will run whenever the cart state changes
-
-    // const cartQuantity = cartProducts.reduce(
-    //     (quantity, item) => item.quantity + quantity,
-    //     0
-    //   );
 
     const cartQuantity = cartProducts.reduce(
         (quantity, item) => item.quantity + quantity,

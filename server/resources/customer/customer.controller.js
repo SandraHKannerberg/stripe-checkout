@@ -73,7 +73,7 @@ async function customerLogIn (req, res) {
         const fileData = fs.readFileSync(filePath, "utf8");
         const customerData = JSON.parse(fileData);
 
-        const customer = customerData.find((customer) => customer.username === username || customer.email === username)
+        const customer = customerData.find((customer) => customer.username === username)
 
         if(!customer) {
             return res.status(404).json({Message: "Error - Customer not found"});
@@ -82,8 +82,9 @@ async function customerLogIn (req, res) {
     const correctPassword = await bcrypt.compare(password, customer.password);
 
     if(correctPassword) {
-        req.session = customer;
-        console.log("req", req.session);
+        delete customer.password; //Delete password before saving in a session
+        req.session = customer; // Save info about the customer to the session (an encrypted cookie stored on the client)
+        console.log(req.session);
         res.json({Message: "Successfully logged in", customer: {username: customer.username, email: customer.email}});
     } else {
         res.status(401).json("Error - wrong username or password. Try again");
@@ -93,8 +94,27 @@ async function customerLogIn (req, res) {
     }
 }
 
+async function customerLogOut (req, res) {
+    if (!req.session.id) {
+      return res.status(400).json("Cannot logout when you are not logged in");
+    }
+    req.session = null;
+    res.status(204).json(null);
+    console.log("Successfully logged out");
+  }
+  
+  async function authorize (req, res) {
+    if (!req.session.id) {
+      return res.status(401).json("You are not logged in");
+    }
+    return req.session,
+    res.status(200).json(req.session);
+  }
+
 module.exports = {
     registerNewCustomer,
     getAllCustomers, 
-    customerLogIn
+    customerLogIn,
+    customerLogOut,
+    authorize
 };

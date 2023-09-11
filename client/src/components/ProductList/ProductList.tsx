@@ -3,9 +3,7 @@ import { Row, Col, Space, Card, Button  } from 'antd';
 
 function ProductList() {
  
-  const { products, fetchProducts, addToCart } = useProductContext();
-
-  fetchProducts();
+  const { products, addToCart } = useProductContext();
 
   return (
     <div>
@@ -25,7 +23,7 @@ function ProductList() {
               <h3>{product.name}</h3>
               <p>{product.description}</p>
               <p>{product.price.unit_amount} {product.price.currency}</p>
-              <Button type='primary' onClick={() => addToCart(product.price.id)}>Lägg till i kundkorgen</Button>
+              <Button type='primary' onClick={() => addToCart(product.price.id, product.name, product.price)}>Lägg till i kundkorgen</Button>
             </Card>
           </Col>
         ))}
