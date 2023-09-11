@@ -6,6 +6,12 @@ function ProductList() {
  
   const { products, addToCart } = useProductContext();
 
+  const gridStyle: React.CSSProperties = {
+    width: "100%",
+    textAlign: "center",
+    marginBottom: "2rem"
+  };
+
   return (
     <>
       <Row style={{"display":"flex", "justifyContent" : "center"}}>
@@ -16,11 +22,11 @@ function ProductList() {
           md={{ span: 8, offset: 4 }}  
           lg={{ span: 4, offset: 2 }}
           style={{"margin" : "1rem"}}>
-            <Card className="product--card" style={{"width":"100%", "display":"flex", "justifyContent": "center"}}>
+            <Card.Grid className="product--card" style={gridStyle}>
               <ul>
                 {product.images.map((image, index) => (
                   <Space key={index}>
-                    <img src={image} alt={`Product ${product.id} Image ${index}`} style={{"height":"300px"}} />
+                    <img src={image} alt={`Product ${product.id} Image ${index}`} style={{"height":"300px", "marginTop":"1rem"}} />
                   </Space>
                 ))}
               </ul>
@@ -28,7 +34,7 @@ function ProductList() {
               <p>{product.description}</p>
               <p>{product.price.unit_amount} <span className="currency--text">{product.price.currency}</span></p>
               <Button className="add--to--cart--btn" type="primary" block onClick={() => addToCart(product.price.id, product.name, product.price)}>Lägg till i kundkorgen</Button>
-            </Card>
+            </Card.Grid>
           </Col>
         ))}
       </Row>
