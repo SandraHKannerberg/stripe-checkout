@@ -17,7 +17,7 @@ interface ICustomerContext {
     setUsername: React.Dispatch<React.SetStateAction<string>>;
     password: string;
     setPassword: React.Dispatch<React.SetStateAction<string>>;
-    isLoggedIn?: Customer | null;
+    loggedInCustomer?: Customer | null;
     handleLogin: (customer: CustomerType) => Promise<void>;
     handleLogout: () => Promise<void>;
 }
@@ -27,7 +27,7 @@ const defaultValues = {
     setUsername: () => {},
     password: '',
     setPassword: () => {},
-    isLoggedIn: null,
+    loggedInCustomer: null,
     handleLogin: async () => {},
     handleLogout: async () => {},
 }
@@ -41,78 +41,48 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [isLoggedIn, setIsLoggedIn] = useState<Customer | null>(null);
-
-  // useEffect(() => {
-  //   const authorization = async () => {
-  //     try {
-  //       const response = await fetch("/api/customers/authorize");
-  //       const data = await response.json();
-  //       if (response.status === 200 || response.status === 304) {
-  //         setloggedInCustomer(data);
-  //         console.log(loggedInCustomer)
-  //       }
- 
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   authorization();
-  // }, []);
-
-  // const login = async (customer : CustomerType) => {
-  //   if (customer) {
-  //     try {
-  //       console.log(customer)
-  //       const response = await fetch("api/customers/login", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(customer),
-  //       });
-  //       console.log(response)
-
-  //       const data = await response.json();
-  //       console.log(data)
- 
-  //       if (response.status === 200) {
-  //         setloggedInCustomer(data);
-  //       } 
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  // };
+  const [loggedInCustomer, setLoggedInCustomer] = useState<Customer | null>(null);
 
   useEffect(() => {
-    console.log("loggedInCustomer changed:", isLoggedIn);
-  }, [isLoggedIn]);
-
-  const handleLogin = async () => {
-    try {
-      const response = await fetch('http://localhost:3000/api/customers/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (response.ok) {
+    const authorization = async () => {
+      try {
+        const response = await fetch("/api/customers/authorize");
         const data = await response.json();
-        console.log(data)
-        // Handle successful login here (e.g., update user state, redirect, etc.)
-      } else {
-        console.log("Something went wrong")
-        // Handle login failure (e.g., display an error message)
+        if (response.status === 200 || response.status === 304) {
+          setLoggedInCustomer(data);
+          console.log("AUTH", data)
+        }
+ 
+      } catch (err) {
+        console.log("ERROR-MESSAGE:", err);
       }
-    } catch (error) {
-      // Handle network or other errors
-      console.log(error);
+    };
+    authorization();
+  }, []);
+
+
+  const handleLogin = async (customer: CustomerType) => {
+    if (customer) {
+
+      try {
+        const response = await fetch("api/customers/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(customer),
+        });
+        const data = await response.json();
+        
+        if (response.status === 200) {
+          setLoggedInCustomer(data);
+          console.log("CONTEXT", data)
+        } 
+      } catch (err) {
+        console.log("ERROR-MESSAGE:", err);
+      }
     }
   };
-
 
   const handleLogout = async () => {
 
@@ -125,7 +95,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
       });
 
       if (response.status === 204) {
-        setIsLoggedIn(null);
+        setLoggedInCustomer(null);
       }
     } catch (err) {
       console.log(err);
@@ -134,7 +104,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
   return (
     <CustomerContext.Provider
-      value={{ username, setUsername, password, setPassword, isLoggedIn, handleLogin, handleLogout }}
+      value={{ username, setUsername, password, setPassword, loggedInCustomer, handleLogin, handleLogout }}
     >
       {children}
     </CustomerContext.Provider>

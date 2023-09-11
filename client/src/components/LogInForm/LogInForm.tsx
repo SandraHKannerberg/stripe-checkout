@@ -1,6 +1,5 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Divider } from "antd";
-import { useState } from "react";
 import {
   useCustomerContext,
   CustomerType,
@@ -8,7 +7,7 @@ import {
 
 function LogInForm() {
 
-  const { username, setUsername, password, setPassword, isLoggedIn, handleLogin } = useCustomerContext();
+  const { loggedInCustomer, handleLogin } = useCustomerContext();
 
   const onFinish = async (values: any) => {
     console.log('Received values of form: ', values);
@@ -21,107 +20,121 @@ function LogInForm() {
     console.log(customer)
 
     await handleLogin(customer)
-
   };
 
 
   return (
     <>
-      <p>Already a customer? Please log in here</p>
 
+      {loggedInCustomer ? (
+            
+          <div>
+            <p className='messageDiv'>Du är inloggad som: {loggedInCustomer.username}</p>
+          </div>
+     
+          ) : (
 
-      <Form
-        name="login"
-        className="login-form"
-        initialValues={{ remember: true }}
-        onFinish={onFinish} 
-      >
-        <Form.Item
-          name="username"
-          rules={[{ required: true, message: "Username is required" }]}
-        >
-          <Input
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            type="username"
-            placeholder="Enter username"
-          />
-        </Form.Item>
+          <div>
 
-        <Form.Item
-          name="password"
-          rules={[{ required: true, message: "Password is required" }]}
-        >
-          <Input
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            type="password"
-            placeholder="Enter password"
-          />
-        </Form.Item>
+            <p>Redan registrerad? Vänligen logga in här:</p>
 
-        <Form.Item>
-          <Button
-            type="primary"
-            className="login-form-button"
-            htmlType="submit"
+            <Form
+              name="login"
+              className="login-form"
+              initialValues={{ remember: true }}
+              onFinish={onFinish} 
+            >
+              <Form.Item
+                name="username"
+                rules={[{ required: true, message: "Du måste ange användarnamn" }]}
+              >
+                <Input
+                  prefix={<UserOutlined className="site-form-item-icon" />}
+                  type="username"
+                  placeholder="Användarnamn..."
+                />
+              </Form.Item>
+      
+              <Form.Item
+                name="password"
+                rules={[{ required: true, message: "Du måste ange lösenord" }]}
+              >
+                <Input
+                  prefix={<LockOutlined className="site-form-item-icon" />}
+                  type="password"
+                  placeholder="Lösenord..."
+                />
+              </Form.Item>
+      
+              <Form.Item>
+                <Button
+                  type="primary"
+                  className="login-form-button"
+                  htmlType="submit"
+                >
+                  Logga in
+                </Button>
+              </Form.Item>
+            </Form>
+
+            <Divider />
+
+          <p>Ny kund? Vänligen registrera dig här:</p>
+
+          <Form
+            name="register"
+            className="login-form"
+            initialValues={{ remember: true }}
+            onFinish={(values) => onFinish(values)}
           >
-            Log In
-          </Button>
-        </Form.Item>
-      </Form>
-
-      <Divider />
-
-      {/*<p>New customer? Please register here</p>
-
-      <Form
-        name="register"
-        className="login-form"
-        initialValues={{ remember: true }}
-        onFinish={(values) => onFinish(values, "register")}
-      >
-        <Form.Item
-          name="username"
-          rules={[
-            { required: true, message: "Username is required" },
-          ]}
-        >
-          <Input
+          <Form.Item
+            name="username"
+            rules={[
+            { required: true, message: "Du måste välja ett användarnamn" },
+            ]}
+          >
+            <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Choose a username"
-          />
+            placeholder="Välj ett användarnamn"
+            />
         </Form.Item>
 
         <Form.Item
           name="email"
-          rules={[{ required: true, message: "E-mail is required" }]}
+          rules={[{ required: true, message: "Du måste ange en e-mail" }]}
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Enter your e-mail"
+            placeholder="Din e-mailadress"
           />
         </Form.Item>
 
         <Form.Item
           name="password"
-          rules={[{ required: true, message: "Password is required" }]}
+          rules={[{ required: true, message: "Du måste välja ett lösenord" }]}
         >
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
-            placeholder="Choose a password"
+            placeholder="Välj ett lösenord"
           />
         </Form.Item>
+
         <Form.Item>
           <Button
             type="primary"
             className="login-form-button"
           >
-            Submit
+            Slutför
           </Button>
         </Form.Item>
-        </Form>*/}
-    </>
-  );
-}
+        </Form>
+      </div>
+
+        )}
+      </>
+    );
+  }
+
 
 export default LogInForm;
