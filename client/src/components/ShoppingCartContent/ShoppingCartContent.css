@@ -1,6 +1,11 @@
+.shoppingcart--content--list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
 .shoppingcart--content--listitem {
     list-style: none;
-    
 }
 
 .currency--cart {
