@@ -1,0 +1,9 @@
+.shoppingcart--content--listitem {
+    list-style: none;
+    
+}
+
+.currency--text {
+    text-transform: uppercase;
+    font-weight: bold;
+}

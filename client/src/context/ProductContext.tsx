@@ -26,8 +26,10 @@ interface Price {
 }
 
 interface CartItem {
-    id: string,
-    quantity: number,
+    id: string, //Just for Stripe
+    quantity: number, //Stripe and cart UI
+    name: string, //Cart UI
+    price: Price, //Cart UI
 }
 
 
@@ -37,7 +39,7 @@ interface IProductContext {
     fetchProducts:  () => void,
     cartProducts: CartItem[];
     setCartProducts: Dispatch<SetStateAction<CartItem[]>>;
-    addToCart: (id: string) => void;
+    addToCart: (id: string, name: string, price: Price) => void;
     getProductQuantity: (id: string) => void;
     cartQuantity: number,
   }
@@ -49,8 +51,8 @@ const defaultValues = {
     fetchProducts:  () => {},
     cartProducts: [],
     setCartProducts: () => {},
-    addToCart: (id : string) => '',
-    getProductQuantity: (id: string) => '', 
+    addToCart: () => '',
+    getProductQuantity: () => {}, 
     cartQuantity: 0,
 };
   
@@ -90,35 +92,12 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         }
       };
 
-    // async function fetchProducts() {
-
-    //     const response = await fetch (
-    //         'http://localhost:3000/api/products'
-    //     );
-
-    //     const data = await response.json();
-
-    //     const productList = data.data.map((product : Product) => ({
-    //         name: product.name,
-    //         description: product.description,
-    //         images: product.images,
-    //         id: product.id,
-    //         price: {
-    //             currency: product.default_price.currency,
-    //             unit_amount: (parseFloat(product.default_price.unit_amount) / 100).toFixed(2),
-    //             id: product.default_price.id
-    //         } 
-    //     }));
-
-    //     setProducts(productList);
-    // }
-
     useEffect(() => {
         fetchProducts()
       }, []);
 
-    //Handle the quantity of every product in the shoppingcart
 
+    //HANDLE THE QUANTITY OF EVERY CARTITEM IN THE SHOPPINGCART
     function getProductQuantity(id : string) {
 
         const quantity = cartProducts.find(product => product.id === id)?.quantity //Check the quantity if the product are in the cart
@@ -130,7 +109,12 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
         return quantity
     }
 
-    function addToCart(id : string) {
+    //HANDLE ADD TO CART
+    function addToCart(
+      id: string,
+      name: string,
+      price: Price
+      ) {
         
         const quantity = getProductQuantity(id); //Get the quantity
 
@@ -141,6 +125,8 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
                 ...cartProducts,
                 {
                     id: id,
+                    name: name,
+                    price: price,
                     quantity: 1
                 }
             ]
