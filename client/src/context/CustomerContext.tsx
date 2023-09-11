@@ -13,20 +13,12 @@ export type CustomerType = {
 };
 
 interface ICustomerContext {
-    username: string;
-    setUsername: React.Dispatch<React.SetStateAction<string>>;
-    password: string;
-    setPassword: React.Dispatch<React.SetStateAction<string>>;
     loggedInCustomer?: Customer | null;
     handleLogin: (customer: CustomerType) => Promise<void>;
-    handleLogout: () => Promise<void>;
+    handleLogout: () => {},
 }
 
 const defaultValues = {
-    username: '',
-    setUsername: () => {},
-    password: '',
-    setPassword: () => {},
     loggedInCustomer: null,
     handleLogin: async () => {},
     handleLogout: async () => {},
@@ -39,19 +31,17 @@ export const useCustomerContext = () => useContext(CustomerContext);
 
 export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
   const [loggedInCustomer, setLoggedInCustomer] = useState<Customer | null>(null);
 
-
+  //CHECKAR OM DET FINNS NÅGON INLOGGAD KUND
   useEffect(() => {
     const authorization = async () => {
       try {
         const response = await fetch("/api/customers/authorize");
         const data = await response.json();
         if (response.status === 200 || response.status === 304) {
-          setLoggedInCustomer(data.customer || null );
-          console.log("AUTH LOG", data.customer);
+          setLoggedInCustomer(data);
+          console.log("AUTH LOG", data);
         }
  
       } catch (err) {
@@ -62,6 +52,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   }, []);
 
 
+  //HANTERAR LOGGA IN
   const handleLogin = async (customer: CustomerType) => {
     if (customer) {
 
@@ -77,19 +68,18 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
         if (response.status === 200) {
  
-          setLoggedInCustomer(data.customer);
+          setLoggedInCustomer(data);
           console.log("CONTEXT", data);
 
-          console.log("LOGGED IN CUSTOMER: ", data.customer);
+          console.log("LOGGED IN CUSTOMER: ", data);
         } 
       } catch (err) {
         console.log("ERROR-MESSAGE:", err);
       }
-        
-    
     }
   };
 
+  //HANTERAR LOGGA UT
   const handleLogout = async () => {
 
     try {
@@ -110,7 +100,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
   return (
     <CustomerContext.Provider
-      value={{ username, setUsername, password, setPassword, loggedInCustomer,handleLogin, handleLogout }}
+      value={{ loggedInCustomer, handleLogin, handleLogout }}
     >
       {children}
     </CustomerContext.Provider>

@@ -104,9 +104,10 @@ async function customerLogOut (req, res) {
   }
   
   async function authorize (req, res) {
-    if (!req.session) {
-      return res.status(304).json("You are not logged in");
+    if (!req.session.id) {
+      return res.status(401).json("You are not logged in");
     }
+    return req.session,
     res.status(200).json(req.session);
   }
 

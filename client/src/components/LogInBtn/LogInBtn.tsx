@@ -22,21 +22,25 @@ function LogInBtn() {
   
   return (
   <>
-      {loggedInCustomer ? (
-        <Button className="logout--btn" type="text" onClick={handleLogout}>
-          Logga Ut
-        </Button>
-      ) : (
-        <>
-        <Button className="login--btn" type="text" onClick={showLogInDrawer}>
-          Logga In/Bli Medlem
-        </Button>
-  
-        <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open}>
-          <LogInForm></LogInForm>
-        </Drawer>
-        </>
-      )}
+
+    {loggedInCustomer && 
+      <Button className="log--btn" type="text" onClick={handleLogout}>
+        Logga Ut
+      </Button>
+    }
+
+    {!loggedInCustomer &&
+
+    <>
+    <Button className="log--btn" type="text" onClick={showLogInDrawer}>
+      Logga In/Bli Medlem
+    </Button>
+
+    <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open}>
+      <LogInForm></LogInForm>
+    </Drawer>
+    </>
+  }
   </>
 );
 }
