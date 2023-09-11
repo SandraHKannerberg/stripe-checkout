@@ -5,6 +5,7 @@ function Logotype() {
 
     <Space style={{"marginLeft":"2rem"}}>
       Sunflower Poster
+      <img src="/client/assets/" alt="Sunflower Posters Logotype" />
     </Space>
   )
 }

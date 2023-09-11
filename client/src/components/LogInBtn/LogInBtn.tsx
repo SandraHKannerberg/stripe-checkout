@@ -50,7 +50,7 @@ function LogInBtn() {
       </div> 
     </div>
 
-    <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open} style={{"backgroundColor":"#A6BB8D", "color":" #3C6255"}}>
+    <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open} style={{"backgroundColor":"whitesmoke", "color":" #3C6255"}}>
       <LogInForm></LogInForm>
     </Drawer>
     </>
