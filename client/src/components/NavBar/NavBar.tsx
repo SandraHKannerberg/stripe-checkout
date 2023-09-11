@@ -7,7 +7,7 @@ function NavBar() {
   return (
     <Space style={{"marginBottom" : "0.3rem", "display":"flex", "justifyContent":"flex-end"}}>
         <LogInBtn></LogInBtn>
-        <Divider type="vertical" style={{"height": "2rem"}}/>
+        <Divider type="vertical" className="divider"/>
         <ShoppingCartIconBtn></ShoppingCartIconBtn>
     </Space>
   )

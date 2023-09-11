@@ -1,0 +1,15 @@
+.add--to--cart--btn{
+    background-color: #3C6255;
+    margin-top: 1rem;
+    border-radius: 0;
+}
+
+.product--card{
+    box-shadow: -5px -5px 9px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3);
+    background-color: whitesmoke;
+    color:  #3C6255;
+}
+
+.currency--text{
+    text-transform: uppercase;
+}
