@@ -42,6 +42,7 @@ interface IProductContext {
     addToCart: (id: string, name: string, price: Price) => void;
     getProductQuantity: (id: string) => void;
     cartQuantity: number,
+    handlePayment: () => void,
   }
   
 
@@ -54,6 +55,8 @@ const defaultValues = {
     addToCart: () => '',
     getProductQuantity: () => {}, 
     cartQuantity: 0,
+    handlePayment: () => {},
+
 };
   
 export const ProductContext = createContext<IProductContext>(defaultValues);
@@ -150,6 +153,32 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
       );
 
 
+    async function handlePayment () {
+
+      const cartToStripe = cartProducts.map(item => ({
+        price: item.id,
+        quantity: item.quantity
+      }))
+
+      console.log("TEST", cartToStripe)
+
+      const response = await fetch("http://localhost:3000/api/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(cartToStripe)
+        })
+
+        if(!response.ok) {
+            return
+        }
+
+        const { url, sessionId } = await response.json()
+        localStorage.setItem("session-id", sessionId)
+        window.location = url;
+    }
+
     return (
       <ProductContext.Provider
         value={{
@@ -160,7 +189,8 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
             setCartProducts,
             addToCart,
             getProductQuantity,
-            cartQuantity
+            cartQuantity,
+            handlePayment
         }}
       >
         {children}
