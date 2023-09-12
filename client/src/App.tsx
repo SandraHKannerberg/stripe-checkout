@@ -1,8 +1,8 @@
 import Home from "../src/pages/Home"
 import "./App.css"
-import { ProductProvider } from './context/ProductContext.tsx';
-import { CustomerProvider } from './context/CustomerContext.tsx';
-import { CartProvider } from './context/CartContext.tsx';
+import { ProductProvider } from "./context/ProductContext.tsx";
+import { CustomerProvider } from "./context/CustomerContext.tsx";
+import { CartProvider } from "./context/CartContext.tsx";
 
 
 function App() {

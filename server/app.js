@@ -29,7 +29,7 @@ app.use(
   );
 
 app.use(express.json())
-app.use(bodyParser.json()); 
+//app.use(bodyParser.json()); 
 
 // Add routers
 app.use("/api", productRouter);
