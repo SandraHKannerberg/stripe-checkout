@@ -3,6 +3,7 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
     border-radius: 0;
+    width: 80%
 }
 .ant-btn-block:hover{
     background-color: #A6BB8D !important;
