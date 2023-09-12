@@ -5,13 +5,13 @@ import ShoppingCartContent from '../ShoppingCartContent/ShoppingCartContent';
 import CheckoutBtn from '../CheckoutBtn/CheckoutBtn';
 import LogInBtn from '../LogInBtn/LogInBtn';
 import { useState } from "react";
-import { useProductContext } from '../../context/ProductContext';
+import { useCartContext } from '../../context/CartContext';
 import { useCustomerContext } from '../../context/CustomerContext';
 
 function ShoppingCartIconBtn() {
 
   const [open, setOpen] = useState(false);
-  const { cartQuantity } = useProductContext();
+  const { cartQuantity } = useCartContext();
   const { loggedInCustomer } = useCustomerContext();
 
   const showShoppingCartDrawer = () => {

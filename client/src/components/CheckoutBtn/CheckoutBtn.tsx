@@ -1,10 +1,10 @@
 import { Button  } from "antd";
-import { useProductContext } from '../../context/ProductContext';
+import { useCartContext } from '../../context/CartContext';
 
 
 function CheckoutBtn() {
 
-  const { handlePayment } = useProductContext();
+  const { handlePayment } = useCartContext();
 
   return (
     <div>

@@ -1,9 +1,9 @@
-import { useProductContext } from '../../context/ProductContext';
+import { useCartContext } from '../../context/CartContext';
 import "./ShoppingCartContent.css"
 
 function ShoppingCartContent() {
 
-const { cartProducts } = useProductContext();
+const { cartProducts } = useCartContext();
 
   return (
     <>

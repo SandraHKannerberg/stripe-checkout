@@ -1,10 +1,20 @@
 import Home from "../src/pages/Home"
 import "./App.css"
+import { ProductProvider } from './context/ProductContext.tsx';
+import { CustomerProvider } from './context/CustomerContext.tsx';
+import { CartProvider } from './context/CartContext.tsx';
+
 
 function App() {
   return (
     <>
-      <Home></Home>
+    <CartProvider>
+      <CustomerProvider>
+        <ProductProvider>
+          <Home></Home>
+        </ProductProvider>
+      </CustomerProvider>
+    </CartProvider>
     </>
   )
 }

@@ -1,10 +1,12 @@
 import { useProductContext } from '../../context/ProductContext';
+import { useCartContext } from '../../context/CartContext';
 import { Row, Col, Space, Card, Button  } from 'antd';
 import "./ProductList.css"
 
 function ProductList() {
  
-  const { products, addToCart } = useProductContext();
+  const { products } = useProductContext();
+  const { addToCart } = useCartContext();
 
   const gridStyle: React.CSSProperties = {
     width: "100%",
