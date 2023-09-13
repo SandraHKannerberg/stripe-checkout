@@ -11,12 +11,30 @@ async function registerNewCustomer(req, res) {
 
     const { username, password, email } = req.body;
 
+    //ARRAY OF CUSTOMERS IN JSON-FILE
+    let customerData = [];
+
+    //GET THE JSON-FILE
+    try {
+        const fileData = fs.readFileSync(filePath, "utf8");
+        customerData = JSON.parse(fileData);
+        } catch (err) {
+            console.log(err)
+        }
+    
+    //CHECK IF THE CUSTOMER ALREADY EXISTS
+        const existingCustomer = customerData.find((customer) => customer.username === username || customer.email === email)
+
+        if(existingCustomer) {
+            return res.status(409).json({Message: "Error - The customer already exists"})
+        }
+
     //REGISTER THE NEW CUSTOMER IN STRIPE
     try {
         const customer = await stripe.customers.create({
             email: email,
             name: username
-        })
+        }) //ska jag ha med ERROR HANDLER FROM STRIPE?????
 
         //HASH THE PASSWORD
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -29,22 +47,6 @@ async function registerNewCustomer(req, res) {
             password: hashedPassword,
         };
 
-        //ARRAY OF CUSTOMERS
-        let customerData = [];
-
-        try {
-            const fileData = fs.readFileSync(filePath, "utf8");
-            customerData = JSON.parse(fileData);
-        } catch (err) {
-            console.log(err)
-        }
-
-        //CHECK IF THE CUSTOMER ALREADY EXISTS
-        const existingCustomer = customerData.find((customer) => customer.username === username || customer.email === email)
-        if(existingCustomer) {
-            return res.status(409).json({Message: "Error - The customer already exists"})
-        }
-
         //IF THE CUSTOMER DOESN'T EXISTS PUSH TO THE ARRAY AND UPDATE THE CUSTOMERS JSON-FILE
         customerData.push(newCustomer);
         fs.writeFileSync(filePath, JSON.stringify(customerData, null, 2));
@@ -52,19 +54,8 @@ async function registerNewCustomer(req, res) {
             } catch (error) {
         res.status(500).json({ error: error.message});
         }
-    }
-
-
-async function getAllCustomers(req, res) {
-    try {
-        const customers = await stripe.customers.list({
-            limit: 3,
-        });
-        res.status(200).json(customers);
-    } catch (error) {
-        res.status(500).json({ error: error.message});
-    }
 }
+
 
 async function customerLogIn (req, res) {
     const { username, password } = req.body;
@@ -94,6 +85,7 @@ async function customerLogIn (req, res) {
     }
 }
 
+
 async function customerLogOut (req, res) {
     if (!req.session.id) {
       return res.status(400).json("Cannot logout when you are not logged in");
@@ -113,7 +105,6 @@ async function customerLogOut (req, res) {
 
 module.exports = {
     registerNewCustomer,
-    getAllCustomers, 
     customerLogIn,
     customerLogOut,
     authorize
