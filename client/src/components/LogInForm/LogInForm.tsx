@@ -55,12 +55,12 @@ function LogInForm() {
         <Form.Item>
           <Button
             type="primary"
-            className="login-form-button"
+            className="login--form--button"
             htmlType="submit"
             block
-            style={{"backgroundColor":" #3C6255"}}
+            style={{"backgroundColor":" #3C6255", "borderRadius": "0"}}
           >
-            Logga in
+            <p className="btn--text">Logga in</p>
           </Button>
         </Form.Item>
       </Form>

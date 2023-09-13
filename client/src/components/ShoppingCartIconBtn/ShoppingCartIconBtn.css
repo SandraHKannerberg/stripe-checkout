@@ -6,3 +6,13 @@
     justify-content: center;
     align-items: center;
 }
+
+.shopping--btn:hover{
+    background-color: inherit !important;
+    transform: scale(1.1);
+}
+
+.text--cart{
+    text-align: center;
+    line-height: 1.3rem;
+}

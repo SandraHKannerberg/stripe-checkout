@@ -84,10 +84,10 @@ function RegisterForm() {
             type="primary"
             className="register-form-button"
             block
-            style={{"backgroundColor":" #3C6255"}}
+            style={{"backgroundColor":" #3C6255", "borderRadius":"0",}}
             onClick={handleRegisterSubmit}
             >
-            Slutför
+            <p className="btn--text">Slutför</p>
             </Button>
         </Form.Item>
     </Form>

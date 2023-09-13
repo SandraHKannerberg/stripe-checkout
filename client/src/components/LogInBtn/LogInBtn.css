@@ -6,6 +6,10 @@
     align-items: center;
     padding-left: 0;
 }
+.log--btn:hover{
+    background-color: inherit !important;
+    transform: scale(1.1);
+}
 
 .logged--in--container{
     display: flex;

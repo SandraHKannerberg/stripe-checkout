@@ -1,4 +1,4 @@
-import { Button, Drawer, Badge } from 'antd';
+import { Button, Drawer, Badge, Divider } from 'antd';
 import { ShoppingOutlined, ShoppingFilled } from '@ant-design/icons';
 import './ShoppingCartIconBtn.css'
 import ShoppingCartContent from '../ShoppingCartContent/ShoppingCartContent';
@@ -45,11 +45,17 @@ function ShoppingCartIconBtn() {
         <CheckoutBtn></CheckoutBtn>
       }
 
+      {cartQuantity === 0 &&
+        <p>Du har inte börjat shoppa än</p>
+      }
+
       {!loggedInCustomer &&
         <>
-        <p>
+        <br />
+        <Divider></Divider>
+        <p className="text--cart">
           Vill du slutföra ditt köp? <br />
-          Vänligen logga in eller registrera dig.
+          Vänligen logga in som registrerad kund eller registrera dig om du är ny kund hos oss.
         </p>
         <LogInBtn></LogInBtn>
         </>

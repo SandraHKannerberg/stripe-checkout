@@ -3,3 +3,8 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.btn--text{
+    text-transform: uppercase;
+    font-weight: 500;
+}

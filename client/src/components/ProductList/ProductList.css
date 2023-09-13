@@ -3,9 +3,10 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
     border-radius: 0;
-    width: 80%
+    width: 80%;
+    font-size: 13px;
 }
-.ant-btn-block:hover{
+.add--to--cart--btn:hover{
     background-color: #A6BB8D !important;
 }
 
