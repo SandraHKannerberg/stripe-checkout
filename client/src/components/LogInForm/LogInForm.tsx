@@ -1,5 +1,5 @@
-import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Divider } from "antd";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Form, Input } from "antd";
 import {
   useCustomerContext,
   CustomerType,
@@ -9,7 +9,7 @@ function LogInForm() {
 
   const { handleLogin } = useCustomerContext();
 
-  const onFinish = async (values: any) => {
+  const handleLoginFinish = async (values: any) => {
   
     const customer: CustomerType = {
           username: values.username,
@@ -28,7 +28,7 @@ function LogInForm() {
         name="login"
         className="login-form"
         initialValues={{ remember: true }}
-        onFinish={onFinish} 
+        onFinish={handleLoginFinish} 
       >
         <Form.Item
           name="username"
@@ -64,64 +64,6 @@ function LogInForm() {
           </Button>
         </Form.Item>
       </Form>
-
-      <br />
-      <Divider />
-      <br />
-      <br />
-
-    <p>Ny kund? Vänligen registrera dig här:</p>
-    <br />
-    <Form
-      name="register"
-      className="login-form"
-      initialValues={{ remember: true }}
-      onFinish={(values) => onFinish(values)}
-    >
-    <Form.Item
-      name="username"
-      rules={[
-      { required: true, message: "Du måste välja ett användarnamn" },
-      ]}
-    >
-      <Input
-      prefix={<UserOutlined className="site-form-item-icon" />}
-      placeholder="Välj ett användarnamn"
-      />
-    </Form.Item>
-
-    <Form.Item
-    name="email"
-    rules={[{ required: true, message: "Du måste ange en e-mail" }]}
-    >
-      <Input
-      prefix={<MailOutlined className="site-form-item-icon" />}
-      placeholder="Din e-mailadress"
-      />
-  </Form.Item>
-
-  <Form.Item
-    name="password"
-    rules={[{ required: true, message: "Du måste välja ett lösenord" }]}
-  >
-    <Input
-      prefix={<LockOutlined className="site-form-item-icon" />}
-      type="password"
-      placeholder="Välj ett lösenord"
-    />
-  </Form.Item>
-
-  <Form.Item>
-    <Button
-      type="primary"
-      className="login-form-button"
-      block
-      style={{"backgroundColor":" #3C6255"}}
-    >
-      Slutför
-    </Button>
-  </Form.Item>
-  </Form>
       </>
     );
   }

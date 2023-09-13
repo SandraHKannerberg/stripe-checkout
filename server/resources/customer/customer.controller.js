@@ -24,9 +24,9 @@ async function registerNewCustomer(req, res) {
         //NEW CUSTOMER OBJECT
         const newCustomer = {
             id: customer.id,
+            email: customer.email,
             username,
             password: hashedPassword,
-            email: customer.email,
         };
 
         //ARRAY OF CUSTOMERS

@@ -1,4 +1,4 @@
-import { Button, Drawer } from "antd";
+import { Button, Drawer, Divider } from "antd";
 import { UserOutlined } from '@ant-design/icons';
 import { useState } from "react";
 import LogInForm from "../LogInForm/LogInForm";
@@ -6,6 +6,7 @@ import "./LogInBtn.css";
 import {
   useCustomerContext,
 } from "../../context/CustomerContext";
+import RegisterForm from "../RegisterForm/RegisterForm";
 
 function LogInBtn() {
 
@@ -52,6 +53,8 @@ function LogInBtn() {
 
     <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open} style={{"backgroundColor":"whitesmoke", "color":" #3C6255"}}>
       <LogInForm></LogInForm>
+      <Divider/>
+      <RegisterForm></RegisterForm>
     </Drawer>
     </>
   }
