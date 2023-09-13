@@ -4,7 +4,7 @@ import './ShoppingCartIconBtn.css'
 import ShoppingCartContent from '../ShoppingCartContent/ShoppingCartContent';
 import CheckoutBtn from '../CheckoutBtn/CheckoutBtn';
 import LogInBtn from '../LogInBtn/LogInBtn';
-import Coupon from '../CheckoutBtn/Coupon/Coupon';
+import Coupon from '../Coupon/Coupon';
 import { useState } from "react";
 import { useCartContext } from '../../context/CartContext';
 import { useCustomerContext } from '../../context/CustomerContext';

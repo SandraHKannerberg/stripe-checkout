@@ -6,6 +6,7 @@ const CLIENT_URL = 'http://localhost:5173'
 const createCheckOutSession = async (req,res) => {
 
     try {
+        //PAYMENT BEGINS - START A SESSION
         const session = await stripe.checkout.sessions.create({
 
             line_items: req.body.items.map((item) => {
@@ -24,25 +25,26 @@ const createCheckOutSession = async (req,res) => {
             currency: 'sek'
         });
 
-
+        //SEND BACK THE URL AND SESSION ID
         res.status(200).json({url: session.url, sessionId: session.id})
-        console.log("SESSION-ID: ", session.id)
-
+        
     } catch (error) {
         console.log(error.message)
         res.status(400).json("ERROR: Something went wrong with the checkout")
     }
 }
 
-//VERIFY PAYMENT
-const verifyPayment = async (res, req) => {
+//VERIFY SESSION
+const verifySession = async (req, res) => {
 
+  console.log("SESSION-ID: ", req.body.sessionId)
 
+  res.status(200).json({verified: true})
 
 }
 
 
 module.exports = {
     createCheckOutSession, 
-    verifyPayment
+    verifySession
   };

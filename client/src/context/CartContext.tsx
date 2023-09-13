@@ -120,8 +120,9 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
             return
         }
 
+        //WE GET THE URL AND SESSION ID. SAVE SESSION ID  IN LOCALSTORAGE
+        //WE NEED THE SESSION ID TO BE ABLE TO CALL ON THE VERIFY SESSION FUNCTION
         const { url, sessionId } = await response.json()
-        console.log(sessionId)
         localStorage.setItem("session-id", sessionId)
         window.location = url;
     }

@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 const { productRouter } = require("./resources/product/product.router");
 const { customerRouter } = require("./resources/customer/customer.router");
 const { checkOutRouter } = require("./resources/checkout/checkout.router")

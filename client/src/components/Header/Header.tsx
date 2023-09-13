@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import Coupon from "../CheckoutBtn/Coupon/Coupon";
+import Coupon from "../Coupon/Coupon";
 import NavBar from "../NavBar/NavBar";
 import Logotype from "../Logotype/Logotype";
 import "./Header.css"
