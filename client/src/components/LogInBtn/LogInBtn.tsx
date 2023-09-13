@@ -31,7 +31,8 @@ function LogInBtn() {
     <div className="logged--in--container">
     <p className="usericon"><UserOutlined /></p>
       <div className="logged--in--box">
-        <p className="logged--in--box--text">{loggedInCustomer.username}</p> 
+        <p className="logged--in--box--text">{loggedInCustomer.username}</p>
+        <p className="link--my--pages">Mina Sidor</p>  
         <Button className="log--btn" type="text" onClick={handleLogout}>
           Logga Ut
         </Button>
