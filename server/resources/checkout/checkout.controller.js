@@ -1,5 +1,10 @@
 const { initStripe } = require('../../stripe');
 const stripe = initStripe();
+const fs = require("fs");
+const path = require("path");
+const filePath = path.join("data", "orders.json")
+
+
 const CLIENT_URL = 'http://localhost:5173'
 
 //SEND CART TO STRIPE
@@ -77,10 +82,21 @@ const verifySession = async (req, res) => {
     };
 
     //logiken att spara till json-filen skrivs här
-
     console.log("ORDER", order)
     console.log("SESSION-ID: ", req.body.sessionId)
     res.status(200).json({verified: true})
+
+
+    let ordersArray = []
+
+    try {
+      ordersArray.push(order);
+      fs.writeFileSync(filePath, JSON.stringify(ordersArray, null, 2));
+      res.json({order})
+
+    } catch (error) {
+    res.status(500).json({ error: error.message});
+    }
 
   } catch (error) {
     console.error(error.message)

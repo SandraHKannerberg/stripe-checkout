@@ -1,0 +1,23 @@
+[
+  {
+    "created": 1694637443,
+    "customer": "Kajsa",
+    "products": [
+      {
+        "product": "Poster Sunflower Evening",
+        "price": 450,
+        "currency": "sek",
+        "quantity": 1,
+        "totalPricePerProduct": 450
+      },
+      {
+        "product": "Poster Sunflower Bouquet",
+        "price": 150,
+        "currency": "sek",
+        "quantity": 2,
+        "totalPricePerProduct": 300
+      }
+    ],
+    "totalOrderPrice": 750
+  }
+]
