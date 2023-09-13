@@ -7,6 +7,12 @@ export interface Customer {
     password: string;
 };
 
+export type newCustomerType = {
+  email: string;
+  username: string;
+  password: string;
+};
+
 export type CustomerType = {
     username: string;
     password: string;
@@ -14,14 +20,36 @@ export type CustomerType = {
 
 interface ICustomerContext {
     loggedInCustomer?: Customer | null;
+    handleRegisterNewCustomer: (newCustomer: newCustomerType) => Promise<void>;
     handleLogin: (customer: CustomerType) => Promise<void>;
     handleLogout: () => {},
+    username: string;
+    setUsername: React.Dispatch<React.SetStateAction<string>>;
+    email: string;
+    setEmail: React.Dispatch<React.SetStateAction<string>>;
+    password: string;
+    setPassword: React.Dispatch<React.SetStateAction<string>>;
+    successInfo: string;
+    setSuccessInfo: React.Dispatch<React.SetStateAction<string>>;
+    errorInfo: string;
+    setErrorInfo: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const defaultValues = {
     loggedInCustomer: null,
+    handleRegisterNewCustomer: async () => {},
     handleLogin: async () => {},
     handleLogout: async () => {},
+    username: "",
+    setUsername: () => {},
+    email: "",
+    setEmail: () => {},
+    password: "",
+    setPassword: () => {},
+    successInfo: "",
+    setSuccessInfo: () => {},
+    errorInfo: "",
+    setErrorInfo: () => {},
 }
 
 export const CustomerContext = createContext<ICustomerContext>(defaultValues);
@@ -32,6 +60,12 @@ export const useCustomerContext = () => useContext(CustomerContext);
 export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
   const [loggedInCustomer, setLoggedInCustomer] = useState<Customer | null>(null);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [successInfo, setSuccessInfo] = useState("");
+  const [errorInfo, setErrorInfo] = useState("");
+
 
   //CHECKAR OM DET FINNS NÅGON INLOGGAD KUND
   useEffect(() => {
@@ -50,6 +84,39 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
     };
     authorization();
   }, []);
+
+    //HANTERAR REGISTRERING AV NY KUND
+    const handleRegisterNewCustomer = async (newCustomer: newCustomerType) => {
+      if (newCustomer) {
+  
+        try {
+          const response = await fetch("api/customers/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newCustomer),
+          });
+          const data = await response.json();
+  
+          if (response.status === 200) {
+   
+            console.log("NEW CUSTOMER", data);
+            //VAD VILL VI GÖRA VID EN LYCKAD REGISTRERING?
+            setSuccessInfo("Du är nu registrerad som kund hos oss. Varmt välkommen att logga in.")
+          } 
+
+          if(response.status === 409) {
+
+            console.log("ERROR", data);
+            setErrorInfo("Denna kund är redan registrerad")
+          }
+        } catch (err) {
+          console.log("ERROR-MESSAGE:", err);
+        }
+      }
+    };
+  
 
 
   //HANTERAR LOGGA IN
@@ -100,7 +167,17 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
   return (
     <CustomerContext.Provider
-      value={{ loggedInCustomer, handleLogin, handleLogout }}
+      value={{ 
+        loggedInCustomer, 
+        handleRegisterNewCustomer, 
+        handleLogin, 
+        handleLogout, 
+        username, setUsername, 
+        email, setEmail, 
+        password, setPassword, 
+        successInfo, setSuccessInfo,
+        errorInfo, setErrorInfo 
+      }}
     >
       {children}
     </CustomerContext.Provider>
