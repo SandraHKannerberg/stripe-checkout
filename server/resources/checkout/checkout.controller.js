@@ -37,10 +37,54 @@ const createCheckOutSession = async (req,res) => {
 //VERIFY SESSION
 const verifySession = async (req, res) => {
 
-  console.log("SESSION-ID: ", req.body.sessionId)
+  try {
 
-  res.status(200).json({verified: true})
+    //RETRIEVE SESSION FROM STRIPE
+    const session = await stripe.checkout.sessions.retrieve(req.body.sessionId);
 
+    //CHECK PAYMENT STATUS
+    if(session.payment_status !== "paid") {
+      return res.status(400).json({ verified: false});
+    }
+
+    //SUCCESSFULL PAYMENT
+    const line_items = await stripe.checkout.sessions.listLineItems(req.body.sessionId);
+    
+    //CREATE ORDER
+    const order = {
+      created: session.created,
+      customer: session.customer_details.name,
+      products: line_items.data.map(item => {
+
+        const price = item.price.unit_amount / 100;
+        const quantity = item.quantity;
+        const totalPricePerProduct = price * quantity;
+
+        return {
+          product: item.description, //product title
+          price,
+          currency: item.price.currency,
+          quantity,
+          totalPricePerProduct,
+        };
+
+      }),
+      totalOrderPrice: line_items.data.reduce((acc, item) => {
+        const price = item.price.unit_amount / 100;
+        const quantity = item.quantity;
+        return acc + price * quantity;
+      }, 0),
+    };
+
+    //logiken att spara till json-filen skrivs här
+
+    console.log("ORDER", order)
+    console.log("SESSION-ID: ", req.body.sessionId)
+    res.status(200).json({verified: true})
+
+  } catch (error) {
+    console.error(error.message)
+  }
 }
 
 

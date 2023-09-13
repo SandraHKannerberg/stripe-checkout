@@ -1,6 +1,6 @@
 import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
-import { Col, Row } from "antd";
+import { Col, Row, Button } from "antd";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -18,10 +18,10 @@ function confirmation() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(sessionId)
+        body: JSON.stringify({sessionId})
         })
 
-        const {verified} = await response.json()
+        const { verified } = await response.json()
 
         if (verified) {
           setIsPaymentverified(true)
@@ -41,7 +41,7 @@ function confirmation() {
   return (
     <Row style={{"minHeight" : "100vh", "backgroundColor":"whitesmoke"}} >
         <Col span={24}><Header></Header></Col>
-        <Col style={{"minHeight" : "70vh", "textAlign":"center"}} span={24}>
+        <Col style={{"minHeight" : "70vh", "textAlign":"center", "marginTop":"1rem"}} span={24}>
 
         {isPaymentVerified ? (
           <h3>Tack för ditt köp!</h3>
@@ -50,7 +50,7 @@ function confirmation() {
         )}
           
           <NavLink to="/"style={{ textDecoration: "none" }}>
-            <p>TILLBAKA TILL BUTIKEN</p>
+            <Button style={{"backgroundColor":"#3C6255", "marginTop":"1.5rem", "borderRadius":"0", "color":"whitesmoke"}}>TILLBAKA TILL BUTIKEN</Button>
           </NavLink>
 
         </Col>
