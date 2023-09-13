@@ -16,5 +16,11 @@
     "email": "kajsasmail@mail.se",
     "username": "Kajsa",
     "password": "$2b$10$41AlHd5McqNImDCaR3tCsOzgmOw.Cgcq9OyqF5L/C20QGgKJdW6Dm"
+  },
+  {
+    "id": "cus_Od4sWZWXTmR09Z",
+    "email": "stinasmail@mail.se",
+    "username": "Stina",
+    "password": "$2b$10$8SZBbuGLvemDbaYjFJZjVOP.llw29ripIRCXRHlThkvDyovKJKE3S"
   }
 ]

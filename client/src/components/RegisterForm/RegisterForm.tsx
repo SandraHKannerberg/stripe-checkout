@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Alert } from "antd";
 import {
@@ -7,7 +8,8 @@ import {
 
 function RegisterForm() {
 
-  const { handleRegisterNewCustomer, username, setUsername, email, setEmail, password, setPassword, successInfo, errorInfo } = useCustomerContext();
+  const { handleRegisterNewCustomer, username, setUsername, email, setEmail, password, setPassword, alertInfo } = useCustomerContext();
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleRegisterSubmit = async () => {
 
@@ -18,14 +20,23 @@ function RegisterForm() {
     };
     
     await handleRegisterNewCustomer(newCustomer)
+    setShowAlert(true)
   };
 
   return (
     <>
     <p>Ny kund? Vänligen registrera dig här:</p>
-    
+
     <br />
-    <Alert message={errorInfo} type="error" showIcon />
+    {showAlert && (
+        <Alert
+          message={alertInfo}
+          type="info"
+          showIcon
+          closable
+          onClose={() => setShowAlert(false)}
+        />
+    )}
     <br />
 
     <Form
@@ -79,8 +90,6 @@ function RegisterForm() {
             Slutför
             </Button>
         </Form.Item>
-
-        <Alert message={successInfo} type="success" />
     </Form>
     </>
     );

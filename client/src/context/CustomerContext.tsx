@@ -29,8 +29,8 @@ interface ICustomerContext {
     setEmail: React.Dispatch<React.SetStateAction<string>>;
     password: string;
     setPassword: React.Dispatch<React.SetStateAction<string>>;
-    successInfo: string;
-    setSuccessInfo: React.Dispatch<React.SetStateAction<string>>;
+    alertInfo: string;
+    setAlertInfo: React.Dispatch<React.SetStateAction<string>>;
     errorInfo: string;
     setErrorInfo: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -46,8 +46,8 @@ const defaultValues = {
     setEmail: () => {},
     password: "",
     setPassword: () => {},
-    successInfo: "",
-    setSuccessInfo: () => {},
+    alertInfo: "",
+    setAlertInfo: () => {},
     errorInfo: "",
     setErrorInfo: () => {},
 }
@@ -63,7 +63,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [successInfo, setSuccessInfo] = useState("");
+  const [alertInfo, setAlertInfo] = useState("");
   const [errorInfo, setErrorInfo] = useState("");
 
 
@@ -103,13 +103,13 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
    
             console.log("NEW CUSTOMER", data);
             //VAD VILL VI GÖRA VID EN LYCKAD REGISTRERING?
-            setSuccessInfo("Du är nu registrerad som kund hos oss. Varmt välkommen att logga in.")
+            setAlertInfo("Du är nu registrerad som kund hos oss. Varmt välkommen att logga in.")
           } 
 
           if(response.status === 409) {
 
             console.log("ERROR", data);
-            setErrorInfo("Denna kund är redan registrerad")
+            setAlertInfo("Denna kund är redan registrerad")
           }
         } catch (err) {
           console.log("ERROR-MESSAGE:", err);
@@ -175,7 +175,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
         username, setUsername, 
         email, setEmail, 
         password, setPassword, 
-        successInfo, setSuccessInfo,
+        alertInfo, setAlertInfo,
         errorInfo, setErrorInfo 
       }}
     >
