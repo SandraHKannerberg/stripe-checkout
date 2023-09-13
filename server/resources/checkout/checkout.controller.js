@@ -2,9 +2,8 @@ const { initStripe } = require('../../stripe');
 const stripe = initStripe();
 const CLIENT_URL = 'http://localhost:5173'
 
+//SEND CART TO STRIPE
 const createCheckOutSession = async (req,res) => {
-
-  console.log(req.body)
 
     try {
         const session = await stripe.checkout.sessions.create({
@@ -33,8 +32,10 @@ const createCheckOutSession = async (req,res) => {
         console.log(error.message)
         res.status(400).json("ERROR: Something went wrong with the checkout")
     }
-
 }
+
+//VERIFY PAYMENT
+
 
 module.exports = {
     createCheckOutSession

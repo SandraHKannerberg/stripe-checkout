@@ -3,12 +3,7 @@ GET http://localhost:3000/api/products
 
 ###
 
-//GET ALL CUSTOMERS
-GET http://localhost:3000/api/customers
-
-###
-
-//NEW CUSTOMER
+//REGISTRATION - NEW CUSTOMER
 POST http://localhost:3000/api/customers/register
 Content-Type: application/json
 
