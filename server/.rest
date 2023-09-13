@@ -3,6 +3,11 @@ GET http://localhost:3000/api/products
 
 ###
 
+//GET ORDERS
+GET http://localhost:3000/api/orders
+
+###
+
 //REGISTRATION - NEW CUSTOMER
 POST http://localhost:3000/api/customers/register
 Content-Type: application/json

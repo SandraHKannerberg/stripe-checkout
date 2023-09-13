@@ -103,8 +103,25 @@ const verifySession = async (req, res) => {
   }
 }
 
+const getOrders = async (req, res) => {
+
+  try {
+    const fileData = fs.readFileSync(filePath, "utf8");
+    const orders = JSON.parse(fileData)
+
+    console.log(orders);
+    
+    res.json(orders);
+    return;
+  } catch (error) {
+    console.error(error);
+    return res.status(404).json("Something went wrong");
+  }  
+};
+
 
 module.exports = {
     createCheckOutSession, 
-    verifySession
+    verifySession,
+    getOrders
   };
