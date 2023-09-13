@@ -3,7 +3,7 @@ const stripe = initStripe();
 const bcrypt = require("bcrypt");
 const fs = require("fs");
 const path = require("path");
-const filePath = path.join("data", "customer.json")
+const filePath = path.join("data", "customers.json")
 
 
 //REGISTER NEW CUSTOMER
@@ -12,18 +12,18 @@ async function registerNewCustomer(req, res) {
     const { username, password, email } = req.body;
 
     //ARRAY OF CUSTOMERS IN JSON-FILE
-    let customerData = [];
+    let customersArray = [];
 
     //GET THE JSON-FILE
     try {
         const fileData = fs.readFileSync(filePath, "utf8");
-        customerData = JSON.parse(fileData);
+        customersArray = JSON.parse(fileData);
         } catch (err) {
             console.log(err)
         }
     
     //CHECK IF THE CUSTOMER ALREADY EXISTS
-        const existingCustomer = customerData.find((customer) => customer.username === username || customer.email === email)
+        const existingCustomer = customersArray.find((customer) => customer.username === username || customer.email === email)
 
         if(existingCustomer) {
             return res.status(409).json({Message: "Error - The customer already exists"})
@@ -31,7 +31,7 @@ async function registerNewCustomer(req, res) {
 
     //REGISTER THE NEW CUSTOMER IN STRIPE
     try {
-        const customer = await stripe.customers.create({
+        const customerStripe = await stripe.customers.create({
             email: email,
             name: username
         }) //ska jag ha med ERROR HANDLER FROM STRIPE?????
@@ -41,15 +41,15 @@ async function registerNewCustomer(req, res) {
 
         //NEW CUSTOMER OBJECT
         const newCustomer = {
-            id: customer.id,
-            email: customer.email,
+            id: customerStripe.id,
+            email: customerStripe.email,
             username,
             password: hashedPassword,
         };
 
         //IF THE CUSTOMER DOESN'T EXISTS PUSH TO THE ARRAY AND UPDATE THE CUSTOMERS JSON-FILE
-        customerData.push(newCustomer);
-        fs.writeFileSync(filePath, JSON.stringify(customerData, null, 2));
+        customersArray.push(newCustomer);
+        fs.writeFileSync(filePath, JSON.stringify(customersArray, null, 2));
         res.json({newCustomer})
             } catch (error) {
         res.status(500).json({ error: error.message});
@@ -62,9 +62,9 @@ async function customerLogIn (req, res) {
 
     try{
         const fileData = fs.readFileSync(filePath, "utf8");
-        const customerData = JSON.parse(fileData);
+        const customersArray = JSON.parse(fileData);
 
-        const customer = customerData.find((customer) => customer.username === username)
+        const customer = customersArray.find((customer) => customer.username === username)
 
         if(!customer) {
             return res.status(404).json({Message: "Error - Customer not found"});

@@ -35,8 +35,12 @@ const createCheckOutSession = async (req,res) => {
 }
 
 //VERIFY PAYMENT
+const verifyPayment = async (res, req) => {
+
+}
 
 
 module.exports = {
-    createCheckOutSession
+    createCheckOutSession, 
+    verifyPayment
   };
