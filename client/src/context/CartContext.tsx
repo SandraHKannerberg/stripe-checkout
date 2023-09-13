@@ -44,7 +44,7 @@ export const useCartContext = () => useContext(CartContext);
   
 export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
 
-    const [cartProducts, setCartProducts] = useState<CartItem[]>([]);
+  const [cartProducts, setCartProducts] = useState<CartItem[]>([]);
 
     //HANDLE THE QUANTITY OF EVERY CARTITEM IN THE SHOPPINGCART
     function getProductQuantity(id : string) {
