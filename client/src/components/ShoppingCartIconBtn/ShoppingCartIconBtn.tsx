@@ -1,9 +1,10 @@
-import { Button, Drawer, Badge } from 'antd';
+import { Button, Drawer, Badge, Divider, Row } from 'antd';
 import { ShoppingOutlined, ShoppingFilled } from '@ant-design/icons';
 import './ShoppingCartIconBtn.css'
 import ShoppingCartContent from '../ShoppingCartContent/ShoppingCartContent';
 import CheckoutBtn from '../CheckoutBtn/CheckoutBtn';
 import LogInBtn from '../LogInBtn/LogInBtn';
+import Coupon from '../CheckoutBtn/Coupon/Coupon';
 import { useState } from "react";
 import { useCartContext } from '../../context/CartContext';
 import { useCustomerContext } from '../../context/CustomerContext';
@@ -42,14 +43,25 @@ function ShoppingCartIconBtn() {
       <ShoppingCartContent></ShoppingCartContent>
       
       {loggedInCustomer && cartQuantity !== 0 &&
+      <>
         <CheckoutBtn></CheckoutBtn>
+        <Row justify="center" align="middle" style={{"backgroundColor" : "black", "height" : "5rem", "marginTop":"0.5rem"}}>
+          <Coupon></Coupon>
+        </Row>
+      </>
+      }
+
+      {cartQuantity === 0 &&
+        <p>Du har inte börjat shoppa än</p>
       }
 
       {!loggedInCustomer &&
         <>
-        <p>
+        <br />
+        <Divider></Divider>
+        <p className="text--cart">
           Vill du slutföra ditt köp? <br />
-          Vänligen logga in eller registrera dig.
+          Vänligen logga in som registrerad kund eller registrera dig om du är ny kund hos oss.
         </p>
         <LogInBtn></LogInBtn>
         </>
