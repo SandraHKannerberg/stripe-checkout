@@ -121,6 +121,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
         }
 
         const { url, sessionId } = await response.json()
+        console.log(sessionId)
         localStorage.setItem("session-id", sessionId)
         window.location = url;
     }

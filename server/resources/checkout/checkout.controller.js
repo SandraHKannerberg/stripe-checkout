@@ -25,8 +25,8 @@ const createCheckOutSession = async (req,res) => {
         });
 
 
-        res.status(200).json({url: session.url})
-        console.log(session)
+        res.status(200).json({url: session.url, sessionId: session.id})
+        console.log("SESSION-ID: ", session.id)
 
     } catch (error) {
         console.log(error.message)
@@ -36,6 +36,8 @@ const createCheckOutSession = async (req,res) => {
 
 //VERIFY PAYMENT
 const verifyPayment = async (res, req) => {
+
+
 
 }
 

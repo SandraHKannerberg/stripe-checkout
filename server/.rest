@@ -39,6 +39,6 @@ POST http://localhost:3000/api/create-checkout-session
 Content-Type: application/json
 
 {
-  "price": "price_1NmxcIDbqBxej6tjDoRLPLRo",
+  "product": "price_1NmxcIDbqBxej6tjDoRLPLRo",
   "quantity": "1",
 }
