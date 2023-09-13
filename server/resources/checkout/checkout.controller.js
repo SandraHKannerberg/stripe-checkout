@@ -2,25 +2,39 @@ const { initStripe } = require('../../stripe');
 const stripe = initStripe();
 const CLIENT_URL = 'http://localhost:5173'
 
-// const createCheckOutSession = async (req,res) => {
-//     try {
-//         const session = await stripe.checkout.sessions.create({
-//             line_items: [
-//                 {price: 'price_1NmxufDbqBxej6tjFCbI8GcO', quantity: 2},
-//                 {price: 'price_1NmxqfDbqBxej6tjzKTHgBlx', quantity: 2},
-//             ],
-//             mode: 'payment',
-//             success_url: `${CLIENT_URL}/confirmation`,
-//             cancel_url: CLIENT_URL, //Avbryter betalningen
-//         })
+const createCheckOutSession = async (req,res) => {
 
-//         res.status(200).json({url: session.url})
+  console.log(req.body)
 
-//     } catch (error) {
-//         console.log(error.message)
-//         res.status(400).json('Det gick inte bra...')
-//     }
-// }
+    try {
+        const session = await stripe.checkout.sessions.create({
+
+            line_items: req.body.items.map((item) => {
+              return {
+                price: item.product,
+                quantity: item.quantity,
+              };
+            }),
+
+            customer: req.session.id,
+            mode: 'payment',
+            success_url: `${CLIENT_URL}/confirmation`,
+            cancel_url: CLIENT_URL,
+            payment_method_types: ['card'],
+            allow_promotion_codes: true,
+            currency: 'sek'
+        });
+
+
+        res.status(200).json({url: session.url})
+        console.log(session)
+
+    } catch (error) {
+        console.log(error.message)
+        res.status(400).json("ERROR: Something went wrong with the checkout")
+    }
+
+}
 
 module.exports = {
     createCheckOutSession

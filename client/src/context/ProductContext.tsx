@@ -9,7 +9,7 @@ import {
   } from "react";
 
 
-interface Product {
+export interface Product {
     id: string,
     name: string,
     price: Price,
@@ -19,29 +19,17 @@ interface Product {
   }
 
 
-interface Price {
+export interface Price {
     id: string,
     unit_amount: string,
     currency: string,
 }
 
-interface CartItem {
-    id: string, //Just for Stripe
-    quantity: number, //Stripe and cart UI
-    name: string, //Cart UI
-    price: Price, //Cart UI
-}
 
-
-interface IProductContext {
+export interface IProductContext {
     products: Product[];
     setProducts: Dispatch<SetStateAction<Product[]>>;
     fetchProducts:  () => void,
-    cartProducts: CartItem[];
-    setCartProducts: Dispatch<SetStateAction<CartItem[]>>;
-    addToCart: (id: string, name: string, price: Price) => void;
-    getProductQuantity: (id: string) => void;
-    cartQuantity: number,
   }
   
 
@@ -54,6 +42,8 @@ const defaultValues = {
     addToCart: () => '',
     getProductQuantity: () => {}, 
     cartQuantity: 0,
+    handlePayment: () => {},
+
 };
   
 export const ProductContext = createContext<IProductContext>(defaultValues);
@@ -64,7 +54,6 @@ export const useProductContext = () => useContext(ProductContext);
 export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
 
     const [products, setProducts] = useState<Product[]>([]);
-    const [cartProducts, setCartProducts] = useState<CartItem[]>([]);
 
     const fetchProducts = async () => {
         try {
@@ -97,70 +86,12 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
       }, []);
 
 
-    //HANDLE THE QUANTITY OF EVERY CARTITEM IN THE SHOPPINGCART
-    function getProductQuantity(id : string) {
-
-        const quantity = cartProducts.find(product => product.id === id)?.quantity //Check the quantity if the product are in the cart
-
-        if (quantity === undefined) {
-            return 0;
-        }
-
-        return quantity
-    }
-
-    //HANDLE ADD TO CART
-    function addToCart(
-      id: string,
-      name: string,
-      price: Price
-      ) {
-        
-        const quantity = getProductQuantity(id); //Get the quantity
-
-        if (quantity === 0) {
-        //Product is not in cart
-        setCartProducts(
-            [
-                ...cartProducts,
-                {
-                    id: id,
-                    name: name,
-                    price: price,
-                    quantity: 1
-                }
-            ]
-        )
-        } else {
-            //Product is already in cart
-            setCartProducts(
-                cartProducts.map(
-                    product => 
-                    product.id === id 
-                    ? {...product, quantity: product.quantity + 1}  //if statement is true
-                    : product                                       //if statement is false
-                )
-            )
-        }
-    }
-
-    const cartQuantity = cartProducts.reduce(
-        (quantity, item) => item.quantity + quantity,
-        0
-      );
-
-
     return (
       <ProductContext.Provider
         value={{
             products,
             setProducts,
             fetchProducts,
-            cartProducts,
-            setCartProducts,
-            addToCart,
-            getProductQuantity,
-            cartQuantity
         }}
       >
         {children}
