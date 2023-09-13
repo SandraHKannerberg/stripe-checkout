@@ -6,12 +6,12 @@ import {
   newCustomerType,
 } from "../../context/CustomerContext";
 
-function RegisterForm() {
+function RegistrationForm() {
 
-  const { handleRegisterNewCustomer, username, setUsername, email, setEmail, password, setPassword, alertInfo } = useCustomerContext();
+  const { handleRegistrationNewCustomer, username, setUsername, email, setEmail, password, setPassword, alertInfo } = useCustomerContext();
   const [showAlert, setShowAlert] = useState(false);
 
-  const handleRegisterSubmit = async () => {
+  const handleRegistrationSubmit = async () => {
 
     const newCustomer: newCustomerType = {
           username,
@@ -19,7 +19,7 @@ function RegisterForm() {
           password,
     };
     
-    await handleRegisterNewCustomer(newCustomer)
+    await handleRegistrationNewCustomer(newCustomer)
     setShowAlert(true)
   };
 
@@ -40,8 +40,7 @@ function RegisterForm() {
     <br />
 
     <Form
-      name="register"
-      className="register-form"
+      name="registration"
       initialValues={{ remember: true }}
     >
 
@@ -82,10 +81,9 @@ function RegisterForm() {
         <Form.Item>
             <Button
             type="primary"
-            className="register-form-button"
             block
             style={{"backgroundColor":" #3C6255", "borderRadius":"0",}}
-            onClick={handleRegisterSubmit}
+            onClick={handleRegistrationSubmit}
             >
             <p className="btn--text">Slutför</p>
             </Button>
@@ -95,4 +93,4 @@ function RegisterForm() {
     );
 }
 
-export default RegisterForm;
+export default RegistrationForm;

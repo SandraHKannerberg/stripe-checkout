@@ -20,7 +20,7 @@ export type CustomerType = {
 
 interface ICustomerContext {
     loggedInCustomer?: Customer | null;
-    handleRegisterNewCustomer: (newCustomer: newCustomerType) => Promise<void>;
+    handleRegistrationNewCustomer: (newCustomer: newCustomerType) => Promise<void>;
     handleLogin: (customer: CustomerType) => Promise<void>;
     handleLogout: () => {},
     username: string;
@@ -37,7 +37,7 @@ interface ICustomerContext {
 
 const defaultValues = {
     loggedInCustomer: null,
-    handleRegisterNewCustomer: async () => {},
+    handleRegistrationNewCustomer: async () => {},
     handleLogin: async () => {},
     handleLogout: async () => {},
     username: "",
@@ -86,7 +86,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   }, []);
 
     //HANTERAR REGISTRERING AV NY KUND
-    const handleRegisterNewCustomer = async (newCustomer: newCustomerType) => {
+    const handleRegistrationNewCustomer = async (newCustomer: newCustomerType) => {
       if (newCustomer) {
   
         try {
@@ -167,7 +167,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
     <CustomerContext.Provider
       value={{ 
         loggedInCustomer, 
-        handleRegisterNewCustomer, 
+        handleRegistrationNewCustomer, 
         handleLogin, 
         handleLogout, 
         username, setUsername, 
