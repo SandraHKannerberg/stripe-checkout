@@ -13,7 +13,6 @@ function LogInBtn() {
 
   const [open, setOpen] = useState(false);
   const { loggedInCustomer, handleLogout} = useCustomerContext();
-  const [username, setUsername ] = useState("")
 
 
   const showLogInDrawer = () => {
@@ -24,15 +23,7 @@ function LogInBtn() {
     setOpen(false);
   };
 
-  useEffect(() => {
-    // Add any additional logic you want to perform when loggedInCustomer changes
-    if (loggedInCustomer) {
-      setUsername(loggedInCustomer.username)
-    }
-    
-  }, [loggedInCustomer]);
 
-  
   return (
   <>
 
@@ -41,7 +32,7 @@ function LogInBtn() {
     <div className="logged--in--container">
     <p className="usericon"><UserOutlined /></p>
       <div className="logged--in--box">
-        <p className="logged--in--box--text">{username}</p>
+        <p className="logged--in--box--text">{loggedInCustomer.username}</p>
         <NavLink to="/orders"style={{ textDecoration: "none" }}>
           <p className="link--my--pages">Mina Sidor</p>
         </NavLink>  

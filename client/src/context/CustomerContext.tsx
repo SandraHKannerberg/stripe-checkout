@@ -21,6 +21,7 @@ export type CustomerType = {
 interface ICustomerContext {
     loggedInCustomer?: Customer | null;
     isLoggedIn: boolean;
+    authorization: () => void,
     handleRegistrationNewCustomer: (newCustomer: newCustomerType) => Promise<void>;
     handleLogin: (customer: CustomerType) => Promise<void>;
     handleLogout: () => {},
@@ -39,6 +40,7 @@ interface ICustomerContext {
 const defaultValues = {
     loggedInCustomer: null,
     isLoggedIn: false,
+    authorization: () => {},
     handleRegistrationNewCustomer: async () => {},
     handleLogin: async () => {},
     handleLogout: async () => {},
@@ -76,10 +78,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
       const response = await fetch("/api/customers/authorize");
       const data = await response.json();
       if (response.status === 200 || response.status === 304) {
-        setIsLoggedIn(true);
         setLoggedInCustomer(data);
-        setUsername(data.username);
-        console.log("AUTH LOG", data.username);
       }
 
     } catch (err) {
@@ -89,7 +88,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
   useEffect(() => {
     authorization()
-  }, [isLoggedIn]);
+  }, []);
 
     //HANTERAR REGISTRERING AV NY KUND
     const handleRegistrationNewCustomer = async (newCustomer: newCustomerType) => {
@@ -138,7 +137,6 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
         const data = await response.json();
 
         if (response.status === 200) {
-          setIsLoggedIn(true);
           setLoggedInCustomer(data);
         } 
 
@@ -166,6 +164,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
       if (response.status === 204) {
         setIsLoggedIn(false);
         setLoggedInCustomer(null);
+        setUsername("");
       }
     } catch (err) {
       console.log(err);
@@ -176,6 +175,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
     <CustomerContext.Provider
       value={{ 
         loggedInCustomer, 
+        authorization,
         isLoggedIn,
         handleRegistrationNewCustomer, 
         handleLogin, 
