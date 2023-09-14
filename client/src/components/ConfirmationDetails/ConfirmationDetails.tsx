@@ -4,10 +4,12 @@ import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import { useCartContext } from "../../context/CartContext";
 import { CheckOutlined } from "@ant-design/icons";
-import "./Confirmation.css"
+import "./ConfirmationDetails.css"
 
 
-const { verifyPayment, isPaymentVerified } = useCartContext();
+function ConfirmationDetails() {
+
+  const { verifyPayment, isPaymentVerified } = useCartContext();
   //const { loggedInCustomer, email, setEmail } = useCustomerContext();
 
   useEffect (() => {
@@ -19,7 +21,6 @@ const { verifyPayment, isPaymentVerified } = useCartContext();
     // }
   }, [])
 
-function ConfirmationDetails() {
   return (
     <>
 

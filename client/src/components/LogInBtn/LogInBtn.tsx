@@ -55,7 +55,7 @@ function LogInBtn() {
       </div> 
     </div>
 
-    <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open} style={{"backgroundColor":"whitesmoke", "color":" #3C6255"}}>
+    <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open} style={{"backgroundImage": "linear-gradient(to top, #c1dfc4 0%, #deecdd 100%)", "color":" #3C6255"}}>
       <LogInForm></LogInForm>
       <Divider/>
       <RegistrationForm></RegistrationForm>

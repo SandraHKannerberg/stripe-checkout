@@ -38,7 +38,7 @@ function ShoppingCartIconBtn() {
       </Button>
     </Badge>
 
-    <Drawer title="Din Kundkorg" placement="right" onClose={onClose} open={open} style={{"backgroundColor":"whitesmoke", "color":"#3C6255"}}>
+    <Drawer title="Din Kundkorg" placement="right" onClose={onClose} open={open} style={{"backgroundImage": "linear-gradient(to top, #c1dfc4 0%, #deecdd 100%)", "color":"#3C6255"}}>
 
       <ShoppingCartContent></ShoppingCartContent>
       
