@@ -6,7 +6,7 @@ import "./OrderList.css"
 
 function OrderList() {
  
-  const { orders } = useCartContext();
+  const { orders, message } = useCartContext();
 
   return (
     <>
@@ -15,6 +15,8 @@ function OrderList() {
     </Row>
 
       <Row style={{"display":"flex", "flexDirection":"column", "alignItems":"center"}}>
+        <br />
+        <p>{message}</p>
         {orders.map((order, index) => (
           <Col key={index} span={24}
           lg={{ span: 24 }}

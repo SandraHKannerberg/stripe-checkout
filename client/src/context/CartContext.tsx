@@ -44,6 +44,8 @@ export interface ICartContext {
     verifyPayment: () => void,
     orders: Order[];
     setOrders: Dispatch<SetStateAction<Order[]>>;
+    message: string,
+    setMessage: Dispatch<SetStateAction<string>>,
 }
 
 const defaultValues = {
@@ -57,6 +59,8 @@ const defaultValues = {
     verifyPayment: () => {},
     orders: [],
     setOrders: () => {},
+    message: "",
+    setMessage: () => {},
 };
   
 export const CartContext = createContext<ICartContext>(defaultValues);
@@ -69,6 +73,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
   const [cartProducts, setCartProducts] = useState<CartItem[]>([]);
   const [isPaymentVerified, setIsPaymentverified] = useState(false);
   const [orders, setOrders] = useState<Order[]>([]);
+  const [message, setMessage] = useState("");
 
     //HANDLE THE QUANTITY OF EVERY CARTITEM IN THE SHOPPINGCART
     function getProductQuantity(id : string) {
@@ -190,9 +195,12 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
             "api/orders"
           );
           const orderData = await response.json();
-  
 
-          //CHECKA KUNDNAMN SÅ ATT RÄTT ORDER VISAS FÖR RÄTT KUND!!!!!!!
+          if (response.status === 203) {
+            setMessage("Du har inte handlat hos oss än. Se din orderhistorik här fr.o.m din första order")
+          } 
+
+          if ( response.status === 200 ) {
 
           //CREATE ORDERLIST
           const orderList = orderData.map((order : Order) => ({
@@ -215,6 +223,8 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
 
         setOrders(orderList);
 
+        }
+
         } catch (err) {
           console.log(err);
         }
@@ -236,8 +246,8 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
             handlePayment,
             isPaymentVerified,
             verifyPayment,
-            orders,
-            setOrders
+            orders, setOrders,
+            message, setMessage,
         }}
       >
         {children}
