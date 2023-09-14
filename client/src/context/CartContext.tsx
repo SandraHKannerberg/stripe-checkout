@@ -2,6 +2,7 @@ import {
     createContext,
     useContext,
     useState,
+    useEffect,
     PropsWithChildren,
     Dispatch,
     SetStateAction,
@@ -17,6 +18,20 @@ export interface CartItem {
     price: Price, //Cart UI
 }
 
+export interface OrderItem {
+  description: string,
+  price: number,
+  currency: string,
+  quantity: number,
+  totalPricePerProduct: number
+}
+
+export interface Order {
+  created: string,
+  customer: string,
+  products: OrderItem[],
+  totalOrderPrice: number
+}
 
 export interface ICartContext {
     cartProducts: CartItem[];
@@ -27,8 +42,9 @@ export interface ICartContext {
     handlePayment: () => void,
     isPaymentVerified: boolean,
     verifyPayment: () => void,
+    orders: Order[];
+    setOrders: Dispatch<SetStateAction<Order[]>>;
 }
-  
 
 const defaultValues = {
     cartProducts: [],
@@ -39,6 +55,8 @@ const defaultValues = {
     handlePayment: () => {},
     isPaymentVerified: false,
     verifyPayment: () => {},
+    orders: [],
+    setOrders: () => {},
 };
   
 export const CartContext = createContext<ICartContext>(defaultValues);
@@ -50,6 +68,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
 
   const [cartProducts, setCartProducts] = useState<CartItem[]>([]);
   const [isPaymentVerified, setIsPaymentverified] = useState(false);
+  const [orders, setOrders] = useState<Order[]>([]);
 
     //HANDLE THE QUANTITY OF EVERY CARTITEM IN THE SHOPPINGCART
     function getProductQuantity(id : string) {
@@ -158,6 +177,43 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
       }
     }
 
+    const getOrders = async () => {
+  
+        try {
+          const response = await fetch(
+            "api/orders"
+          );
+          const orderData = await response.json();
+          console.log(orderData); //Check på att vi får tillbaka ordern i consolen
+
+          const orderList = orderData.map((order : Order) => ({
+
+            created: order.created,
+            customer: order.customer,
+            // products: [
+            //   {
+            //     product: order.description,
+            //     price: order.price,
+            //     currency: order.currency,
+            //     quantity: order.quantity,
+            //     totalPricePerProduct: order.totalPricePerProduct
+            //   }
+            // ],
+            totalOrderPrice: order.totalOrderPrice
+        }));
+
+        setOrders(orderList);
+        console.log(orderList)
+   
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+    useEffect(() => {
+        getOrders()
+      }, []);
+
     return (
       <CartContext.Provider
         value={{
@@ -168,7 +224,9 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
             cartQuantity,
             handlePayment,
             isPaymentVerified,
-            verifyPayment
+            verifyPayment,
+            orders,
+            setOrders
         }}
       >
         {children}

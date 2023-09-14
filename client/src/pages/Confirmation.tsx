@@ -4,19 +4,32 @@ import { Col, Row, Button, Divider } from "antd";
 import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import { useCartContext } from "../context/CartContext";
+import { useCustomerContext } from "../context/CustomerContext";
+import { HomeOutlined } from "@ant-design/icons";
 
 function confirmation() {
 
   const { verifyPayment, isPaymentVerified } = useCartContext();
+  const { loggedInCustomer, email, setEmail } = useCustomerContext();
+
 
   useEffect (() => {
     verifyPayment()
+    
+    if (loggedInCustomer) {
+      const email = loggedInCustomer.email;
+      setEmail(email);
+    }
   }, [])
 
   return (
     <Row style={{"minHeight" : "100vh", "backgroundColor":"whitesmoke"}} >
         <Col span={24}><Header></Header></Col>
         <Col style={{"minHeight" : "70vh", "textAlign":"center", "marginTop":"1rem"}} span={24}>
+
+          <NavLink to="/"style={{ textDecoration: "none" }}>
+            <p className="link--my--pages"><HomeOutlined /> Till Startsidan</p>
+          </NavLink> 
 
         {isPaymentVerified ? (
           <>
@@ -26,7 +39,7 @@ function confirmation() {
             <div>ORDER SYMBOL</div>
             <h1>Ditt köp har genomförts!</h1>
             <p>En bekräftelse kommer skickas till:</p>
-            <p>KUNDENS MAIL</p>
+            <p>{email}</p>
             <h4>Orderdetaljer</h4>
             <div>PLOCKA IN ORDERN HÄR!</div>
           </>
@@ -35,7 +48,7 @@ function confirmation() {
         )}
           
           <NavLink to="/"style={{ textDecoration: "none" }}>
-            <Button style={{"backgroundColor":"#3C6255", "marginTop":"1.5rem", "borderRadius":"0", "color":"whitesmoke"}}>TILLBAKA TILL BUTIKEN</Button>
+            <Button className="btn--text" style={{"backgroundColor":"#3C6255", "marginTop":"1.5rem", "borderRadius":"0", "color":"whitesmoke"}}>Fortsätt shoppa</Button>
           </NavLink>
 
         </Col>
