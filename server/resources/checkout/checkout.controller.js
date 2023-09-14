@@ -86,8 +86,16 @@ const verifySession = async (req, res) => {
     console.log("SESSION-ID: ", req.body.sessionId)
     res.status(200).json({verified: true})
 
+    //ARRAY OF ORDERS IN JSON-FILE
+    let ordersArray = [];
 
-    let ordersArray = []
+    //GET THE JSON-FILE
+      try {
+        const fileData = fs.readFileSync(filePath, "utf8");
+          ordersArray = JSON.parse(fileData);
+        } catch (err) {
+          console.log(err)
+        }
 
     try {
       ordersArray.push(order);

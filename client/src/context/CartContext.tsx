@@ -12,10 +12,10 @@ import { Price } from "./ProductContext";
 
 
 export interface CartItem {
-    id: string, //Just for Stripe
-    quantity: number, //Stripe and cart UI
-    name: string, //Cart UI
-    price: Price, //Cart UI
+    id: string,
+    quantity: number,
+    name: string,
+    price: Price,
 }
 
 export interface OrderItem {
@@ -89,10 +89,11 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
       price: Price
       ) {
         
-        const quantity = getProductQuantity(id); //Get the quantity
+        //GET THE QUANTITY
+        const quantity = getProductQuantity(id);
 
         if (quantity === 0) {
-        //Product is not in cart
+        //PRODUCT IS NOT IN CART
         setCartProducts(
             [
                 ...cartProducts,
@@ -105,24 +106,26 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
             ]
         )
         } else {
-            //Product is already in cart
+            //PRODUCT IS ALREADY IN CART
             setCartProducts(
                 cartProducts.map(
                     product => 
                     product.id === id 
-                    ? {...product, quantity: product.quantity + 1}  //if statement is true
-                    : product                                       //if statement is false
+                    ? {...product, quantity: product.quantity + 1}
+                    : product                                     
                 )
             )
         }
     }
 
+    //COUNT THE CARTQUANTITY
     const cartQuantity = cartProducts.reduce(
         (quantity, item) => item.quantity + quantity,
         0
       );
 
 
+    //HANDLE PAYMENT
     async function handlePayment () {
 
       const cartToStripe = cartProducts.map(item => ({
@@ -145,15 +148,16 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
         }
 
         //WE GET THE URL AND SESSION ID. SAVE SESSION ID  IN LOCALSTORAGE
-        //WE NEED THE SESSION ID TO BE ABLE TO CALL ON THE VERIFY SESSION FUNCTION
         const { url, sessionId } = await response.json()
         localStorage.setItem("session-id", sessionId)
         window.location = url;
     }
 
+    //VERIFY PAYMENT
     const verifyPayment = async () => {
 
       try {
+        //CATCH THE SESSION ID
         const sessionId = localStorage.getItem("session-id")
   
         const response = await fetch("/api/verify-session", {
@@ -163,9 +167,10 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
           },
           body: JSON.stringify({sessionId})
           })
-  
+
           const { verified } = await response.json()
   
+          //CHECK IF THE PAYMENT IS VERIFIED
           if (verified) {
             setIsPaymentverified(true)
             localStorage.removeItem("session-id")
@@ -177,6 +182,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
       }
     }
 
+    //SHOW THE LOGGED IN CUSTOMER ORDERS
     const getOrders = async () => {
   
         try {
@@ -184,10 +190,11 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
             "api/orders"
           );
           const orderData = await response.json();
-          console.log(orderData); //Check på att vi får tillbaka ordern i consolen
+  
 
           //CHECKA KUNDNAMN SÅ ATT RÄTT ORDER VISAS FÖR RÄTT KUND!!!!!!!
 
+          //CREATE ORDERLIST
           const orderList = orderData.map((order : Order) => ({
 
             created: order.created,
@@ -207,8 +214,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
         }));
 
         setOrders(orderList);
-        console.log(orderList)
-   
+
         } catch (err) {
           console.log(err);
         }
@@ -217,6 +223,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
     useEffect(() => {
         getOrders()
       }, []);
+
 
     return (
       <CartContext.Provider

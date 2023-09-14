@@ -4,22 +4,23 @@ import { Col, Row, Button, Divider } from "antd";
 import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 import { useCartContext } from "../context/CartContext";
-import { useCustomerContext } from "../context/CustomerContext";
-import { HomeOutlined } from "@ant-design/icons";
+//import { useCustomerContext } from "../context/CustomerContext";
+import { HomeOutlined, CheckOutlined } from "@ant-design/icons";
+import "./Confirmation.css"
 
 function confirmation() {
 
   const { verifyPayment, isPaymentVerified } = useCartContext();
-  const { loggedInCustomer, email, setEmail } = useCustomerContext();
+  //const { loggedInCustomer, email, setEmail } = useCustomerContext();
 
 
   useEffect (() => {
     verifyPayment()
     
-    if (loggedInCustomer) {
-      const email = loggedInCustomer.email;
-      setEmail(email);
-    }
+    // if (loggedInCustomer) {
+    //   const email = loggedInCustomer.email;
+    //   setEmail(email);
+    // }
   }, [])
 
   return (
@@ -36,12 +37,9 @@ function confirmation() {
             <h3>Tack för din order!</h3>
             <h4>Information</h4>
             <Divider></Divider>
-            <div>ORDER SYMBOL</div>
-            <h1>Ditt köp har genomförts!</h1>
-            <p>En bekräftelse kommer skickas till:</p>
-            <p>{email}</p>
-            <h4>Orderdetaljer</h4>
-            <div>PLOCKA IN ORDERN HÄR!</div>
+            <div className="order--check--icon"><CheckOutlined /></div>
+            <h2>Ditt köp har genomförts!</h2>
+            <p>En bekräftelse kommer skickas till din registrerade e-mailadress</p>
           </>
         ) : (
           <h3>Något gick fel med betalningen. Ditt köp gick inte igenom</h3>

@@ -1,5 +1,6 @@
 import { useCartContext } from '../../context/CartContext';
 import { Row, Col } from 'antd';
+import { HeartOutlined } from "@ant-design/icons";
 import "./OrderList.css"
 
 
@@ -9,9 +10,10 @@ function OrderList() {
 
   return (
     <>
-      <Row style={{"display":"flex", "justifyContent" : "center"}}>
+    <h1 className="orderhistory--title">Orderhistorik</h1>
+      <Row style={{"marginLeft":"6rem"}}>
         {orders.map((order, index) => (
-          <Col key={index} span={2} 
+          <Col key={index} span={12} 
           xs={{ span: 22 }}
           sm={{ span: 12 }}  
           md={{ span: 12 }}  
@@ -27,12 +29,14 @@ function OrderList() {
                 {order.products.map((product, productIndex) => (
                     <li className="order--details" key={productIndex}>
                         <p>{product.product}</p>
-                        <p>Pris: {product.price} {product.currency}</p>
+                        <p>Pris / st: {product.price} {product.currency}</p>
                         <p>Antal: {product.quantity}</p>
                         <p>Totalt denna produkt: {product.totalPricePerProduct} {product.currency}</p>
+                        <br />
                     </li>
                 ))}
               </ul>
+              <Col span={12} style={{ fontSize: '20px', marginTop: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><HeartOutlined /></Col>
           </Col>
         ))}
       </Row>
