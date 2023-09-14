@@ -1,3 +1,9 @@
 .heading--welcome{
     margin: auto;
+    color: #3C6255;
+}
+
+.logotype--text{
+    font-family:'Allura', cursive;
+
 }
