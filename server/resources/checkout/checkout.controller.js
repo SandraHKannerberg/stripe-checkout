@@ -111,25 +111,50 @@ const verifySession = async (req, res) => {
   }
 }
 
-const getOrders = async (req, res) => {
+const getCustomerOrders = async (req, res) => {
 
   try {
     const fileData = fs.readFileSync(filePath, "utf8");
-    const orders = JSON.parse(fileData)
+    const orders = JSON.parse(fileData);
 
-    console.log(orders);
-    res.json(orders);
-    return;
-    
+    const customerFilteredOrders = orders.filter(order => order.customer === req.session.username);
+
+    if (customerFilteredOrders.length === 0) {
+
+      console.log("No orders found for the customer");
+      res.status(203).json("You have no orders to show");
+
+    } else {
+     
+      console.log(customerFilteredOrders);
+      res.status(200).json(customerFilteredOrders);
+      return;
+    }
+
   } catch (error) {
     console.error(error);
-    return res.status(404).json("Something went wrong - no orders to show");
+    return res.status(403).json("You don not have permissions to perform this request");
   }  
 };
 
+// const getOrder = async (req, res) => {
+//   const order = await OrderModel.findById(req.params.id)
+//     .populate("customer")
+//     .populate("orderItems.product")
+//     .populate("shippingMethod");
+//   if (
+//     !req.session.isAdmin &&
+//     req.session._id.toString() !== order.customer._id.toString()
+//   ) {
+//     return res
+//       .status(403)
+//       .json("You don not have permissions to perform this request");
+//   }
+//   res.status(200).json(order);
+// };
 
 module.exports = {
     createCheckOutSession, 
     verifySession,
-    getOrders
+    getCustomerOrders
   };
