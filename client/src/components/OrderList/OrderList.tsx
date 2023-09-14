@@ -1,6 +1,6 @@
 import { useCartContext } from '../../context/CartContext';
-import { Row, Col } from 'antd';
-import { HeartOutlined, CheckOutlined } from "@ant-design/icons";
+import { Row, Col, Card } from 'antd';
+import { HeartOutlined } from "@ant-design/icons";
 import "./OrderList.css"
 
 
@@ -10,17 +10,16 @@ function OrderList() {
 
   return (
     <>
-    <h1 className="orderhistory--title">Orderhistorik</h1>
+    <Row style={{"display":"flex", "flexDirection":"column", "alignItems":"center", "marginTop":"2rem", "color":"#3C6255"}}>
+        <h1 className="orderhistory--title">Orderhistorik</h1>
+    </Row>
 
-    <div className="order--check--icon"><CheckOutlined/></div>
-      <Row style={{"marginLeft":"6rem"}}>
+      <Row style={{"display":"flex", "flexDirection":"column", "alignItems":"center"}}>
         {orders.map((order, index) => (
-          <Col key={index} span={12} 
-          xs={{ span: 22 }}
-          sm={{ span: 12 }}  
-          md={{ span: 12 }}  
-          lg={{ span: 12 }}
+          <Col key={index} span={24}
+          lg={{ span: 24 }}
           style={{"margin" : "1rem"}}>
+            <Card.Grid className="order--card">
 
               <h3>Ordernummer {order.created}</h3>
               <p>Kund: {order.customer}</p>
@@ -38,7 +37,8 @@ function OrderList() {
                     </li>
                 ))}
               </ul>
-              <Col span={12} style={{ fontSize: '20px', marginTop: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><HeartOutlined /></Col>
+              </Card.Grid>
+              <Col span={24} style={{ fontSize: '20px', marginTop: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#3C6255'}}><HeartOutlined /></Col>
           </Col>
         ))}
       </Row>

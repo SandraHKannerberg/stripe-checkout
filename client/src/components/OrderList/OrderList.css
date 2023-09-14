@@ -1,8 +1,11 @@
-.orderhistory--title {
-    margin-left: 6rem;
-    margin-top: 2rem;
-}
-
 .order--details{
     list-style: none;
+}
+
+.order--card{
+    box-shadow: -5px -5px 9px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3);
+    background-image: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%);
+    color:  #3C6255;
+    border-radius: 15px;
+    padding: 25px;
 }
