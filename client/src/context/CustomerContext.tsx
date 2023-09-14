@@ -29,8 +29,8 @@ interface ICustomerContext {
     setEmail: React.Dispatch<React.SetStateAction<string>>;
     password: string;
     setPassword: React.Dispatch<React.SetStateAction<string>>;
-    alertInfo: string;
-    setAlertInfo: React.Dispatch<React.SetStateAction<string>>;
+    successInfo: string;
+    setSuccessInfo: React.Dispatch<React.SetStateAction<string>>;
     errorInfo: string;
     setErrorInfo: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -46,8 +46,8 @@ const defaultValues = {
     setEmail: () => {},
     password: "",
     setPassword: () => {},
-    alertInfo: "",
-    setAlertInfo: () => {},
+    successInfo: "",
+    setSuccessInfo: () => {},
     errorInfo: "",
     setErrorInfo: () => {},
 }
@@ -63,7 +63,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [alertInfo, setAlertInfo] = useState("");
+  const [successInfo, setSuccessInfo] = useState("");
   const [errorInfo, setErrorInfo] = useState("");
 
 
@@ -102,14 +102,13 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
           if (response.status === 200) {
    
             console.log("NEW CUSTOMER", data);
-            //VAD VILL VI GÖRA VID EN LYCKAD REGISTRERING?
-            setAlertInfo("Du är nu registrerad som kund hos oss. Varmt välkommen att logga in.")
+            setSuccessInfo("Grattis! Du är nu registrerad som kund hos oss. Varmt välkommen att logga in.")
           } 
 
           if(response.status === 409) {
 
             console.log("ERROR", data);
-            setAlertInfo("Denna kund är redan registrerad")
+            setErrorInfo("*Denna kund är redan registrerad. Vänligen välj ett annat användarnamn")
           }
         } catch (err) {
           console.log("ERROR-MESSAGE:", err);
@@ -117,7 +116,6 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
       }
     };
   
-
 
   //HANTERAR LOGGA IN
   const handleLogin = async (customer: CustomerType) => {
@@ -134,10 +132,13 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
         const data = await response.json();
 
         if (response.status === 200) {
- 
           setLoggedInCustomer(data);
-          console.log("LOGGED IN CUSTOMER: ", data);
         } 
+
+        if (response.status === 404) {
+          setErrorInfo("Ooops! Inloggning misslyckades. Felaktigt användarnamn och/eller lösenord")
+        }
+
       } catch (err) {
         console.log("ERROR-MESSAGE:", err);
       }
@@ -173,7 +174,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
         username, setUsername, 
         email, setEmail, 
         password, setPassword, 
-        alertInfo, setAlertInfo,
+        successInfo, setSuccessInfo,
         errorInfo, setErrorInfo 
       }}
     >

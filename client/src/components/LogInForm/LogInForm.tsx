@@ -1,13 +1,15 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Typography } from "antd";
 import {
   useCustomerContext,
   CustomerType,
 } from "../../context/CustomerContext";
 
+const { Text } = Typography;
+
 function LogInForm() {
 
-  const { handleLogin } = useCustomerContext();
+  const { handleLogin, errorInfo } = useCustomerContext();
 
   const handleLoginFinish = async (values: any) => {
   
@@ -63,6 +65,8 @@ function LogInForm() {
             <p className="btn--text">Logga in</p>
           </Button>
         </Form.Item>
+
+        <Text type="danger">{errorInfo}</Text>
       </Form>
       </>
     );

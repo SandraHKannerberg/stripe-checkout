@@ -1,6 +1,7 @@
 import { Button, Drawer, Divider } from "antd";
 import { UserOutlined } from '@ant-design/icons';
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import LogInForm from "../LogInForm/LogInForm";
 import "./LogInBtn.css";
 import {
@@ -32,7 +33,9 @@ function LogInBtn() {
     <p className="usericon"><UserOutlined /></p>
       <div className="logged--in--box">
         <p className="logged--in--box--text">{loggedInCustomer.username}</p>
-        <p className="link--my--pages">Mina Sidor</p>  
+        <NavLink to="/orders"style={{ textDecoration: "none" }}>
+          <p className="link--my--pages">Mina Sidor</p>
+        </NavLink>  
         <Button className="log--btn" type="text" onClick={handleLogout}>
           Logga Ut
         </Button>

@@ -22,5 +22,11 @@
     "email": "stinasmail@mail.se",
     "username": "Stina",
     "password": "$2b$10$8SZBbuGLvemDbaYjFJZjVOP.llw29ripIRCXRHlThkvDyovKJKE3S"
+  },
+  {
+    "id": "cus_OdPpdkeVAIt9f2",
+    "email": "kalle@minmail.com",
+    "username": "Kalle",
+    "password": "$2b$10$/zneBNX6NqaHptmAKeG9Ru9Xyiv9BZnBtqoWH7Raj7aqzSIV1bt7O"
   }
 ]

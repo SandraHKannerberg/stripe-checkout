@@ -110,12 +110,12 @@ const getOrders = async (req, res) => {
     const orders = JSON.parse(fileData)
 
     console.log(orders);
-    
     res.json(orders);
     return;
+    
   } catch (error) {
     console.error(error);
-    return res.status(404).json("Something went wrong");
+    return res.status(404).json("Something went wrong - no orders to show");
   }  
 };
 
