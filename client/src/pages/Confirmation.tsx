@@ -1,38 +1,13 @@
 import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
-import { Col, Row, Button } from "antd";
+import { Col, Row, Button, Divider } from "antd";
 import { NavLink } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useCartContext } from "../context/CartContext";
 
 function confirmation() {
 
-  const [isPaymentVerified, setIsPaymentverified] = useState(false);
-
-  const verifyPayment = async () => {
-
-    try {
-      const sessionId = localStorage.getItem("session-id")
-
-      const response = await fetch("/api/verify-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({sessionId})
-        })
-
-        const { verified } = await response.json()
-
-        if (verified) {
-          setIsPaymentverified(true)
-          localStorage.removeItem("session-id") //Detta behöver vi inte längre och kan därför tas bort när allt är verifierat
-        } else {
-          setIsPaymentverified(false)
-        }
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const { verifyPayment, isPaymentVerified } = useCartContext();
 
   useEffect (() => {
     verifyPayment()
@@ -44,7 +19,17 @@ function confirmation() {
         <Col style={{"minHeight" : "70vh", "textAlign":"center", "marginTop":"1rem"}} span={24}>
 
         {isPaymentVerified ? (
-          <h3>Tack för ditt köp!</h3>
+          <>
+            <h3>Tack för din order!</h3>
+            <h4>Information</h4>
+            <Divider></Divider>
+            <div>ORDER SYMBOL</div>
+            <h1>Ditt köp har genomförts!</h1>
+            <p>En bekräftelse kommer skickas till:</p>
+            <p>KUNDENS MAIL</p>
+            <h4>Orderdetaljer</h4>
+            <div>PLOCKA IN ORDERN HÄR!</div>
+          </>
         ) : (
           <h3>Något gick fel med betalningen. Ditt köp gick inte igenom</h3>
         )}

@@ -25,6 +25,8 @@ export interface ICartContext {
     getProductQuantity: (id: string) => void;
     cartQuantity: number,
     handlePayment: () => void,
+    isPaymentVerified: boolean,
+    verifyPayment: () => void,
 }
   
 
@@ -35,6 +37,8 @@ const defaultValues = {
     getProductQuantity: () => {}, 
     cartQuantity: 0,
     handlePayment: () => {},
+    isPaymentVerified: false,
+    verifyPayment: () => {},
 };
   
 export const CartContext = createContext<ICartContext>(defaultValues);
@@ -45,6 +49,7 @@ export const useCartContext = () => useContext(CartContext);
 export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
 
   const [cartProducts, setCartProducts] = useState<CartItem[]>([]);
+  const [isPaymentVerified, setIsPaymentverified] = useState(false);
 
     //HANDLE THE QUANTITY OF EVERY CARTITEM IN THE SHOPPINGCART
     function getProductQuantity(id : string) {
@@ -127,6 +132,32 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
         window.location = url;
     }
 
+    const verifyPayment = async () => {
+
+      try {
+        const sessionId = localStorage.getItem("session-id")
+  
+        const response = await fetch("/api/verify-session", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({sessionId})
+          })
+  
+          const { verified } = await response.json()
+  
+          if (verified) {
+            setIsPaymentverified(true)
+            localStorage.removeItem("session-id")
+          } else {
+            setIsPaymentverified(false)
+          }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     return (
       <CartContext.Provider
         value={{
@@ -135,7 +166,9 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
             addToCart,
             getProductQuantity,
             cartQuantity,
-            handlePayment
+            handlePayment,
+            isPaymentVerified,
+            verifyPayment
         }}
       >
         {children}
