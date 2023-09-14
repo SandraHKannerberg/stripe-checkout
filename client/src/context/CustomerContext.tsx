@@ -20,6 +20,7 @@ export type CustomerType = {
 
 interface ICustomerContext {
     loggedInCustomer?: Customer | null;
+    isLoggedIn: boolean;
     handleRegistrationNewCustomer: (newCustomer: newCustomerType) => Promise<void>;
     handleLogin: (customer: CustomerType) => Promise<void>;
     handleLogout: () => {},
@@ -37,6 +38,7 @@ interface ICustomerContext {
 
 const defaultValues = {
     loggedInCustomer: null,
+    isLoggedIn: false,
     handleRegistrationNewCustomer: async () => {},
     handleLogin: async () => {},
     handleLogout: async () => {},
@@ -60,6 +62,7 @@ export const useCustomerContext = () => useContext(CustomerContext);
 export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
   const [loggedInCustomer, setLoggedInCustomer] = useState<Customer | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -68,22 +71,25 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
 
   //CHECKAR OM DET FINNS NÅGON INLOGGAD KUND
-  useEffect(() => {
-    const authorization = async () => {
-      try {
-        const response = await fetch("/api/customers/authorize");
-        const data = await response.json();
-        if (response.status === 200 || response.status === 304) {
-          setLoggedInCustomer(data);
-          console.log("AUTH LOG", data);
-        }
- 
-      } catch (err) {
-        console.log("ERROR-MESSAGE:", err);
+  const authorization = async () => {
+    try {
+      const response = await fetch("/api/customers/authorize");
+      const data = await response.json();
+      if (response.status === 200 || response.status === 304) {
+        setIsLoggedIn(true);
+        setLoggedInCustomer(data);
+        setUsername(data.username);
+        console.log("AUTH LOG", data.username);
       }
-    };
-    authorization();
-  }, []);
+
+    } catch (err) {
+      console.log("ERROR-MESSAGE:", err);
+    }
+  }
+
+  useEffect(() => {
+    authorization()
+  }, [isLoggedIn]);
 
     //HANTERAR REGISTRERING AV NY KUND
     const handleRegistrationNewCustomer = async (newCustomer: newCustomerType) => {
@@ -132,6 +138,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
         const data = await response.json();
 
         if (response.status === 200) {
+          setIsLoggedIn(true);
           setLoggedInCustomer(data);
         } 
 
@@ -157,6 +164,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
       });
 
       if (response.status === 204) {
+        setIsLoggedIn(false);
         setLoggedInCustomer(null);
       }
     } catch (err) {
@@ -168,6 +176,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
     <CustomerContext.Provider
       value={{ 
         loggedInCustomer, 
+        isLoggedIn,
         handleRegistrationNewCustomer, 
         handleLogin, 
         handleLogout, 
