@@ -19,7 +19,7 @@ export interface CartItem {
 }
 
 export interface OrderItem {
-  description: string,
+  product: string,
   price: number,
   currency: string,
   quantity: number,
@@ -186,19 +186,23 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
           const orderData = await response.json();
           console.log(orderData); //Check på att vi får tillbaka ordern i consolen
 
+          //CHECKA KUNDNAMN SÅ ATT RÄTT ORDER VISAS FÖR RÄTT KUND!!!!!!!
+
           const orderList = orderData.map((order : Order) => ({
 
             created: order.created,
             customer: order.customer,
-            // products: [
-            //   {
-            //     product: order.description,
-            //     price: order.price,
-            //     currency: order.currency,
-            //     quantity: order.quantity,
-            //     totalPricePerProduct: order.totalPricePerProduct
-            //   }
-            // ],
+
+            products: order.products.map((product) => ({
+
+              product: product.product,
+              price: product.price,
+              currency: product.currency,
+              quantity: product.quantity,
+              totalPricePerProduct: product.totalPricePerProduct
+
+            })),
+
             totalOrderPrice: order.totalOrderPrice
         }));
 

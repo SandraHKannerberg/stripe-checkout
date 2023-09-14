@@ -1,5 +1,6 @@
 import { useCartContext } from '../../context/CartContext';
 import { Row, Col } from 'antd';
+import "./OrderList.css"
 
 
 function OrderList() {
@@ -17,9 +18,21 @@ function OrderList() {
           lg={{ span: 12 }}
           style={{"margin" : "1rem"}}>
 
-              <h3>Ordernummer: {order.created}</h3>
+              <h3>Ordernummer {order.created}</h3>
               <p>Kund: {order.customer}</p>
-              <p>Totalbelopp: {order.totalOrderPrice}</p>
+              <p>Totalbelopp: {order.totalOrderPrice} SEK</p>
+                <br />
+              <h4>Order detaljer</h4>
+              <ul>
+                {order.products.map((product, productIndex) => (
+                    <li className="order--details" key={productIndex}>
+                        <p>{product.product}</p>
+                        <p>Pris: {product.price} {product.currency}</p>
+                        <p>Antal: {product.quantity}</p>
+                        <p>Totalt denna produkt: {product.totalPricePerProduct} {product.currency}</p>
+                    </li>
+                ))}
+              </ul>
           </Col>
         ))}
       </Row>
