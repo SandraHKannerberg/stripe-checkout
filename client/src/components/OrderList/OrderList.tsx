@@ -1,6 +1,6 @@
 import { useCartContext } from '../../context/CartContext';
 import { Row, Col } from 'antd';
-import { HeartOutlined } from "@ant-design/icons";
+import { HeartOutlined, CheckOutlined } from "@ant-design/icons";
 import "./OrderList.css"
 
 
@@ -11,6 +11,8 @@ function OrderList() {
   return (
     <>
     <h1 className="orderhistory--title">Orderhistorik</h1>
+
+    <div className="order--check--icon"><CheckOutlined/></div>
       <Row style={{"marginLeft":"6rem"}}>
         {orders.map((order, index) => (
           <Col key={index} span={12} 
