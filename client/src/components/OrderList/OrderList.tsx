@@ -1,4 +1,5 @@
 import { useCartContext } from '../../context/CartContext';
+import { useEffect } from "react";
 import { Row, Col, Card } from 'antd';
 import { HeartOutlined } from "@ant-design/icons";
 import "./OrderList.css"
@@ -6,7 +7,11 @@ import "./OrderList.css"
 
 function OrderList() {
  
-  const { orders, message } = useCartContext();
+  const { orders, message, getOrders } = useCartContext();
+
+  useEffect(() => {
+    getOrders()
+  }, []);
 
   return (
     <>
@@ -25,6 +30,7 @@ function OrderList() {
 
               <h3>Ordernummer {order.created}</h3>
               <p>Kund: {order.customer}</p>
+              <p>E-mail: {order.email}</p>
               <p>Totalbelopp: {order.totalOrderPrice} SEK</p>
                 <br />
               <h4>Order detaljer</h4>

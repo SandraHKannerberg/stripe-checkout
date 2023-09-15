@@ -2,7 +2,6 @@ import {
     createContext,
     useContext,
     useState,
-    useEffect,
     PropsWithChildren,
     Dispatch,
     SetStateAction,
@@ -29,6 +28,7 @@ export interface OrderItem {
 export interface Order {
   created: string,
   customer: string,
+  email: string,
   products: OrderItem[],
   totalOrderPrice: number
 }
@@ -47,6 +47,7 @@ export interface ICartContext {
     setOrders: Dispatch<SetStateAction<Order[]>>;
     message: string,
     setMessage: Dispatch<SetStateAction<string>>,
+    getOrders: () => void,
 }
 
 const defaultValues = {
@@ -63,6 +64,7 @@ const defaultValues = {
     setOrders: () => {},
     message: "",
     setMessage: () => {},
+    getOrders: () => {},
 };
   
 export const CartContext = createContext<ICartContext>(defaultValues);
@@ -221,6 +223,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
 
             created: order.created,
             customer: order.customer,
+            email: order.email,
 
             products: order.products.map((product) => ({
 
@@ -244,11 +247,6 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
         }
       };
 
-    useEffect(() => {
-        getOrders()
-      }, []);
-
-
     return (
       <CartContext.Provider
         value={{
@@ -263,6 +261,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
             verifyPayment,
             orders, setOrders,
             message, setMessage,
+            getOrders,
         }}
       >
         {children}

@@ -59,6 +59,7 @@ const verifySession = async (req, res) => {
     const order = {
       created: session.created,
       customer: session.customer_details.name,
+      email: session.customer_details.email,
       products: line_items.data.map(item => {
 
         const price = item.price.unit_amount / 100;
@@ -136,22 +137,6 @@ const getCustomerOrders = async (req, res) => {
     return res.status(403).json("You don not have permissions to perform this request");
   }  
 };
-
-// const getOrder = async (req, res) => {
-//   const order = await OrderModel.findById(req.params.id)
-//     .populate("customer")
-//     .populate("orderItems.product")
-//     .populate("shippingMethod");
-//   if (
-//     !req.session.isAdmin &&
-//     req.session._id.toString() !== order.customer._id.toString()
-//   ) {
-//     return res
-//       .status(403)
-//       .json("You don not have permissions to perform this request");
-//   }
-//   res.status(200).json(order);
-// };
 
 module.exports = {
     createCheckOutSession, 
