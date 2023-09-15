@@ -1,17 +1,18 @@
 import { Button, Drawer, Divider } from "antd";
 import { UserOutlined } from '@ant-design/icons';
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import LogInForm from "../LogInForm/LogInForm";
 import "./LogInBtn.css";
 import {
   useCustomerContext,
 } from "../../context/CustomerContext";
-import RegisterForm from "../RegisterForm/RegisterForm";
+import RegistrationForm from "../RegistrationForm/RegistrationForm";
 
 function LogInBtn() {
 
   const [open, setOpen] = useState(false);
-  const { loggedInCustomer, handleLogout } = useCustomerContext();
+  const { loggedInCustomer, handleLogout} = useCustomerContext();
 
 
   const showLogInDrawer = () => {
@@ -22,7 +23,7 @@ function LogInBtn() {
     setOpen(false);
   };
 
-  
+
   return (
   <>
 
@@ -31,7 +32,10 @@ function LogInBtn() {
     <div className="logged--in--container">
     <p className="usericon"><UserOutlined /></p>
       <div className="logged--in--box">
-        <p className="logged--in--box--text">{loggedInCustomer.username}</p> 
+        <p className="logged--in--box--text">{loggedInCustomer.username}</p>
+        <NavLink to="/orders"style={{ textDecoration: "none" }}>
+          <p className="link--my--pages">Mina Sidor</p>
+        </NavLink>  
         <Button className="log--btn" type="text" onClick={handleLogout}>
           Logga Ut
         </Button>
@@ -51,10 +55,10 @@ function LogInBtn() {
       </div> 
     </div>
 
-    <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open} style={{"backgroundColor":"whitesmoke", "color":" #3C6255"}}>
+    <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open} style={{"backgroundImage": "linear-gradient(to top, #c1dfc4 0%, #deecdd 100%)", "color":" #3C6255"}}>
       <LogInForm></LogInForm>
       <Divider/>
-      <RegisterForm></RegisterForm>
+      <RegistrationForm></RegistrationForm>
     </Drawer>
     </>
   }

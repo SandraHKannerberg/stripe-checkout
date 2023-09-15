@@ -20,7 +20,9 @@ export type CustomerType = {
 
 interface ICustomerContext {
     loggedInCustomer?: Customer | null;
-    handleRegisterNewCustomer: (newCustomer: newCustomerType) => Promise<void>;
+    isLoggedIn: boolean;
+    authorization: () => void,
+    handleRegistrationNewCustomer: (newCustomer: newCustomerType) => Promise<void>;
     handleLogin: (customer: CustomerType) => Promise<void>;
     handleLogout: () => {},
     username: string;
@@ -29,15 +31,17 @@ interface ICustomerContext {
     setEmail: React.Dispatch<React.SetStateAction<string>>;
     password: string;
     setPassword: React.Dispatch<React.SetStateAction<string>>;
-    alertInfo: string;
-    setAlertInfo: React.Dispatch<React.SetStateAction<string>>;
+    successInfo: string;
+    setSuccessInfo: React.Dispatch<React.SetStateAction<string>>;
     errorInfo: string;
     setErrorInfo: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const defaultValues = {
     loggedInCustomer: null,
-    handleRegisterNewCustomer: async () => {},
+    isLoggedIn: false,
+    authorization: () => {},
+    handleRegistrationNewCustomer: async () => {},
     handleLogin: async () => {},
     handleLogout: async () => {},
     username: "",
@@ -46,8 +50,8 @@ const defaultValues = {
     setEmail: () => {},
     password: "",
     setPassword: () => {},
-    alertInfo: "",
-    setAlertInfo: () => {},
+    successInfo: "",
+    setSuccessInfo: () => {},
     errorInfo: "",
     setErrorInfo: () => {},
 }
@@ -60,33 +64,34 @@ export const useCustomerContext = () => useContext(CustomerContext);
 export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
   const [loggedInCustomer, setLoggedInCustomer] = useState<Customer | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [alertInfo, setAlertInfo] = useState("");
+  const [successInfo, setSuccessInfo] = useState("");
   const [errorInfo, setErrorInfo] = useState("");
 
 
   //CHECKAR OM DET FINNS NÅGON INLOGGAD KUND
-  useEffect(() => {
-    const authorization = async () => {
-      try {
-        const response = await fetch("/api/customers/authorize");
-        const data = await response.json();
-        if (response.status === 200 || response.status === 304) {
-          setLoggedInCustomer(data);
-          console.log("AUTH LOG", data);
-        }
- 
-      } catch (err) {
-        console.log("ERROR-MESSAGE:", err);
+  const authorization = async () => {
+    try {
+      const response = await fetch("/api/customers/authorize");
+      const data = await response.json();
+      if (response.status === 200 || response.status === 304) {
+        setLoggedInCustomer(data);
       }
-    };
-    authorization();
+
+    } catch (err) {
+      console.log("ERROR-MESSAGE:", err);
+    }
+  }
+
+  useEffect(() => {
+    authorization()
   }, []);
 
     //HANTERAR REGISTRERING AV NY KUND
-    const handleRegisterNewCustomer = async (newCustomer: newCustomerType) => {
+    const handleRegistrationNewCustomer = async (newCustomer: newCustomerType) => {
       if (newCustomer) {
   
         try {
@@ -102,14 +107,13 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
           if (response.status === 200) {
    
             console.log("NEW CUSTOMER", data);
-            //VAD VILL VI GÖRA VID EN LYCKAD REGISTRERING?
-            setAlertInfo("Du är nu registrerad som kund hos oss. Varmt välkommen att logga in.")
+            setSuccessInfo("Grattis! Du är nu registrerad som kund hos oss. Varmt välkommen att logga in.")
           } 
 
           if(response.status === 409) {
 
             console.log("ERROR", data);
-            setAlertInfo("Denna kund är redan registrerad")
+            setErrorInfo("*Denna kund är redan registrerad. Vänligen välj ett annat användarnamn")
           }
         } catch (err) {
           console.log("ERROR-MESSAGE:", err);
@@ -117,7 +121,6 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
       }
     };
   
-
 
   //HANTERAR LOGGA IN
   const handleLogin = async (customer: CustomerType) => {
@@ -134,12 +137,13 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
         const data = await response.json();
 
         if (response.status === 200) {
- 
           setLoggedInCustomer(data);
-          console.log("CONTEXT", data.customer.username);
-
-          console.log("LOGGED IN CUSTOMER: ", data);
         } 
+
+        if (response.status === 404) {
+          setErrorInfo("Ooops! Inloggning misslyckades. Felaktigt användarnamn och/eller lösenord")
+        }
+
       } catch (err) {
         console.log("ERROR-MESSAGE:", err);
       }
@@ -158,7 +162,9 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
       });
 
       if (response.status === 204) {
+        setIsLoggedIn(false);
         setLoggedInCustomer(null);
+        setUsername("");
       }
     } catch (err) {
       console.log(err);
@@ -169,13 +175,15 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
     <CustomerContext.Provider
       value={{ 
         loggedInCustomer, 
-        handleRegisterNewCustomer, 
+        authorization,
+        isLoggedIn,
+        handleRegistrationNewCustomer, 
         handleLogin, 
         handleLogout, 
         username, setUsername, 
         email, setEmail, 
         password, setPassword, 
-        alertInfo, setAlertInfo,
+        successInfo, setSuccessInfo,
         errorInfo, setErrorInfo 
       }}
     >

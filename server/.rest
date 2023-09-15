@@ -3,6 +3,11 @@ GET http://localhost:3000/api/products
 
 ###
 
+//GET ORDERS
+GET http://localhost:3000/api/orders
+
+###
+
 //REGISTRATION - NEW CUSTOMER
 POST http://localhost:3000/api/customers/register
 Content-Type: application/json
@@ -26,19 +31,13 @@ Content-Type: application/json
 
 ###
 
+//CHECK AUTH
 GET http://localhost:3000/api/customers/authorize
 
 ###
 
+//LOGOUT
 POST http://localhost:3000/api/customers/logout
 Content-Type: application/json
 
 ###
-
-POST http://localhost:3000/api/create-checkout-session
-Content-Type: application/json
-
-{
-  "price": "price_1NmxcIDbqBxej6tjDoRLPLRo",
-  "quantity": "1",
-}

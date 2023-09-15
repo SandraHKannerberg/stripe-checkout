@@ -11,30 +11,60 @@ import { Price } from "./ProductContext";
 
 
 export interface CartItem {
-    id: string, //Just for Stripe
-    quantity: number, //Stripe and cart UI
-    name: string, //Cart UI
-    price: Price, //Cart UI
+    id: string,
+    quantity: number,
+    name: string,
+    price: Price,
 }
 
+export interface OrderItem {
+  product: string,
+  price: number,
+  currency: string,
+  quantity: number,
+  totalPricePerProduct: number
+}
+
+export interface Order {
+  created: string,
+  customer: string,
+  email: string,
+  products: OrderItem[],
+  totalOrderPrice: number
+}
 
 export interface ICartContext {
     cartProducts: CartItem[];
     setCartProducts: Dispatch<SetStateAction<CartItem[]>>;
     addToCart: (id: string, name: string, price: Price) => void;
     getProductQuantity: (id: string) => void;
+    calculateTotalPrice: () => void,
     cartQuantity: number,
     handlePayment: () => void,
+    isPaymentVerified: boolean,
+    verifyPayment: () => void,
+    orders: Order[];
+    setOrders: Dispatch<SetStateAction<Order[]>>;
+    message: string,
+    setMessage: Dispatch<SetStateAction<string>>,
+    getOrders: () => void,
 }
-  
 
 const defaultValues = {
     cartProducts: [],
     setCartProducts: () => {},
-    addToCart: () => '',
-    getProductQuantity: () => {}, 
+    addToCart: () => "",
+    getProductQuantity: () => {},
+    calculateTotalPrice: () => {},
     cartQuantity: 0,
     handlePayment: () => {},
+    isPaymentVerified: false,
+    verifyPayment: () => {},
+    orders: [],
+    setOrders: () => {},
+    message: "",
+    setMessage: () => {},
+    getOrders: () => {},
 };
   
 export const CartContext = createContext<ICartContext>(defaultValues);
@@ -45,6 +75,9 @@ export const useCartContext = () => useContext(CartContext);
 export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
 
   const [cartProducts, setCartProducts] = useState<CartItem[]>([]);
+  const [isPaymentVerified, setIsPaymentverified] = useState(false);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [message, setMessage] = useState("");
 
     //HANDLE THE QUANTITY OF EVERY CARTITEM IN THE SHOPPINGCART
     function getProductQuantity(id : string) {
@@ -65,10 +98,11 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
       price: Price
       ) {
         
-        const quantity = getProductQuantity(id); //Get the quantity
+        //GET THE QUANTITY
+        const quantity = getProductQuantity(id);
 
         if (quantity === 0) {
-        //Product is not in cart
+        //PRODUCT IS NOT IN CART
         setCartProducts(
             [
                 ...cartProducts,
@@ -81,24 +115,38 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
             ]
         )
         } else {
-            //Product is already in cart
+            //PRODUCT IS ALREADY IN CART
             setCartProducts(
                 cartProducts.map(
                     product => 
                     product.id === id 
-                    ? {...product, quantity: product.quantity + 1}  //if statement is true
-                    : product                                       //if statement is false
+                    ? {...product, quantity: product.quantity + 1}
+                    : product                                     
                 )
             )
         }
     }
 
-    const cartQuantity = cartProducts.reduce(
+    function calculateTotalPrice() {
+      let total = 0;
+      for (const item of cartProducts) {
+
+        const priceNumeric = parseFloat(item.price.unit_amount);
+        if (!isNaN(priceNumeric)) {
+          total += priceNumeric * item.quantity;
+        }
+          
+      }
+      return total;
+    }
+
+    //COUNT THE CARTQUANTITY
+      const cartQuantity = cartProducts.reduce(
         (quantity, item) => item.quantity + quantity,
         0
       );
 
-
+    //HANDLE PAYMENT
     async function handlePayment () {
 
       const cartToStripe = cartProducts.map(item => ({
@@ -120,10 +168,84 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
             return
         }
 
+        //WE GET THE URL AND SESSION ID. SAVE SESSION ID  IN LOCALSTORAGE
         const { url, sessionId } = await response.json()
         localStorage.setItem("session-id", sessionId)
         window.location = url;
     }
+
+    //VERIFY PAYMENT
+    const verifyPayment = async () => {
+
+      try {
+        //CATCH THE SESSION ID
+        const sessionId = localStorage.getItem("session-id")
+  
+        const response = await fetch("/api/verify-session", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({sessionId})
+          })
+
+          const { verified } = await response.json()
+  
+          //CHECK IF THE PAYMENT IS VERIFIED
+          if (verified) {
+            setIsPaymentverified(true)
+            localStorage.removeItem("session-id")
+          } else {
+            setIsPaymentverified(false)
+          }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    //SHOW THE LOGGED IN CUSTOMER ORDERS
+    const getOrders = async () => {
+  
+        try {
+          const response = await fetch(
+            "api/orders"
+          );
+          const orderData = await response.json();
+
+          if (response.status === 203) {
+            setMessage("Du har inte handlat hos oss än. Se din orderhistorik här fr.o.m din första order")
+          } 
+
+          if ( response.status === 200 ) {
+
+          //CREATE ORDERLIST
+          const orderList = orderData.map((order : Order) => ({
+
+            created: order.created,
+            customer: order.customer,
+            email: order.email,
+
+            products: order.products.map((product) => ({
+
+              product: product.product,
+              price: product.price,
+              currency: product.currency,
+              quantity: product.quantity,
+              totalPricePerProduct: product.totalPricePerProduct
+
+            })),
+
+            totalOrderPrice: order.totalOrderPrice
+        }));
+
+        setOrders(orderList);
+
+        }
+
+        } catch (err) {
+          console.log(err);
+        }
+      };
 
     return (
       <CartContext.Provider
@@ -132,8 +254,14 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
             setCartProducts,
             addToCart,
             getProductQuantity,
+            calculateTotalPrice,
             cartQuantity,
-            handlePayment
+            handlePayment,
+            isPaymentVerified,
+            verifyPayment,
+            orders, setOrders,
+            message, setMessage,
+            getOrders,
         }}
       >
         {children}

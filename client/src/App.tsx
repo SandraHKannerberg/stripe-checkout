@@ -1,5 +1,6 @@
 import Home from "../src/pages/Home"
 import Confirmation from "../src/pages/Confirmation.tsx"
+import Orders from "./pages/Orders.tsx";
 import "./App.css"
 import { ProductProvider } from "./context/ProductContext.tsx";
 import { CustomerProvider } from "./context/CustomerContext.tsx";
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/confirmation" element={<Confirmation />} />
+            <Route path="/orders" element={<Orders />} />
           </Routes>
         </ProductProvider>
       </CustomerProvider>

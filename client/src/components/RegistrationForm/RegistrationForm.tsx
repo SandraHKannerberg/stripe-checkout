@@ -1,17 +1,17 @@
-import { useState } from "react";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Alert } from "antd";
+import { Button, Form, Input, Typography } from "antd";
 import {
   useCustomerContext,
   newCustomerType,
 } from "../../context/CustomerContext";
 
-function RegisterForm() {
+const { Text } = Typography;
 
-  const { handleRegisterNewCustomer, username, setUsername, email, setEmail, password, setPassword, alertInfo } = useCustomerContext();
-  const [showAlert, setShowAlert] = useState(false);
+function RegistrationForm() {
 
-  const handleRegisterSubmit = async () => {
+  const { handleRegistrationNewCustomer, username, setUsername, email, setEmail, password, setPassword, successInfo, errorInfo } = useCustomerContext();
+
+  const handleRegistrationSubmit = async () => {
 
     const newCustomer: newCustomerType = {
           username,
@@ -19,8 +19,8 @@ function RegisterForm() {
           password,
     };
     
-    await handleRegisterNewCustomer(newCustomer)
-    setShowAlert(true)
+    await handleRegistrationNewCustomer(newCustomer)
+
   };
 
   return (
@@ -28,20 +28,12 @@ function RegisterForm() {
     <p>Ny kund? Vänligen registrera dig här:</p>
 
     <br />
-    {showAlert && (
-        <Alert
-          message={alertInfo}
-          type="info"
-          showIcon
-          closable
-          onClose={() => setShowAlert(false)}
-        />
-    )}
+    <Text type="success">{successInfo}</Text>
+    <br />
     <br />
 
     <Form
-      name="register"
-      className="register-form"
+      name="registration"
       initialValues={{ remember: true }}
     >
 
@@ -82,17 +74,18 @@ function RegisterForm() {
         <Form.Item>
             <Button
             type="primary"
-            className="register-form-button"
             block
             style={{"backgroundColor":" #3C6255", "borderRadius":"0",}}
-            onClick={handleRegisterSubmit}
+            onClick={handleRegistrationSubmit}
             >
             <p className="btn--text">Slutför</p>
             </Button>
         </Form.Item>
+
+        <Text type="danger">{errorInfo}</Text>
     </Form>
     </>
     );
 }
 
-export default RegisterForm;
+export default RegistrationForm;

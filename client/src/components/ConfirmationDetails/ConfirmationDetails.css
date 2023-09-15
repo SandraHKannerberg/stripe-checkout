@@ -1,0 +1,13 @@
+.order--check--icon{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: auto;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(-225deg, #20E2D7 0%, #F9FEA5 100%);
+    color: #3C6255;
+    filter: drop-shadow(0 0 8px #A6BB8D);
+}

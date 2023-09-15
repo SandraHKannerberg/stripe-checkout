@@ -4,7 +4,7 @@ import './ShoppingCartIconBtn.css'
 import ShoppingCartContent from '../ShoppingCartContent/ShoppingCartContent';
 import CheckoutBtn from '../CheckoutBtn/CheckoutBtn';
 import LogInBtn from '../LogInBtn/LogInBtn';
-import Coupon from '../CheckoutBtn/Coupon/Coupon';
+import Coupon from '../Coupon/Coupon';
 import { useState } from "react";
 import { useCartContext } from '../../context/CartContext';
 import { useCustomerContext } from '../../context/CustomerContext';
@@ -38,7 +38,7 @@ function ShoppingCartIconBtn() {
       </Button>
     </Badge>
 
-    <Drawer title="Din Kundkorg" placement="right" onClose={onClose} open={open} style={{"backgroundColor":"whitesmoke", "color":"#3C6255"}}>
+    <Drawer title="Din Kundkorg" placement="right" onClose={onClose} open={open} style={{"backgroundImage": "linear-gradient(to top, #c1dfc4 0%, #deecdd 100%)", "color":"#3C6255"}}>
 
       <ShoppingCartContent></ShoppingCartContent>
       
