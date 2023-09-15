@@ -1,6 +1,6 @@
 import { Button, Drawer, Divider } from "antd";
 import { UserOutlined } from '@ant-design/icons';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import LogInForm from "../LogInForm/LogInForm";
 import "./LogInBtn.css";

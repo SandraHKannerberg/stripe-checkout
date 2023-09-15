@@ -38,6 +38,7 @@ export interface ICartContext {
     setCartProducts: Dispatch<SetStateAction<CartItem[]>>;
     addToCart: (id: string, name: string, price: Price) => void;
     getProductQuantity: (id: string) => void;
+    calculateTotalPrice: () => void,
     cartQuantity: number,
     handlePayment: () => void,
     isPaymentVerified: boolean,
@@ -51,8 +52,9 @@ export interface ICartContext {
 const defaultValues = {
     cartProducts: [],
     setCartProducts: () => {},
-    addToCart: () => '',
-    getProductQuantity: () => {}, 
+    addToCart: () => "",
+    getProductQuantity: () => {},
+    calculateTotalPrice: () => {},
     cartQuantity: 0,
     handlePayment: () => {},
     isPaymentVerified: false,
@@ -123,12 +125,24 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
         }
     }
 
+    function calculateTotalPrice() {
+      let total = 0;
+      for (const item of cartProducts) {
+
+        const priceNumeric = parseFloat(item.price.unit_amount);
+        if (!isNaN(priceNumeric)) {
+          total += priceNumeric * item.quantity;
+        }
+          
+      }
+      return total;
+    }
+
     //COUNT THE CARTQUANTITY
-    const cartQuantity = cartProducts.reduce(
+      const cartQuantity = cartProducts.reduce(
         (quantity, item) => item.quantity + quantity,
         0
       );
-
 
     //HANDLE PAYMENT
     async function handlePayment () {
@@ -242,6 +256,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
             setCartProducts,
             addToCart,
             getProductQuantity,
+            calculateTotalPrice,
             cartQuantity,
             handlePayment,
             isPaymentVerified,
