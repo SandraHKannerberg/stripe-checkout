@@ -10,15 +10,15 @@ const { Text } = Typography;
 
 function LogInForm() {
 
-  const { authorization, handleLogin, confirmLogin, errorLogin, setErrorLogin } = useCustomerContext();
+  const { authorization, handleLogin, errorLogin, setErrorLogin } = useCustomerContext();
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
 
 
     const success = () => {
         messageApi.open({
-          type: 'success',
-          content: confirmLogin,
+          type: "success",
+          content: "Du är inloggad",
         });
     };
 
