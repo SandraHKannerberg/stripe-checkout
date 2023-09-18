@@ -5,6 +5,7 @@ import {
   newCustomerType,
 } from "../../context/CustomerContext";
 import { useEffect } from "react";
+import "../LogInForm/LogInForm.css"
 
 const { Text } = Typography;
 
@@ -93,6 +94,7 @@ function RegistrationForm() {
         <Form.Item>
             <Button
             type="primary"
+            className="drawer--button"
             block
             style={{"backgroundColor":" #3C6255", "borderRadius":"0",}}
             onClick={handleRegistrationSubmit}

@@ -1,6 +1,7 @@
 import { Button  } from "antd";
 import { useCartContext } from "../../context/CartContext";
 import { ArrowRightOutlined } from "@ant-design/icons";
+import "./CheckoutBtn.css"
 
 function CheckoutBtn() {
 
