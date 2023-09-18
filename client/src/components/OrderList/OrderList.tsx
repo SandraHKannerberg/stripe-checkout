@@ -35,7 +35,7 @@ function OrderList() {
 
       <Row style={{"display":"flex", "flexDirection":"column", "alignItems":"center"}}>
         <br />
-        <p>{message}</p>
+        <p className="message">{message}</p>
         {orders.map((order, index) => (
           <Col key={index} span={24}
           lg={{ span: 24 }}

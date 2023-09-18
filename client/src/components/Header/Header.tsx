@@ -9,11 +9,11 @@ function Header() {
   return (
     <div className="header--container">
 
-      <Row justify="center" align="middle" style={{"backgroundColor" : "black", "height" : "3rem"}}>
+      <Row justify="center" align="middle" style={{backgroundColor : "black", minHeight : "3rem", padding: "10px"}}>
         <Coupon></Coupon>
       </Row>
 
-      <Row justify="space-around" align="bottom" style={{"height":"6rem"}}>
+      <Row justify="space-around" align="bottom" style={{height:"6rem"}}>
         <Col span={12}><Logotype></Logotype></Col>
         <Col span={12}><NavBar></NavBar></Col>
       </Row>
