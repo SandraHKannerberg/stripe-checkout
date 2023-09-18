@@ -40,10 +40,9 @@ function ShoppingCartIconBtn() {
 
     <Drawer title="Din Kundkorg" placement="right" onClose={onClose} open={open} style={{"backgroundImage": "linear-gradient(to top, #c1dfc4 0%, #deecdd 100%)", "color":"#3C6255"}}>
 
-      <ShoppingCartContent></ShoppingCartContent>
-      
       {loggedInCustomer && cartQuantity !== 0 &&
       <>
+        <ShoppingCartContent></ShoppingCartContent>
         <CheckoutBtn></CheckoutBtn>
         <Row justify="center" align="middle" style={{"backgroundColor" : "black", "height" : "5rem", "marginTop":"0.5rem"}}>
           <Coupon></Coupon>

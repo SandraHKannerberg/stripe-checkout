@@ -28,8 +28,9 @@ function OrderList() {
           lg={{ span: 24 }}
           style={{"margin" : "1rem"}}>
             <Card.Grid className="order--card">
-              <h3>Ordernummer {order.created}</h3>
-              <p className="totalamount--order">Totalbelopp {order.totalOrderPrice} SEK</p>
+              <h3>Ordernummer </h3>
+              <p>Datum {order.created}</p>
+              <p>Totalbelopp {order.totalOrderPrice} SEK</p>
               <br />
 
               <h4>Order detaljer</h4>
