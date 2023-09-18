@@ -42,7 +42,7 @@ export interface ICartContext {
     cartQuantity: number,
     handlePayment: () => void,
     isPaymentVerified: boolean,
-    //verifyPayment: () => void,
+    verifyPayment: () => void,
     orders: Order[];
     setOrders: Dispatch<SetStateAction<Order[]>>;
     message: string,
@@ -59,7 +59,7 @@ const defaultValues = {
     cartQuantity: 0,
     handlePayment: () => {},
     isPaymentVerified: false,
-    //verifyPayment: () => {},
+    verifyPayment: () => {},
     orders: [],
     setOrders: () => {},
     message: "",
@@ -68,7 +68,6 @@ const defaultValues = {
 };
   
 export const CartContext = createContext<ICartContext>(defaultValues);
-
 
 export const useCartContext = () => useContext(CartContext);
   
@@ -174,34 +173,34 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
         window.location = url;
     }
 
-    // //VERIFY PAYMENT
-    // const verifyPayment = async () => {
+    //VERIFY PAYMENT
+    const verifyPayment = async () => {
 
-    //   try {
-    //     //CATCH THE SESSION ID
-    //     const sessionId = localStorage.getItem("session-id")
+      try {
+        //CATCH THE SESSION ID
+        const sessionId = localStorage.getItem("session-id")
   
-    //     const response = await fetch("/api/verify-session", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json"
-    //       },
-    //       body: JSON.stringify({sessionId})
-    //       })
+        const response = await fetch("/api/verify-session", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({sessionId})
+          })
 
-    //       const { verified } = await response.json()
+          const { verified } = await response.json()
   
-    //       //CHECK IF THE PAYMENT IS VERIFIED
-    //       if (verified) {
-    //         setIsPaymentverified(true)
-    //         localStorage.removeItem("session-id")
-    //       } else {
-    //         setIsPaymentverified(false)
-    //       }
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-    // }
+          //CHECK IF THE PAYMENT IS VERIFIED
+          if (verified) {
+            setIsPaymentverified(true)
+            localStorage.removeItem("session-id")
+          } else {
+            setIsPaymentverified(false)
+          }
+      } catch (error) {
+        console.log(error)
+      }
+    }
 
     //SHOW THE LOGGED IN CUSTOMER ORDERS
     const getOrders = async () => {
@@ -258,7 +257,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
             cartQuantity,
             handlePayment,
             isPaymentVerified,
-            //verifyPayment,
+            verifyPayment,
             orders, setOrders,
             message, setMessage,
             getOrders,

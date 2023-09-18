@@ -82,7 +82,6 @@ const verifySession = async (req, res) => {
       }, 0),
     };
 
-    //logiken att spara till json-filen skrivs här
     console.log("ORDER", order)
     console.log("SESSION-ID: ", req.body.sessionId)
     res.status(200).json({verified: true})
