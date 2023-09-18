@@ -34,7 +34,7 @@ function ProductList() {
               </ul>
               <h3>{product.name}</h3>
               <p>{product.description}</p>
-              <p>{product.price.unit_amount} <span className="currency--text">{product.price.currency}</span></p>
+              <p>{product.price.unit_amount} <span className="currency--letters">{product.price.currency}</span></p>
               <Button className="btn--text add--to--cart--btn" type="primary" onClick={() => addToCart(product.price.id, product.name, product.price)}>Lägg till i kundkorgen</Button>
             </Card.Grid>
           </Col>

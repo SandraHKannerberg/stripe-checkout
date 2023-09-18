@@ -54,10 +54,21 @@ const verifySession = async (req, res) => {
 
     //SUCCESSFULL PAYMENT
     const line_items = await stripe.checkout.sessions.listLineItems(req.body.sessionId);
-    
+
+    const createdDate = new Date(session.created * 1000);
+    const formattedDate = createdDate.toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true, // Use AM/PM
+    });
+
     //CREATE ORDER
     const order = {
-      created: session.created,
+      created: formattedDate,
       customer: session.customer_details.name,
       email: session.customer_details.email,
       products: line_items.data.map(item => {
@@ -82,7 +93,6 @@ const verifySession = async (req, res) => {
       }, 0),
     };
 
-    //logiken att spara till json-filen skrivs här
     console.log("ORDER", order)
     console.log("SESSION-ID: ", req.body.sessionId)
     res.status(200).json({verified: true})

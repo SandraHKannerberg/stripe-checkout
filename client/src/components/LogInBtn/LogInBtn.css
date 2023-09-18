@@ -8,7 +8,7 @@
 }
 .log--btn:hover{
     background-color: inherit !important;
-    transform: scale(1.1);
+    color: whitesmoke !important;
 }
 
 .logged--in--container{
@@ -31,6 +31,10 @@
 
 .link--my--pages{
     color: #3C6255;
+}
+
+.link--my--pages:hover{
+    color: whitesmoke;
 }
 
 .usericon{

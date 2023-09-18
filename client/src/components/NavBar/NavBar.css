@@ -2,3 +2,12 @@
     height: 3rem !important;
     color: #3C6255 !important;
 }
+
+.homeicon{
+    font-size: 30px;
+    color: #3C6255;
+}
+
+.homeicon:hover{
+    color: whitesmoke;
+}

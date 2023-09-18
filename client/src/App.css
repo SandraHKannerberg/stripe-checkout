@@ -11,3 +11,7 @@
     text-transform: uppercase;
     font-weight: 500;
 }
+
+.currency--letters{
+    text-transform: uppercase;
+}

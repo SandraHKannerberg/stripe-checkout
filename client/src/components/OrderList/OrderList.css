@@ -9,3 +9,7 @@
     border-radius: 15px;
     padding: 25px;
 }
+
+.customerdetails--order{
+    font-weight: bold;
+}

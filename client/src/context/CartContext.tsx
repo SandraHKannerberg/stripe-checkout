@@ -69,7 +69,6 @@ const defaultValues = {
   
 export const CartContext = createContext<ICartContext>(defaultValues);
 
-
 export const useCartContext = () => useContext(CartContext);
   
 export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
