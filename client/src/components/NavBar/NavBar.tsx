@@ -7,7 +7,7 @@ import "./NavBar.css"
 
 function NavBar() {
   return (
-    <Space style={{marginBottom : "0.3rem", display:"flex", justifyContent:"flex-end", gap: "2rem"}}>
+    <Space style={{marginBottom : "0.3rem", display:"flex", justifyContent:"flex-end"}}>
         <NavLink className="homeicon" to="/"style={{ textDecoration: "none"}}>
           <HomeOutlined />
         </NavLink>

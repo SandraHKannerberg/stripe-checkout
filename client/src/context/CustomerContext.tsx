@@ -35,6 +35,10 @@ interface ICustomerContext {
     setSuccessInfo: React.Dispatch<React.SetStateAction<string>>;
     errorInfo: string;
     setErrorInfo: React.Dispatch<React.SetStateAction<string>>;
+    confirmLogin: string;
+    setConfirmLogin: React.Dispatch<React.SetStateAction<string>>;
+    errorLogin: string;
+    setErrorLogin: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const defaultValues = {
@@ -54,6 +58,10 @@ const defaultValues = {
     setSuccessInfo: () => {},
     errorInfo: "",
     setErrorInfo: () => {},
+    confirmLogin: "",
+    setConfirmLogin: () => {},
+    errorLogin: "",
+    setErrorLogin: () => {},
 }
 
 export const CustomerContext = createContext<ICustomerContext>(defaultValues);
@@ -70,15 +78,17 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   const [password, setPassword] = useState("");
   const [successInfo, setSuccessInfo] = useState("");
   const [errorInfo, setErrorInfo] = useState("");
+  const [confirmLogin, setConfirmLogin] = useState("");
+  const [errorLogin, setErrorLogin] = useState("");
 
 
   //CHECKAR OM DET FINNS NÅGON INLOGGAD KUND
   const authorization = async () => {
     try {
       const response = await fetch("/api/customers/authorize");
-      const data = await response.json();
+      const customerData = await response.json();
       if (response.status === 200 || response.status === 304) {
-        setLoggedInCustomer(data);
+        setLoggedInCustomer(customerData);
       }
 
     } catch (err) {
@@ -102,17 +112,14 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
             },
             body: JSON.stringify(newCustomer),
           });
-          const data = await response.json();
+          const data = await response.json(); //Vad göra med denna data?
   
           if (response.status === 200) {
-   
-            console.log("NEW CUSTOMER", data);
             setSuccessInfo("Grattis! Du är nu registrerad som kund hos oss. Varmt välkommen att logga in.")
+            console.log(data)
           } 
 
           if(response.status === 409) {
-
-            console.log("ERROR", data);
             setErrorInfo("*Denna kund är redan registrerad. Vänligen välj ett annat användarnamn")
           }
         } catch (err) {
@@ -138,10 +145,11 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
         if (response.status === 200) {
           setLoggedInCustomer(data);
+          setConfirmLogin("Du är nu inloggad")
         } 
 
-        if (response.status === 404) {
-          setErrorInfo("Ooops! Inloggning misslyckades. Felaktigt användarnamn och/eller lösenord")
+        if (response.status === 404 || response.status === 401 ) {
+          setErrorLogin("Ooops! Inloggning misslyckades. Felaktigt användarnamn och/eller lösenord")
         }
 
       } catch (err) {
@@ -184,7 +192,9 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
         email, setEmail, 
         password, setPassword, 
         successInfo, setSuccessInfo,
-        errorInfo, setErrorInfo 
+        errorInfo, setErrorInfo,
+        confirmLogin, setConfirmLogin, 
+        errorLogin, setErrorLogin 
       }}
     >
       {children}

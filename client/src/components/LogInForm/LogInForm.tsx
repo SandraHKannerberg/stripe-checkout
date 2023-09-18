@@ -1,15 +1,27 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Typography } from "antd";
+import { Button, Form, Input, Typography, message } from "antd";
 import {
   useCustomerContext,
   CustomerType,
 } from "../../context/CustomerContext";
+import { useEffect } from "react";
 
 const { Text } = Typography;
 
 function LogInForm() {
 
-  const { handleLogin, errorInfo } = useCustomerContext();
+  const { authorization, handleLogin, confirmLogin, errorLogin, setErrorLogin } = useCustomerContext();
+  const [form] = Form.useForm();
+  const [messageApi, contextHolder] = message.useMessage();
+
+
+    const success = () => {
+        messageApi.open({
+          type: 'success',
+          content: confirmLogin,
+        });
+    };
+
 
   const handleLoginFinish = async (values: any) => {
   
@@ -19,17 +31,30 @@ function LogInForm() {
         };
 
     await handleLogin(customer)
+    authorization()
+
+    success()
+    form.resetFields(); //Reset inputs after login
   };
+
+  useEffect(() => {
+    if (errorLogin !== "") {
+      setTimeout(() => {
+        setErrorLogin("");
+      }, 5000);
+    }
+  }, [errorLogin]);
 
 
   return (
     <>
+      {contextHolder}
       <p>Redan registrerad? Vänligen logga in här:</p>
       <br />
       <Form
+        form={form}
         name="login"
         className="login-form"
-        initialValues={{ remember: true }}
         onFinish={handleLoginFinish} 
       >
         <Form.Item
@@ -66,7 +91,7 @@ function LogInForm() {
           </Button>
         </Form.Item>
 
-        <Text type="danger">{errorInfo}</Text>
+        <Text type="danger">{errorLogin}</Text>
       </Form>
       </>
     );
