@@ -35,6 +35,8 @@ interface ICustomerContext {
     setSuccessInfo: React.Dispatch<React.SetStateAction<string>>;
     errorInfo: string;
     setErrorInfo: React.Dispatch<React.SetStateAction<string>>;
+    errorLogin: string;
+    setErrorLogin: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const defaultValues = {
@@ -54,6 +56,8 @@ const defaultValues = {
     setSuccessInfo: () => {},
     errorInfo: "",
     setErrorInfo: () => {},
+    errorLogin: "",
+    setErrorLogin: () => {},
 }
 
 export const CustomerContext = createContext<ICustomerContext>(defaultValues);
@@ -70,6 +74,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   const [password, setPassword] = useState("");
   const [successInfo, setSuccessInfo] = useState("");
   const [errorInfo, setErrorInfo] = useState("");
+  const [errorLogin, setErrorLogin] = useState("");
 
 
   //CHECKAR OM DET FINNS NÅGON INLOGGAD KUND
@@ -106,6 +111,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   
           if (response.status === 200) {
             setSuccessInfo("Grattis! Du är nu registrerad som kund hos oss. Varmt välkommen att logga in.")
+            console.log(data)
           } 
 
           if(response.status === 409) {
@@ -136,8 +142,8 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
           setLoggedInCustomer(data);
         } 
 
-        if (response.status === 404) {
-          setErrorInfo("Ooops! Inloggning misslyckades. Felaktigt användarnamn och/eller lösenord")
+        if (response.status === 404 || response.status === 401 ) {
+          setErrorLogin("Ooops! Inloggning misslyckades. Felaktigt användarnamn och/eller lösenord")
         }
 
       } catch (err) {
@@ -180,7 +186,8 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
         email, setEmail, 
         password, setPassword, 
         successInfo, setSuccessInfo,
-        errorInfo, setErrorInfo 
+        errorInfo, setErrorInfo,
+        errorLogin, setErrorLogin 
       }}
     >
       {children}

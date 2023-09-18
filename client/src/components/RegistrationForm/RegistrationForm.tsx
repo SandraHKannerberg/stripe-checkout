@@ -4,12 +4,31 @@ import {
   useCustomerContext,
   newCustomerType,
 } from "../../context/CustomerContext";
+import { useEffect } from "react";
 
 const { Text } = Typography;
 
 function RegistrationForm() {
 
-  const { handleRegistrationNewCustomer, username, setUsername, email, setEmail, password, setPassword, successInfo, errorInfo } = useCustomerContext();
+  const { handleRegistrationNewCustomer, username, setUsername, email, setEmail, password, setPassword, successInfo, setSuccessInfo, errorInfo, setErrorInfo } = useCustomerContext();
+  
+
+  useEffect(() => {
+    if (successInfo !== "") {
+      setTimeout(() => {
+        setSuccessInfo("");
+      }, 5000);
+    }
+  }, [successInfo]);
+
+  useEffect(() => {
+    if (errorInfo !== "") {
+      setTimeout(() => {
+        setErrorInfo("");
+      }, 5000);
+    }
+  }, [errorInfo]);
+
 
   const handleRegistrationSubmit = async () => {
 

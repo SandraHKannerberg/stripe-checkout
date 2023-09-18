@@ -1,6 +1,6 @@
 import { Button, Drawer, Divider } from "antd";
 import { UserOutlined } from '@ant-design/icons';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import LogInForm from "../LogInForm/LogInForm";
 import "./LogInBtn.css";
@@ -12,7 +12,7 @@ import RegistrationForm from "../RegistrationForm/RegistrationForm";
 function LogInBtn() {
 
   const [open, setOpen] = useState(false);
-  const { authorization, loggedInCustomer, handleLogout, setUsername, username} = useCustomerContext();
+  const { loggedInCustomer, handleLogout } = useCustomerContext();
 
 
   const showLogInDrawer = () => {

@@ -4,14 +4,14 @@ import {
   useCustomerContext,
   CustomerType,
 } from "../../context/CustomerContext";
+import { useEffect } from "react";
 
 const { Text } = Typography;
 
 function LogInForm() {
 
-  const { authorization, handleLogin, errorInfo } = useCustomerContext();
+  const { authorization, handleLogin, errorLogin, setErrorLogin } = useCustomerContext();
   const [form] = Form.useForm();
-
 
   const handleLoginFinish = async (values: any) => {
   
@@ -25,6 +25,14 @@ function LogInForm() {
 
     form.resetFields(); //Reset inputs after login
   };
+
+  useEffect(() => {
+    if (errorLogin !== "") {
+      setTimeout(() => {
+        setErrorLogin("");
+      }, 5000);
+    }
+  }, [errorLogin]);
 
 
   return (
@@ -71,7 +79,7 @@ function LogInForm() {
           </Button>
         </Form.Item>
 
-        <Text type="danger">{errorInfo}</Text>
+        <Text type="danger">{errorLogin}</Text>
       </Form>
       </>
     );
