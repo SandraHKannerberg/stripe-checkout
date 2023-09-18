@@ -11,3 +11,7 @@
 .homeicon:hover{
     color: whitesmoke;
 }
+
+.dropdown--icon{
+    font-size: 20px;
+}
