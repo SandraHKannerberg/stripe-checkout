@@ -13,8 +13,7 @@ function LogInBtn() {
 
   const [open, setOpen] = useState(false);
   const { loggedInCustomer, handleLogout } = useCustomerContext();
-
-
+ 
   const showLogInDrawer = () => {
     setOpen(true);
   };

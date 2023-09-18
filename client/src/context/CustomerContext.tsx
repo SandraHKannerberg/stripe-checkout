@@ -35,6 +35,8 @@ interface ICustomerContext {
     setSuccessInfo: React.Dispatch<React.SetStateAction<string>>;
     errorInfo: string;
     setErrorInfo: React.Dispatch<React.SetStateAction<string>>;
+    confirmLogin: string;
+    setConfirmLogin: React.Dispatch<React.SetStateAction<string>>;
     errorLogin: string;
     setErrorLogin: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -56,6 +58,8 @@ const defaultValues = {
     setSuccessInfo: () => {},
     errorInfo: "",
     setErrorInfo: () => {},
+    confirmLogin: "",
+    setConfirmLogin: () => {},
     errorLogin: "",
     setErrorLogin: () => {},
 }
@@ -74,6 +78,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   const [password, setPassword] = useState("");
   const [successInfo, setSuccessInfo] = useState("");
   const [errorInfo, setErrorInfo] = useState("");
+  const [confirmLogin, setConfirmLogin] = useState("");
   const [errorLogin, setErrorLogin] = useState("");
 
 
@@ -140,6 +145,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
         if (response.status === 200) {
           setLoggedInCustomer(data);
+          setConfirmLogin("Du är nu inloggad")
         } 
 
         if (response.status === 404 || response.status === 401 ) {
@@ -187,6 +193,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
         password, setPassword, 
         successInfo, setSuccessInfo,
         errorInfo, setErrorInfo,
+        confirmLogin, setConfirmLogin, 
         errorLogin, setErrorLogin 
       }}
     >

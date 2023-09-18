@@ -1,5 +1,5 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Typography } from "antd";
+import { Button, Form, Input, Typography, message } from "antd";
 import {
   useCustomerContext,
   CustomerType,
@@ -10,8 +10,18 @@ const { Text } = Typography;
 
 function LogInForm() {
 
-  const { authorization, handleLogin, errorLogin, setErrorLogin } = useCustomerContext();
+  const { authorization, handleLogin, confirmLogin, errorLogin, setErrorLogin } = useCustomerContext();
   const [form] = Form.useForm();
+  const [messageApi, contextHolder] = message.useMessage();
+
+
+    const success = () => {
+        messageApi.open({
+          type: 'success',
+          content: confirmLogin,
+        });
+    };
+
 
   const handleLoginFinish = async (values: any) => {
   
@@ -23,6 +33,7 @@ function LogInForm() {
     await handleLogin(customer)
     authorization()
 
+    success()
     form.resetFields(); //Reset inputs after login
   };
 
@@ -37,6 +48,7 @@ function LogInForm() {
 
   return (
     <>
+      {contextHolder}
       <p>Redan registrerad? Vänligen logga in här:</p>
       <br />
       <Form
