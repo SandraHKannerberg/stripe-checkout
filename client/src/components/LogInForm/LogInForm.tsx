@@ -9,7 +9,9 @@ const { Text } = Typography;
 
 function LogInForm() {
 
-  const { handleLogin, errorInfo } = useCustomerContext();
+  const { authorization, handleLogin, errorInfo } = useCustomerContext();
+  const [form] = Form.useForm();
+
 
   const handleLoginFinish = async (values: any) => {
   
@@ -19,6 +21,9 @@ function LogInForm() {
         };
 
     await handleLogin(customer)
+    authorization()
+
+    form.resetFields(); //Reset inputs after login
   };
 
 
@@ -27,9 +32,9 @@ function LogInForm() {
       <p>Redan registrerad? Vänligen logga in här:</p>
       <br />
       <Form
+        form={form}
         name="login"
         className="login-form"
-        initialValues={{ remember: true }}
         onFinish={handleLoginFinish} 
       >
         <Form.Item

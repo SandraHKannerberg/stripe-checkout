@@ -76,9 +76,9 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   const authorization = async () => {
     try {
       const response = await fetch("/api/customers/authorize");
-      const data = await response.json();
+      const customerData = await response.json();
       if (response.status === 200 || response.status === 304) {
-        setLoggedInCustomer(data);
+        setLoggedInCustomer(customerData);
       }
 
     } catch (err) {
@@ -102,17 +102,13 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
             },
             body: JSON.stringify(newCustomer),
           });
-          const data = await response.json();
+          const data = await response.json(); //Vad göra med denna data?
   
           if (response.status === 200) {
-   
-            console.log("NEW CUSTOMER", data);
             setSuccessInfo("Grattis! Du är nu registrerad som kund hos oss. Varmt välkommen att logga in.")
           } 
 
           if(response.status === 409) {
-
-            console.log("ERROR", data);
             setErrorInfo("*Denna kund är redan registrerad. Vänligen välj ett annat användarnamn")
           }
         } catch (err) {

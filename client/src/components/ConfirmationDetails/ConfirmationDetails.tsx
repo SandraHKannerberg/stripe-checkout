@@ -20,7 +20,6 @@ function ConfirmationDetails() {
 
     <Space direction="vertical" size={16}>
  
-
     {isPaymentVerified ? ( 
     
     <Card title="Tack för din order" style={{ width: 300, display: "flex", flexDirection:"column", gap: "2rem" }}>
@@ -37,8 +36,7 @@ function ConfirmationDetails() {
       <Button className="btn--text" style={{"backgroundColor":"#3C6255", "marginTop":"1.5rem", "borderRadius":"0", "color":"whitesmoke"}}>Fortsätt shoppa</Button>
       </NavLink>
     </Space>
-
- 
+    
   )
 }
 

@@ -1,6 +1,6 @@
 import { Button, Drawer, Divider } from "antd";
 import { UserOutlined } from '@ant-design/icons';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import LogInForm from "../LogInForm/LogInForm";
 import "./LogInBtn.css";
@@ -12,7 +12,7 @@ import RegistrationForm from "../RegistrationForm/RegistrationForm";
 function LogInBtn() {
 
   const [open, setOpen] = useState(false);
-  const { loggedInCustomer, handleLogout} = useCustomerContext();
+  const { authorization, loggedInCustomer, handleLogout, setUsername, username} = useCustomerContext();
 
 
   const showLogInDrawer = () => {
@@ -22,7 +22,6 @@ function LogInBtn() {
   const onClose = () => {
     setOpen(false);
   };
-
 
   return (
   <>
@@ -54,14 +53,15 @@ function LogInBtn() {
         </Button>
       </div> 
     </div>
+    </>
+  }
 
-    <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open} style={{"backgroundImage": "linear-gradient(to top, #c1dfc4 0%, #deecdd 100%)", "color":" #3C6255"}}>
+<Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open} style={{"backgroundImage": "linear-gradient(to top, #c1dfc4 0%, #deecdd 100%)", "color":" #3C6255"}}>
       <LogInForm></LogInForm>
       <Divider/>
       <RegistrationForm></RegistrationForm>
     </Drawer>
-    </>
-  }
+
   </>
 );
 }
