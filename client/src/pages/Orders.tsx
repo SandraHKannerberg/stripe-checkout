@@ -5,9 +5,9 @@ import OrderList from "../components/OrderList/OrderList";
 
 function Orders() {
   return (
-    <Row style={{"minHeight" : "100vh", "backgroundColor":"whitesmoke"}} >
+    <Row style={{minHeight : "100vh", backgroundColor:"whitesmoke"}} >
         <Col span={24}><Header></Header></Col>
-        <Col style={{"minHeight" : "70vh"}} span={24}>
+        <Col style={{height : "auto", marginTop: "10rem"}} span={24}>
           <OrderList></OrderList>
         </Col>
         <Col span={24}><Footer></Footer></Col>

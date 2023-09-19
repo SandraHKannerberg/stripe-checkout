@@ -14,9 +14,12 @@ function Header() {
         <Coupon></Coupon>
       </Row>
 
-      <Row justify="start" style={{minHeight:"6rem"}}>
-        <Col style={{width: "auto"}}><Logotype></Logotype></Col>
-        <Col style={{width: "100%", display:"flex", justifyContent:"flex-end", alignItems: "center", minHeight: "3rem"}}>
+      <Row justify="space-between" align="middle" style={{minHeight:"6rem", width: "100%"}}>
+        <Col>
+          <Logotype></Logotype>
+        </Col>
+
+        <Col style={{display:"flex", justifyContent:"flex-end", alignItems: "center"}}>
           <NavBar></NavBar>
           <ShoppingCartIconBtn></ShoppingCartIconBtn>
         </Col>

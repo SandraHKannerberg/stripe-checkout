@@ -68,6 +68,7 @@ const verifySession = async (req, res) => {
 
     //CREATE ORDER
     const order = {
+      orderId: session.id,
       created: formattedDate,
       customer: session.customer_details.name,
       email: session.customer_details.email,

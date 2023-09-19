@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import {
   useCustomerContext,
 } from "../../context/CustomerContext";
+import Logotype from "../Logotype/Logotype";
 
 function NavBar() {
 
@@ -52,6 +53,7 @@ function NavBar() {
       ) : (
 
       <>
+      {/* <Logotype></Logotype> */}
       <Space  size="large"> 
         <NavLink className="homeicon" to="/"style={{ textDecoration: "none"}}>
           <HomeOutlined />
