@@ -6,27 +6,27 @@
     "email": "test@test.nu"
   },
   {
-    "id": "cus_Od3Ud1WL0G2Ub5",
-    "username": "User",
-    "password": "$2b$10$4TCzkNfQo8SlrmJIQtUYc.WjPiEmORU.s93MZ1SiQY7L8RZgbKFAW",
-    "email": "user@user.nu"
-  },
-  {
-    "id": "cus_Od4CduLNysvHgM",
-    "email": "kajsasmail@mail.se",
-    "username": "Kajsa",
-    "password": "$2b$10$41AlHd5McqNImDCaR3tCsOzgmOw.Cgcq9OyqF5L/C20QGgKJdW6Dm"
-  },
-  {
-    "id": "cus_Od4sWZWXTmR09Z",
-    "email": "stinasmail@mail.se",
-    "username": "Stina",
-    "password": "$2b$10$8SZBbuGLvemDbaYjFJZjVOP.llw29ripIRCXRHlThkvDyovKJKE3S"
-  },
-  {
     "id": "cus_OdPpdkeVAIt9f2",
     "email": "kalle@minmail.com",
     "username": "Kalle",
     "password": "$2b$10$/zneBNX6NqaHptmAKeG9Ru9Xyiv9BZnBtqoWH7Raj7aqzSIV1bt7O"
+  },
+  {
+    "id": "cus_OfOfPSGkztETZ5",
+    "email": "stina@minmail.com",
+    "username": "Stina",
+    "password": "$2b$10$bkHDel7ctfrDbhPht5Aewul.2ajL7J/Re2DZ8AW//cG7bxh4I9l.u"
+  },
+  {
+    "id": "cus_OfOfD6uOlMTAOB",
+    "email": "kajsa@minmail.com",
+    "username": "Kajsa",
+    "password": "$2b$10$.A0DIyZYsmSofOC4UrDzpu/1Ot.AS2vlLLXDnq5lYiL9VrKRmnZty"
+  },
+  {
+    "id": "cus_OfOgPwRCaXsjBC",
+    "email": "pelle@minmail.com",
+    "username": "Pelle",
+    "password": "$2b$10$EzBIdeW7Ok017okzJwF32eG7QPzzKWEFZ319qWwkdaFIoBkr7/wR."
   }
 ]

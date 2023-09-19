@@ -21,7 +21,7 @@ function ConfirmationDetails() {
  
     {isPaymentVerified ? ( 
     
-    <Card title="Tack för din order" style={{ width: 300, display: "flex", flexDirection:"column", gap: "2rem" }}>
+    <Card title="Tack för din order" style={{ width: 300, display: "flex", flexDirection:"column", gap: "2rem", marginTop:"3rem" }}>
       <div className="order--check--icon"><CheckOutlined /></div>
       <h3>Ditt köp har genomförts!</h3>
       <p className="order--confirmation--text">En bekräftelse kommer skickas till din registrerade e-mailadress</p>

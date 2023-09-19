@@ -148,7 +148,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
 
     const cartToStripe = cartProducts.map(item => ({
       product: item.id,
-        uantity: item.quantity
+      quantity: item.quantity
     }))
 
     const response = await fetch("/api/create-checkout-session", {
