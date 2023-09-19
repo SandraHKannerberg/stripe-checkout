@@ -5,9 +5,9 @@ import { Col, Row } from "antd";
 
 function home() {
   return (
-    <Row style={{"minHeight" : "100vh", "backgroundColor":"whitesmoke"}} >
+    <Row style={{minHeight: "100vh", backgroundColor:"whitesmoke"}} >
         <Col span={24}><Header></Header></Col>
-        <Col style={{"minHeight" : "70vh"}} span={24}><MainContent></MainContent></Col>
+        <Col style={{minHeight : "70vh", marginTop: "8.5rem"}} span={24}><MainContent></MainContent></Col>
         <Col span={24}><Footer></Footer></Col>
     </Row>
   )
