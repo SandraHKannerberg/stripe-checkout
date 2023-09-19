@@ -1,5 +1,5 @@
-import { useProductContext } from '../../context/ProductContext';
-import { useCartContext } from '../../context/CartContext';
+import { useProductContext } from "../../context/ProductContext";
+import { useCartContext } from "../../context/CartContext";
 import { Row, Col, Space, Card, Button  } from 'antd';
 import "./ProductList.css"
 
@@ -16,19 +16,19 @@ function ProductList() {
 
   return (
     <>
-      <Row style={{"display":"flex", "justifyContent" : "center"}}>
+      <Row style={{display:"flex", justifyContent : "center"}}>
         {products.map((product, index) => (
           <Col key={index} span={4} 
           xs={{ span: 22 }}
           sm={{ span: 12, offset: 6 }}  
           md={{ span: 8, offset: 4 }}  
           lg={{ span: 4, offset: 2 }}
-          style={{"margin" : "1rem"}}>
+          style={{margin : "1rem"}}>
             <Card.Grid className="product--card" style={gridStyle}>
               <ul>
                 {product.images.map((image, index) => (
                   <Space key={index}>
-                    <img src={image} alt={`Product ${product.id} Image ${index}`} style={{"height":"300px", "marginTop":"1rem"}} />
+                    <img src={image} alt={`Product ${product.id} Image ${index}`} style={{height:"300px", marginTop:"1rem"}} />
                   </Space>
                 ))}
               </ul>

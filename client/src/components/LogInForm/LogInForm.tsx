@@ -15,14 +15,12 @@ function LogInForm() {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
 
-
-    const success = () => {
-        messageApi.open({
-          type: "success",
-          content: "Du är inloggad",
-        });
-    };
-
+  const success = () => {
+     messageApi.open({
+      type: "success",
+      content: "Du är inloggad",
+    });
+  };
 
   const handleLoginFinish = async (values: any) => {
   
@@ -86,7 +84,7 @@ function LogInForm() {
             className="drawer--button"
             htmlType="submit"
             block
-            style={{backgroundColor:" #3C6255", borderRadius: "0"}}
+            style={{backgroundColor:"#3C6255", borderRadius: "0"}}
           >
            <p className="btn--text">Logga in</p>
           </Button>

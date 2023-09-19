@@ -1,5 +1,5 @@
 import { Col } from "antd";
-import { GiftOutlined } from '@ant-design/icons';
+import { GiftOutlined } from "@ant-design/icons";
 import "./Coupon.css"
 
 function Coupon() {

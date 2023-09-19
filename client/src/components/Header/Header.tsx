@@ -9,7 +9,6 @@ import ShoppingCartIconBtn from "../ShoppingCartIconBtn/ShoppingCartIconBtn";
 function Header() {
   return (
     <div className="header--container">
-
       <Row justify="center" align="middle" style={{backgroundColor : "black", minHeight : "3rem", padding: "10px"}}>
         <Coupon></Coupon>
       </Row>

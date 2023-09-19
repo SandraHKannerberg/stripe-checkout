@@ -78,125 +78,120 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [message, setMessage] = useState("");
 
-    //HANDLE THE QUANTITY OF EVERY CARTITEM IN THE SHOPPINGCART
-    function getProductQuantity(id : string) {
+  //HANDLE THE QUANTITY OF EVERY CARTITEM IN THE SHOPPINGCART
+  function getProductQuantity(id : string) {
 
-        const quantity = cartProducts.find(product => product.id === id)?.quantity //Check the quantity if the product are in the cart
+    //Check the quantity if the product are in the cart
+    const quantity = cartProducts.find(product => product.id === id)?.quantity 
 
-        if (quantity === undefined) {
-            return 0;
-        }
+      if (quantity === undefined) {
+        return 0;
+      }
 
-        return quantity
-    }
+    return quantity
+  }
 
-    //HANDLE ADD TO CART
-    function addToCart(
-      id: string,
-      name: string,
-      price: Price
-      ) {
+  //HANDLE ADD TO CART
+  function addToCart(id: string, name: string, price: Price) {
         
-        //GET THE QUANTITY
-        const quantity = getProductQuantity(id);
+    //Get the quantity
+    const quantity = getProductQuantity(id);
 
-        if (quantity === 0) {
-        //PRODUCT IS NOT IN CART
-        setCartProducts(
-            [
-                ...cartProducts,
-                {
-                    id: id,
-                    name: name,
-                    price: price,
-                    quantity: 1
-                }
-            ]
+    if (quantity === 0) {
+    //If product not in cart
+      setCartProducts(
+        [
+          ...cartProducts,
+        {
+          id: id,
+          name: name,
+          price: price,
+          quantity: 1
+        }
+        ]
         )
         } else {
-            //PRODUCT IS ALREADY IN CART
-            setCartProducts(
-                cartProducts.map(
-                    product => 
-                    product.id === id 
-                    ? {...product, quantity: product.quantity + 1}
-                    : product                                     
-                )
+          //If product already in cart
+          setCartProducts(
+            cartProducts.map(
+              product => 
+              product.id === id 
+              ? {...product, quantity: product.quantity + 1}
+              : product                                     
             )
-        }
+          )
+      }
     }
 
-    function calculateTotalPrice() {
-      let total = 0;
-      for (const item of cartProducts) {
+  //TOTALPRICE
+  function calculateTotalPrice() {
+    let total = 0;
+    for (const item of cartProducts) {
 
         const priceNumeric = parseFloat(item.price.unit_amount);
         if (!isNaN(priceNumeric)) {
           total += priceNumeric * item.quantity;
         }
           
-      }
-      return total;
+    }
+    return total;
+  }
+
+  //COUNT THE CARTQUANTITY
+    const cartQuantity = cartProducts.reduce(
+      (quantity, item) => item.quantity + quantity,
+      0
+    );
+
+  //HANDLE PAYMENT
+  async function handlePayment () {
+
+    const cartToStripe = cartProducts.map(item => ({
+      product: item.id,
+        uantity: item.quantity
+    }))
+
+    const response = await fetch("/api/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({items: cartToStripe})
+      })
+
+      if(!response.ok) {
+            return
+        }
+
+      //Save session id to localStorage
+      const { url, sessionId } = await response.json()
+      localStorage.setItem("session-id", sessionId)
+      window.location = url;
     }
 
-    //COUNT THE CARTQUANTITY
-      const cartQuantity = cartProducts.reduce(
-        (quantity, item) => item.quantity + quantity,
-        0
-      );
+  //VERIFY PAYMENT
+  const verifyPayment = async () => {
 
-    //HANDLE PAYMENT
-    async function handlePayment () {
-
-      const cartToStripe = cartProducts.map(item => ({
-        product: item.id,
-        quantity: item.quantity
-      }))
-
-      console.log("TEST", cartToStripe)
-
-      const response = await fetch("/api/create-checkout-session", {
+    try {
+      const sessionId = localStorage.getItem("session-id")
+  
+      const response = await fetch("/api/verify-session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({items: cartToStripe})
+        body: JSON.stringify({sessionId})
         })
 
-        if(!response.ok) {
-            return
-        }
-
-        //WE GET THE URL AND SESSION ID. SAVE SESSION ID  IN LOCALSTORAGE
-        const { url, sessionId } = await response.json()
-        localStorage.setItem("session-id", sessionId)
-        window.location = url;
-    }
-
-    //VERIFY PAYMENT
-    const verifyPayment = async () => {
-
-      try {
-        //CATCH THE SESSION ID
-        const sessionId = localStorage.getItem("session-id")
+        const { verified } = await response.json()
   
-        const response = await fetch("/api/verify-session", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({sessionId})
-          })
-
-          const { verified } = await response.json()
-  
-          //CHECK IF THE PAYMENT IS VERIFIED
-          if (verified) {
-            setIsPaymentverified(true)
-            localStorage.removeItem("session-id")
+        //Check if payment is verified
+        if (verified) {
+          setIsPaymentverified(true)
+          localStorage.removeItem("session-id")
           } else {
             setIsPaymentverified(false)
-          }
+        }
       } catch (error) {
         console.log(error)
       }
@@ -205,46 +200,46 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
     //SHOW THE LOGGED IN CUSTOMER ORDERS
     const getOrders = async () => {
   
-        try {
-          const response = await fetch(
-            "api/orders"
-          );
-          const orderData = await response.json();
+      try {
+        const response = await fetch(
+          "api/orders"
+        );
+        const orderData = await response.json();
 
-          if (response.status === 203) {
-            setMessage("Du har inte handlat hos oss än. Se din orderhistorik här fr.o.m din första order")
-          } 
+        if (response.status === 203) {
+          setMessage("Du har inte handlat hos oss än. Se din orderhistorik här fr.o.m din första order")
+        } 
 
-          if ( response.status === 200 ) {
+        if ( response.status === 200 ) {
 
-          //CREATE ORDERLIST
-          const orderList = orderData.map((order : Order) => ({
+        //Create orderlist
+        const orderList = orderData.map((order : Order) => ({
 
-            created: order.created,
-            customer: order.customer,
-            email: order.email,
+          created: order.created,
+          customer: order.customer,
+          email: order.email,
 
-            products: order.products.map((product) => ({
+          products: order.products.map((product) => ({
 
-              product: product.product,
-              price: product.price,
-              currency: product.currency,
-              quantity: product.quantity,
-              totalPricePerProduct: product.totalPricePerProduct
+            product: product.product,
+            price: product.price,
+            currency: product.currency,
+            quantity: product.quantity,
+            totalPricePerProduct: product.totalPricePerProduct
 
-            })),
+          })),
 
-            totalOrderPrice: order.totalOrderPrice
-        }));
+          totalOrderPrice: order.totalOrderPrice
+      }));
 
-        setOrders(orderList);
+      setOrders(orderList);
 
-        }
+      }
 
-        } catch (err) {
-          console.log(err);
-        }
-      };
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
     return (
       <CartContext.Provider

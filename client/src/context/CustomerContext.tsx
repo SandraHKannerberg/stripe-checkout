@@ -64,7 +64,6 @@ export const CustomerContext = createContext<ICustomerContext>(defaultValues);
 
 export const useCustomerContext = () => useContext(CustomerContext);
 
-
 export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
   const [loggedInCustomer, setLoggedInCustomer] = useState<Customer | null>(null);
@@ -77,7 +76,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   const [errorLogin, setErrorLogin] = useState("");
 
 
-  //CHECKAR OM DET FINNS NÅGON INLOGGAD KUND
+  //CHECK IF SOMEONE IS LOGGED IN
   const authorization = async () => {
     try {
       const response = await fetch("/api/customers/authorize");
@@ -95,7 +94,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
     authorization()
   }, []);
 
-    //HANTERAR REGISTRERING AV NY KUND
+    //REGISTRATION - NEW CUSTOMER
     const handleRegistrationNewCustomer = async (newCustomer: newCustomerType) => {
       if (newCustomer) {
   
@@ -124,7 +123,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
     };
   
 
-  //HANTERAR LOGGA IN
+  //HANDLE LOG IN
   const handleLogin = async (customer: CustomerType) => {
     if (customer) {
 
@@ -152,7 +151,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
     }
   };
 
-  //HANTERAR LOGGA UT
+  //HANDLE LOG OUT
   const handleLogout = async () => {
 
     try {

@@ -13,7 +13,6 @@ function RegistrationForm() {
 
   const { handleRegistrationNewCustomer, username, setUsername, email, setEmail, password, setPassword, successInfo, setSuccessInfo, errorInfo, setErrorInfo } = useCustomerContext();
   
-
   useEffect(() => {
     if (successInfo !== "") {
       setTimeout(() => {

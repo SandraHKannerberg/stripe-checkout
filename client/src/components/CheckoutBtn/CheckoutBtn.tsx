@@ -9,7 +9,7 @@ function CheckoutBtn() {
 
   return (
     <>
-      <Button className="checkout--btn" type="primary" block onClick={handlePayment} style={{"backgroundColor":"#3C6255", "marginTop":"2rem", "borderRadius":"0"}}>
+      <Button className="checkout--btn" type="primary" block onClick={handlePayment} style={{backgroundColor:"#3C6255", marginTop:"2rem", borderRadius: "0"}}>
         <p className="btn--text">Gå till kassan <ArrowRightOutlined /></p>
       </Button>
     </>

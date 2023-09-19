@@ -26,7 +26,7 @@ function ShoppingCartIconBtn() {
 
   return (
     <>
-    <Badge count={cartQuantity} style={{"marginRight": "2.8rem", "backgroundColor":"#EAE7B1", "color": "#3C6255", "fontSize":"1.1rem"}}>
+    <Badge count={cartQuantity} style={{marginRight: "2.8rem", backgroundColor:"#EAE7B1", color: "#3C6255", fontSize:"1.1rem"}}>
       <Button className="shopping--btn" type="text" onClick={showShoppingCartDrawer}>
         {cartQuantity === 0 &&
         <ShoppingOutlined></ShoppingOutlined>
@@ -38,13 +38,13 @@ function ShoppingCartIconBtn() {
       </Button>
     </Badge>
 
-    <Drawer title="Din Kundkorg" placement="right" onClose={onClose} open={open} style={{"backgroundImage": "linear-gradient(to top, #c1dfc4 0%, #deecdd 100%)", "color":"#3C6255"}}>
+    <Drawer title="Din Kundkorg" placement="right" onClose={onClose} open={open} style={{backgroundImage: "linear-gradient(to top, #c1dfc4 0%, #deecdd 100%)", color:"#3C6255"}}>
 
       {loggedInCustomer && cartQuantity !== 0 &&
       <>
         <ShoppingCartContent></ShoppingCartContent>
         <CheckoutBtn></CheckoutBtn>
-        <Row justify="center" align="middle" style={{"backgroundColor" : "black", "height" : "5rem", "marginTop":"0.5rem"}}>
+        <Row justify="center" align="middle" style={{backgroundColor : "black", height : "5rem", marginTop:"0.5rem"}}>
           <Coupon></Coupon>
         </Row>
       </>

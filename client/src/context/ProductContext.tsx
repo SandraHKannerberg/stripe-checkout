@@ -48,13 +48,13 @@ const defaultValues = {
   
 export const ProductContext = createContext<IProductContext>(defaultValues);
 
-
 export const useProductContext = () => useContext(ProductContext);
   
 export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
 
     const [products, setProducts] = useState<Product[]>([]);
 
+    //GET ALL PRODUCTS
     const fetchProducts = async () => {
         try {
           const response = await fetch(

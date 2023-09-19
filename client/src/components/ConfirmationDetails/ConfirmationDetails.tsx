@@ -10,7 +10,6 @@ import "./ConfirmationDetails.css"
 function ConfirmationDetails() {
 
   const { verifyPayment, isPaymentVerified } = useCartContext();
-  //const { loggedInCustomer, email, setEmail } = useCustomerContext();
 
   useEffect (() => {
     verifyPayment()

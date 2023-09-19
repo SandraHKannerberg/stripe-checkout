@@ -8,13 +8,14 @@ import { useEffect, useState } from "react";
 import {
   useCustomerContext,
 } from "../../context/CustomerContext";
-import Logotype from "../Logotype/Logotype";
+
 
 function NavBar() {
 
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 520);
   const { loggedInCustomer } = useCustomerContext();
 
+  {/*RESPONSIVE DESIGN FOR NAVBAR. DROPMENU FROM SCREEN WIDTH 520PX*/}
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth <= 520);
@@ -42,18 +43,14 @@ function NavBar() {
   
 
   return (
-    <>
-
+  <>
     {isSmallScreen ? (
-      
         <Dropdown menu={{ items }} placement="bottomRight">
           <Button type="text" className="dropdown--icon">Meny <DownOutlined></DownOutlined></Button>
         </Dropdown>
-    
       ) : (
 
       <>
-      {/* <Logotype></Logotype> */}
       <Space  size="large"> 
         <NavLink className="homeicon" to="/"style={{ textDecoration: "none"}}>
           <HomeOutlined />
@@ -70,7 +67,7 @@ function NavBar() {
         <p className="customername--small--screens">{loggedInCustomer.username}</p>
         </>
       )}
-</>
+  </>
 )
 }
 

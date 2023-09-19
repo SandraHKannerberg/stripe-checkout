@@ -20,7 +20,7 @@ function OrderList() {
   return (
     <>
     {!loggedInCustomer && (
-      <Row style={{"display":"flex", "flexDirection":"column", "alignItems":"center", "marginTop":"2rem", "color":"#3C6255"}}>
+      <Row style={{display:"flex", flexDirection:"column", alignItems:"center", marginTop:"2rem", color:"#3C6255"}}>
         <p className="text--order--auth">Du måste vara en registrerad kund och inloggad för att se innehållet på denna sida.</p>
         <LogInBtn></LogInBtn>
       </Row>
@@ -28,11 +28,11 @@ function OrderList() {
 
     {loggedInCustomer && (
     <>
-      <Row style={{"display":"flex", "flexDirection":"column", "alignItems":"center", "marginTop":"2rem", "color":"#3C6255"}}>
+      <Row style={{display:"flex", flexDirection:"column", alignItems:"center", marginTop:"2rem", color:"#3C6255"}}>
         <h1 className="orderhistory--title">Orderhistorik</h1>
       </Row>
 
-      <Row style={{"display":"flex", "flexDirection":"column", "alignItems":"center"}}>
+      <Row style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
         <br />
         <p className="message">{message}</p>
         {orders.map((order, index) => (
@@ -61,7 +61,7 @@ function OrderList() {
               <p>E-mail: {order.email}</p>
               <br />
             </Card.Grid>
-            <Col span={24} style={{ fontSize: '20px', marginTop: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#3C6255'}}><HeartOutlined /></Col>
+            <Col span={24} style={{ fontSize: "20px", marginTop: "2rem", display: "flex", alignItems: "center", justifyContent: "center", color: "#3C6255"}}><HeartOutlined /></Col>
           </Col>
         ))}
       </Row>
