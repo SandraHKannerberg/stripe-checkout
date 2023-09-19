@@ -63,7 +63,7 @@ const verifySession = async (req, res) => {
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
-      hour12: true, // Use AM/PM
+      hour12: true,
     });
 
     //CREATE ORDER
@@ -79,7 +79,7 @@ const verifySession = async (req, res) => {
         const totalPricePerProduct = price * quantity;
 
         return {
-          product: item.description, //product title
+          product: item.description,
           price,
           currency: item.price.currency,
           quantity,

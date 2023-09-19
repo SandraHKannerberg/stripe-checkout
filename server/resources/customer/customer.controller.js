@@ -34,7 +34,7 @@ async function registerNewCustomer(req, res) {
         const customerStripe = await stripe.customers.create({
             email: email,
             name: username
-        }) //ska jag ha med ERROR HANDLER FROM STRIPE?????
+        })
 
         //HASH THE PASSWORD
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -74,7 +74,7 @@ async function customerLogIn (req, res) {
 
     if(correctPassword) {
         delete customer.password; //Delete password before saving in a session
-        req.session = customer; // Save info about the customer to the session (an encrypted cookie stored on the client)
+        req.session = customer;
         console.log(req.session);
         res.status(200).json({Message: "Successfully logged in", customer: {username: customer.username, email: customer.email}});
     } else {
