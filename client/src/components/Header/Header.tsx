@@ -3,6 +3,7 @@ import Coupon from "../Coupon/Coupon";
 import NavBar from "../NavBar/NavBar";
 import Logotype from "../Logotype/Logotype";
 import "./Header.css"
+import ShoppingCartIconBtn from "../ShoppingCartIconBtn/ShoppingCartIconBtn";
 
 
 function Header() {
@@ -13,9 +14,12 @@ function Header() {
         <Coupon></Coupon>
       </Row>
 
-      <Row justify="space-around" align="bottom" style={{height:"6rem"}}>
-        <Col span={12}><Logotype></Logotype></Col>
-        <Col span={12}><NavBar></NavBar></Col>
+      <Row justify="start" style={{minHeight:"6rem"}}>
+        <Col style={{width: "auto"}}><Logotype></Logotype></Col>
+        <Col style={{width: "100%", display:"flex", justifyContent:"flex-end", alignItems: "center", height: "3rem"}}>
+          <NavBar></NavBar>
+          <ShoppingCartIconBtn></ShoppingCartIconBtn>
+        </Col>
       </Row>
     </div>
   )

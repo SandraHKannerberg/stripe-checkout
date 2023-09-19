@@ -13,5 +13,10 @@
 }
 
 .dropdown--icon{
-    font-size: 20px;
+    background-color: inherit !important;
+}
+
+.home--icon-dropdown{
+    font-size: 30px;
+    color: #3C6255;
 }
