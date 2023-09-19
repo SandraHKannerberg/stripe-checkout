@@ -5,10 +5,14 @@ import { NavLink } from "react-router-dom";
 import { DownOutlined, HomeOutlined } from "@ant-design/icons";
 import "./NavBar.css"
 import { useEffect, useState } from "react";
+import {
+  useCustomerContext,
+} from "../../context/CustomerContext";
 
 function NavBar() {
 
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 520);
+  const { loggedInCustomer } = useCustomerContext();
 
   useEffect(() => {
     const handleResize = () => {
@@ -40,9 +44,11 @@ function NavBar() {
     <>
 
     {isSmallScreen ? (
+      
         <Dropdown menu={{ items }} placement="bottomRight">
           <Button type="text" className="dropdown--icon">Meny <DownOutlined></DownOutlined></Button>
         </Dropdown>
+    
       ) : (
 
       <>
@@ -55,6 +61,12 @@ function NavBar() {
 
       <Divider type="vertical" className="divider"/> 
       </>
+      )}
+
+      {isSmallScreen && loggedInCustomer && (
+        <>
+        <p className="customername--small--screens">{loggedInCustomer.username}</p>
+        </>
       )}
 </>
 )

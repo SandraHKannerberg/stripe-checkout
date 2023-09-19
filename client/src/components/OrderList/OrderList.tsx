@@ -21,8 +21,7 @@ function OrderList() {
     <>
     {!loggedInCustomer && (
       <Row style={{"display":"flex", "flexDirection":"column", "alignItems":"center", "marginTop":"2rem", "color":"#3C6255"}}>
-        <p>Vänligen logga in för att se innehållet på denna sida.</p> <br />
-        <p>Inte kund hos oss sedan tidigare? Ingen fara, registrera dig via länken nedan</p>
+        <p className="text--order--auth">Du måste vara en registrerad kund och inloggad för att se innehållet på denna sida.</p>
         <LogInBtn></LogInBtn>
       </Row>
     )}

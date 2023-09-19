@@ -16,7 +16,7 @@ function Header() {
 
       <Row justify="start" style={{minHeight:"6rem"}}>
         <Col style={{width: "auto"}}><Logotype></Logotype></Col>
-        <Col style={{width: "100%", display:"flex", justifyContent:"flex-end", alignItems: "center", height: "3rem"}}>
+        <Col style={{width: "100%", display:"flex", justifyContent:"flex-end", alignItems: "center", minHeight: "3rem"}}>
           <NavBar></NavBar>
           <ShoppingCartIconBtn></ShoppingCartIconBtn>
         </Col>
