@@ -26,7 +26,7 @@ function OrderList() {
       </Row>
     )}
 
-    {loggedInCustomer && (
+    {loggedInCustomer && orders && (
     <>
       <Row style={{display:"flex", flexDirection:"column", alignItems:"center", marginTop:"2rem", color:"#3C6255"}}>
         <h1 className="orderhistory--title">Orderhistorik</h1>

@@ -209,9 +209,12 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
 
         if (response.status === 203) {
           setMessage("Du har inte handlat hos oss än. Se din orderhistorik här fr.o.m din första order")
+          setOrders([]);
         } 
 
         if ( response.status === 200 ) {
+
+          setMessage("")
 
         //Create orderlist
         const orderList = orderData.map((order : Order) => ({
