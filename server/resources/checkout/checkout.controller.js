@@ -76,22 +76,24 @@ const verifySession = async (req, res) => {
 
         const price = item.price.unit_amount / 100;
         const quantity = item.quantity;
-        const totalPricePerProduct = price * quantity;
 
         return {
           product: item.description,
           price,
           currency: item.price.currency,
           quantity,
-          totalPricePerProduct,
+          discount: item.amount_discount / 100,
         };
 
       }),
-      totalOrderPrice: line_items.data.reduce((acc, item) => {
-        const price = item.price.unit_amount / 100;
-        const quantity = item.quantity;
-        return acc + price * quantity;
-      }, 0),
+      // total: line_items.data.reduce((acc, item) => {
+      //   const price = item.price.unit_amount / 100;
+      //   const quantity = item.quantity;
+      //   return acc + price * quantity - discount;
+      // }, 0),
+
+      // discount: session.amount_discount,
+      totalOrderPrice: session.amount_total / 100,
     };
 
     console.log("ORDER", order)

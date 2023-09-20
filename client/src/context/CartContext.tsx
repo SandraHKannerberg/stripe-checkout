@@ -22,7 +22,8 @@ export interface OrderItem {
   price: number,
   currency: string,
   quantity: number,
-  totalPricePerProduct: number
+  totalPricePerProduct: number,
+  discount: number,
 }
 
 export interface Order {
@@ -220,13 +221,11 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
           email: order.email,
 
           products: order.products.map((product) => ({
-
             product: product.product,
             price: product.price,
             currency: product.currency,
             quantity: product.quantity,
-            totalPricePerProduct: product.totalPricePerProduct
-
+            discount: product.discount !== 0 ? product.discount : undefined,
           })),
 
           totalOrderPrice: order.totalOrderPrice

@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useContext, PropsWithChildren } from "react";
+import { useCartContext } from "./CartContext";
 
 export interface Customer {
     id: string;
@@ -75,6 +76,8 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   const [errorInfo, setErrorInfo] = useState("");
   const [errorLogin, setErrorLogin] = useState("");
 
+  const {getOrders} = useCartContext();
+
 
   //CHECK IF SOMEONE IS LOGGED IN
   const authorization = async () => {
@@ -139,7 +142,8 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
         if (response.status === 200) {
           setLoggedInCustomer(data);
-        } 
+          getOrders();
+        }
 
         if (response.status === 404 || response.status === 401 ) {
           setErrorLogin("Ooops! Inloggning misslyckades. Felaktigt användarnamn och/eller lösenord")

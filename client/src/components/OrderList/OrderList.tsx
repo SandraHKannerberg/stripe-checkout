@@ -11,7 +11,7 @@ import "../../App.css"
 function OrderList() {
  
   const { orders, message, getOrders } = useCartContext();
-  const { loggedInCustomer } = useCustomerContext();
+  const { loggedInCustomer, authorization } = useCustomerContext();
 
   useEffect(() => {
     getOrders()
@@ -50,7 +50,9 @@ function OrderList() {
                     <li className="order--details" key={productIndex}>
                       <p>{product.product}</p>
                       <p>{product.quantity} st à {product.price} <span className="currency--letters">{product.currency}</span></p>
-                      <p>Totalt {product.totalPricePerProduct} <span className="currency--letters">{product.currency}</span></p>
+                      {product.discount !== undefined && (
+                        <p>Rabatt {product.discount} <span className="currency--letters">{product.currency}</span></p>
+                      )}
                       <br />
                     </li>
                 ))}
