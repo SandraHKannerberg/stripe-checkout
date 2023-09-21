@@ -7,8 +7,8 @@ I detta skolprojekt har jag skapat en e-handel med fokus på checkout och integr
 I webbshopen går det att lägga och genomföra en order. Man kan registrera sig som kund och logga in på Mina sidor där orderhistorik visas. 
 
 Projektet är byggt med </br>
-Backend: Node/Express </br>
-Frontend: React/TypeScript </br>
+- Backend: Node/Express </br>
+- Frontend: React/TypeScript </br>
 
 På frontend har jag använt antdesign i kombination med egen css för design och layout. </br>
 GitHub är använt under hela arbetet.
@@ -56,11 +56,10 @@ För att få igång projektet gör du följande:
         npm install
 
 - När installationen är klar, starta servern genom något av följande kommandon:</br>
-
         npm start för att dra igång servern mot node server.js
 
                 eller: 
-
+                
         npm run dev för att köra med nodemon server.js
 
 - Servern är nu igång
