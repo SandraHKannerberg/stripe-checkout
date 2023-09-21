@@ -1,3 +1,4 @@
 .checkout--btn:hover{
     background-color: #A6BB8D !important;
+    transform: scale(1.1);
 }

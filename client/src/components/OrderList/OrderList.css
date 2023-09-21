@@ -13,3 +13,11 @@
 .customerdetails--order{
     font-weight: bold;
 }
+
+.message{
+    text-align: center;
+}
+
+.text--order--auth{
+    text-align: center;
+}

@@ -6,12 +6,10 @@ import { Col, Row } from "antd";
 function confirmation() {
 
   return (
-    <Row style={{"minHeight" : "100vh", "backgroundColor":"whitesmoke"}} >
+    <Row style={{minHeight : "100vh", backgroundColor:"whitesmoke", marginTop: "5rem"}} >
         <Col span={24}><Header></Header></Col>
-        <Col style={{"minHeight" : "70vh", "textAlign":"center", "marginTop":"1rem"}} span={24}>
-
+        <Col style={{height : "auto", textAlign:"center", marginTop:"1rem"}} span={24}>
           <ConfirmationDetails />
-
         </Col>
         <Col span={24}><Footer></Footer></Col>
     </Row>

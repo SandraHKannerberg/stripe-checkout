@@ -24,7 +24,6 @@ function LogInBtn() {
 
   return (
   <>
-
     {loggedInCustomer && 
     <>
     <div className="logged--in--container">
@@ -55,12 +54,11 @@ function LogInBtn() {
     </>
   }
 
-<Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open} style={{"backgroundImage": "linear-gradient(to top, #c1dfc4 0%, #deecdd 100%)", "color":" #3C6255"}}>
+    <Drawer title="Logga in eller Bli medlem" placement="right" onClose={onClose} open={open} style={{backgroundImage: "linear-gradient(to top, #c1dfc4 0%, #deecdd 100%)", color:"#3C6255"}}>
       <LogInForm></LogInForm>
       <Divider/>
       <RegistrationForm></RegistrationForm>
     </Drawer>
-
   </>
 );
 }

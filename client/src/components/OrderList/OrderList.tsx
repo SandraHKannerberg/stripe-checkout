@@ -17,25 +17,25 @@ function OrderList() {
     getOrders()
   }, []);
 
+
   return (
     <>
     {!loggedInCustomer && (
-      <Row style={{"display":"flex", "flexDirection":"column", "alignItems":"center", "marginTop":"2rem", "color":"#3C6255"}}>
-        <p>Vänligen logga in för att se innehållet på denna sida.</p> <br />
-        <p>Inte kund hos oss sedan tidigare? Ingen fara, registrera dig via länken nedan</p>
+      <Row style={{display:"flex", flexDirection:"column", alignItems:"center", marginTop:"2rem", color:"#3C6255"}}>
+        <p className="text--order--auth">Du måste vara en registrerad kund och inloggad för att se innehållet på denna sida.</p>
         <LogInBtn></LogInBtn>
       </Row>
     )}
 
-    {loggedInCustomer && (
+    {loggedInCustomer && orders && (
     <>
-      <Row style={{"display":"flex", "flexDirection":"column", "alignItems":"center", "marginTop":"2rem", "color":"#3C6255"}}>
+      <Row style={{display:"flex", flexDirection:"column", alignItems:"center", marginTop:"2rem", color:"#3C6255"}}>
         <h1 className="orderhistory--title">Orderhistorik</h1>
       </Row>
 
-      <Row style={{"display":"flex", "flexDirection":"column", "alignItems":"center"}}>
+      <Row style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
         <br />
-        <p>{message}</p>
+        <p className="message">{message}</p>
         {orders.map((order, index) => (
           <Col key={index} span={24}
           lg={{ span: 24 }}
@@ -51,7 +51,9 @@ function OrderList() {
                     <li className="order--details" key={productIndex}>
                       <p>{product.product}</p>
                       <p>{product.quantity} st à {product.price} <span className="currency--letters">{product.currency}</span></p>
-                      <p>Totalt {product.totalPricePerProduct} <span className="currency--letters">{product.currency}</span></p>
+                      {product.discount !== undefined && (
+                        <p>Rabatt {product.discount} <span className="currency--letters">{product.currency}</span></p>
+                      )}
                       <br />
                     </li>
                 ))}
@@ -62,7 +64,7 @@ function OrderList() {
               <p>E-mail: {order.email}</p>
               <br />
             </Card.Grid>
-            <Col span={24} style={{ fontSize: '20px', marginTop: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#3C6255'}}><HeartOutlined /></Col>
+            <Col span={24} style={{ fontSize: "20px", marginTop: "2rem", display: "flex", alignItems: "center", justifyContent: "center", color: "#3C6255"}}><HeartOutlined /></Col>
           </Col>
         ))}
       </Row>

@@ -1,4 +1,4 @@
-import { useCartContext } from '../../context/CartContext';
+import { useCartContext } from "../../context/CartContext";
 import "./ShoppingCartContent.css"
 import { useEffect, useState } from "react";
 import { Row } from "antd";

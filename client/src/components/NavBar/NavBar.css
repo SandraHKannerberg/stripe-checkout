@@ -11,3 +11,16 @@
 .homeicon:hover{
     color: whitesmoke;
 }
+
+.dropdown--icon{
+    background-color: inherit !important;
+}
+
+.home--icon-dropdown{
+    font-size: 30px;
+    color: #3C6255;
+}
+
+.customername--small--screens{
+    color: #3C6255;
+}

@@ -1,6 +1,7 @@
 [
   {
-    "created": "Sep 18, 2023, 12:48:37 PM",
+    "orderId": "cs_test_b1DwvWgWTNSER0uaC6b0x3OjliIrx8FCV61VjHTL7oOyCOeehjEJ9hxxR1",
+    "created": "Sep 20, 2023, 11:04:18 AM",
     "customer": "Test Testar",
     "email": "test@test.nu",
     "products": [
@@ -9,16 +10,177 @@
         "price": 450,
         "currency": "sek",
         "quantity": 1,
-        "totalPricePerProduct": 450
+        "discount": 112.5
       },
       {
         "product": "Poster Sunflower Beach",
         "price": 350,
         "currency": "sek",
         "quantity": 1,
-        "totalPricePerProduct": 350
+        "discount": 87.5
+      },
+      {
+        "product": "Poster Sunflower Bouquet",
+        "price": 150,
+        "currency": "sek",
+        "quantity": 1,
+        "discount": 37.5
+      },
+      {
+        "product": "Poster Sunflower Garden",
+        "price": 450,
+        "currency": "sek",
+        "quantity": 1,
+        "discount": 112.5
+      }
+    ],
+    "totalOrderPrice": 1050
+  },
+  {
+    "orderId": "cs_test_b1rKwCBSjC9D3qwtsh2QOKXe2yznJE8ONuWRJaFIyRM5k2zxS8z41Z1JN2",
+    "created": "Sep 20, 2023, 11:48:56 AM",
+    "customer": "Kalle",
+    "email": "kalle@minmail.com",
+    "products": [
+      {
+        "product": "Poster Sunflower Garden",
+        "price": 450,
+        "currency": "sek",
+        "quantity": 1,
+        "discount": 0
+      }
+    ],
+    "totalOrderPrice": 450
+  },
+  {
+    "orderId": "cs_test_b1ztKj6VzHW0DytYnyWKjDQDs3rRHr5TL3ZYElnEK9USTdmXfwH2crNII4",
+    "created": "Sep 21, 2023, 09:37:37 AM",
+    "customer": "Stina",
+    "email": "stina@minmail.com",
+    "products": [
+      {
+        "product": "Poster Sunflower Beach",
+        "price": 350,
+        "currency": "sek",
+        "quantity": 1,
+        "discount": 87.5
+      },
+      {
+        "product": "Poster Sunflower Garden",
+        "price": 450,
+        "currency": "sek",
+        "quantity": 1,
+        "discount": 112.5
+      },
+      {
+        "product": "Poster Sunflower Bouquet",
+        "price": 150,
+        "currency": "sek",
+        "quantity": 1,
+        "discount": 37.5
+      }
+    ],
+    "totalOrderPrice": 712.5
+  },
+  {
+    "orderId": "cs_test_b1WZ9BgF0TunTlL5dQQCPU4MwdBurD1XKxoMsCm0k1g3HfvYBkeHAzOaKd",
+    "created": "Sep 21, 2023, 09:38:52 AM",
+    "customer": "Kajsa",
+    "email": "kajsa@minmail.com",
+    "products": [
+      {
+        "product": "Poster Sunflower Beach",
+        "price": 350,
+        "currency": "sek",
+        "quantity": 1,
+        "discount": 87.5
+      }
+    ],
+    "totalOrderPrice": 262.5
+  },
+  {
+    "orderId": "cs_test_b1EGEbHcGV0OIOA1H0IeufZM7pNYZLe2Ix6HP8T1sUv6wMo1q8gDXWe6Bj",
+    "created": "Sep 21, 2023, 09:40:26 AM",
+    "customer": "Kalle",
+    "email": "kalle@minmail.com",
+    "products": [
+      {
+        "product": "Poster Sunflower Beach",
+        "price": 350,
+        "currency": "sek",
+        "quantity": 1,
+        "discount": 0
+      },
+      {
+        "product": "Poster Sunflower Evening",
+        "price": 450,
+        "currency": "sek",
+        "quantity": 1,
+        "discount": 0
       }
     ],
     "totalOrderPrice": 800
+  },
+  {
+    "orderId": "cs_test_b1LSg4GOTKK8GEkqrKniYscFIAA8sqLMDCXQgYopVTk2SOt0TpLq4L8qsj",
+    "created": "Sep 21, 2023, 09:41:16 AM",
+    "customer": "Kalle",
+    "email": "kalle@minmail.com",
+    "products": [
+      {
+        "product": "Poster Sunflower Garden",
+        "price": 450,
+        "currency": "sek",
+        "quantity": 1,
+        "discount": 112.5
+      }
+    ],
+    "totalOrderPrice": 337.5
+  },
+  {
+    "orderId": "cs_test_b11vwt6gH76KA0OYv0JZLXHzZzfumlnh9Y2VFt5aQI6NOXsW8RygYWbMV3",
+    "created": "Sep 21, 2023, 09:42:53 AM",
+    "customer": "Kajsa",
+    "email": "kajsa@minmail.com",
+    "products": [
+      {
+        "product": "Poster Sunflower Bouquet",
+        "price": 150,
+        "currency": "sek",
+        "quantity": 1,
+        "discount": 0
+      },
+      {
+        "product": "Poster Sunflower Beach",
+        "price": 350,
+        "currency": "sek",
+        "quantity": 1,
+        "discount": 0
+      },
+      {
+        "product": "Poster Sunflower Garden",
+        "price": 450,
+        "currency": "sek",
+        "quantity": 1,
+        "discount": 0
+      }
+    ],
+    "totalOrderPrice": 950
+  },
+  {
+    "orderId": "cs_test_b18jaV3ZH1eJ6iBwBgFJqj3sQtSKQLij11relOST7PcPGvqhDzBL8vlZoI",
+    "created": "Sep 21, 2023, 10:21:36 AM",
+    "customer": "Stina",
+    "email": "stina@minmail.com",
+    "products": [
+      {
+        "product": "Poster Sunflower Evening",
+        "price": 450,
+        "currency": "sek",
+        "quantity": 2,
+        "discount": 0
+      }
+    ],
+    "totalOrderPrice": 900
   }
 ]

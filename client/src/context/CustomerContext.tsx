@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useContext, PropsWithChildren } from "react";
+import { useCartContext } from "./CartContext";
 
 export interface Customer {
     id: string;
@@ -64,7 +65,6 @@ export const CustomerContext = createContext<ICustomerContext>(defaultValues);
 
 export const useCustomerContext = () => useContext(CustomerContext);
 
-
 export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
   const [loggedInCustomer, setLoggedInCustomer] = useState<Customer | null>(null);
@@ -76,8 +76,10 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   const [errorInfo, setErrorInfo] = useState("");
   const [errorLogin, setErrorLogin] = useState("");
 
+  const {getOrders} = useCartContext();
 
-  //CHECKAR OM DET FINNS NÅGON INLOGGAD KUND
+
+  //CHECK IF SOMEONE IS LOGGED IN
   const authorization = async () => {
     try {
       const response = await fetch("/api/customers/authorize");
@@ -95,7 +97,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
     authorization()
   }, []);
 
-    //HANTERAR REGISTRERING AV NY KUND
+    //REGISTRATION - NEW CUSTOMER
     const handleRegistrationNewCustomer = async (newCustomer: newCustomerType) => {
       if (newCustomer) {
   
@@ -107,7 +109,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
             },
             body: JSON.stringify(newCustomer),
           });
-          const data = await response.json(); //Vad göra med denna data?
+          const data = await response.json();
   
           if (response.status === 200) {
             setSuccessInfo("Grattis! Du är nu registrerad som kund hos oss. Varmt välkommen att logga in.")
@@ -124,7 +126,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
     };
   
 
-  //HANTERAR LOGGA IN
+  //HANDLE LOG IN
   const handleLogin = async (customer: CustomerType) => {
     if (customer) {
 
@@ -140,7 +142,8 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
 
         if (response.status === 200) {
           setLoggedInCustomer(data);
-        } 
+          getOrders();
+        }
 
         if (response.status === 404 || response.status === 401 ) {
           setErrorLogin("Ooops! Inloggning misslyckades. Felaktigt användarnamn och/eller lösenord")
@@ -152,7 +155,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
     }
   };
 
-  //HANTERAR LOGGA UT
+  //HANDLE LOG OUT
   const handleLogout = async () => {
 
     try {

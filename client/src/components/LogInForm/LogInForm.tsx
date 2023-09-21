@@ -5,6 +5,7 @@ import {
   CustomerType,
 } from "../../context/CustomerContext";
 import { useEffect } from "react";
+import "./LogInForm.css"
 
 const { Text } = Typography;
 
@@ -14,14 +15,12 @@ function LogInForm() {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
 
-
-    const success = () => {
-        messageApi.open({
-          type: "success",
-          content: "Du är inloggad",
-        });
-    };
-
+  const success = () => {
+     messageApi.open({
+      type: "success",
+      content: "Du är inloggad",
+    });
+  };
 
   const handleLoginFinish = async (values: any) => {
   
@@ -82,12 +81,12 @@ function LogInForm() {
         <Form.Item>
           <Button
             type="primary"
-            className="login--form--button"
+            className="drawer--button"
             htmlType="submit"
             block
-            style={{"backgroundColor":" #3C6255", "borderRadius": "0"}}
+            style={{backgroundColor:"#3C6255", borderRadius: "0"}}
           >
-            <p className="btn--text">Logga in</p>
+           <p className="btn--text">Logga in</p>
           </Button>
         </Form.Item>
 

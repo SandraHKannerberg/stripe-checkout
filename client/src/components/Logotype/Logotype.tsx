@@ -1,11 +1,15 @@
-import { Space } from "antd"
+import { Col, Space } from "antd"
+import { NavLink } from "react-router-dom"
 
 function Logotype() {
   return (
-
-    <Space style={{"marginLeft":"3rem", "height":"6rem", "display": "flex", "alignItems":"center", "justifyContent":"flex-start"}}>
-      <img src="/assets/logotype-sunflower.png" alt="Sunflower Posters Logotype" height="80rem"/>
-    </Space>
+  <Col span={24} style={{maxHeight: "6rem"}}>
+    <NavLink className="homeicon" to="/"style={{ textDecoration: "none"}}>
+      <Space style={{marginLeft:"1.5rem", minHeight:"3rem"}}>
+        <img src="/assets/logotype-sunflower.png" alt="Sunflower Posters Logotype" height="80rem"/>
+      </Space>
+    </NavLink>
+  </Col>
   )
 }
 
