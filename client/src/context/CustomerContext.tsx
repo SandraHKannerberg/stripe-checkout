@@ -109,11 +109,10 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
             },
             body: JSON.stringify(newCustomer),
           });
-          const data = await response.json();
+          await response.json();
   
           if (response.status === 200) {
             setSuccessInfo("Grattis! Du är nu registrerad som kund hos oss. Varmt välkommen att logga in.")
-            console.log(data)
           } 
 
           if(response.status === 409) {
