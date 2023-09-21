@@ -59,8 +59,7 @@ För att få igång projektet gör du följande:
         npm start (för att dra igång servern mot node server.js)
 
 eller: </br>
-
-        npm run dev (för att köra med nodemon server.js)
+        npm run dev (för att dra igång servern mot nodemon server.js)
 
 - Servern är nu igång
 
