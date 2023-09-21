@@ -11,11 +11,12 @@ import "../../App.css"
 function OrderList() {
  
   const { orders, message, getOrders } = useCartContext();
-  const { loggedInCustomer, authorization } = useCustomerContext();
+  const { loggedInCustomer } = useCustomerContext();
 
   useEffect(() => {
     getOrders()
   }, []);
+
 
   return (
     <>

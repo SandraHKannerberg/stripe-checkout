@@ -219,7 +219,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
         //Create orderlist
         const orderList = orderData.map((order : Order) => ({
 
-          created: order.created,
+          created: order.created, 
           customer: order.customer,
           email: order.email,
 
@@ -234,8 +234,16 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
           totalOrderPrice: order.totalOrderPrice
       }));
 
-      setOrders(orderList);
+      const sortedOrderList = orderList.slice().sort((a:Order, b:Order) => {
+        //Convert the 'created' string to Date object
+        const dateA = new Date(a.created).getTime();
+        const dateB = new Date(b.created).getTime();
+      
+        //Sort the list - newest order first
+        return dateB - dateA;
+      });
 
+      setOrders(sortedOrderList);
       }
 
       } catch (err) {

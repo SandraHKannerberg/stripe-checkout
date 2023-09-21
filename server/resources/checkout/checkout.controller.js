@@ -66,6 +66,8 @@ const verifySession = async (req, res) => {
       hour12: true,
     });
 
+    console.log(typeof formattedDate)
+
     //CREATE ORDER
     const order = {
       orderId: session.id,
@@ -86,13 +88,7 @@ const verifySession = async (req, res) => {
         };
 
       }),
-      // total: line_items.data.reduce((acc, item) => {
-      //   const price = item.price.unit_amount / 100;
-      //   const quantity = item.quantity;
-      //   return acc + price * quantity - discount;
-      // }, 0),
 
-      // discount: session.amount_discount,
       totalOrderPrice: session.amount_total / 100,
     };
 
