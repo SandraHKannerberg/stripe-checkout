@@ -10,7 +10,7 @@ Projektet är byggt med </br>
 Backend: Node/Express </br>
 Frontend: React/TypeScript </br>
 
-På frontend har jag använt antdesign i kombination med egen css för design och layout.
+På frontend har jag använt antdesign i kombination med egen css för design och layout. </br>
 GitHub är använt under hela arbetet.
 
 # Krav som uppfyllts
@@ -49,13 +49,13 @@ För att få igång projektet gör du följande:
 **Server**
 - Öppna en Terminal
 
-- Navigera till server-mappen genom kommandot:
+- Navigera till server-mappen genom kommandot:</br>
         cd server
 
-- För att hämta alla dependencies på servern, kör kommandot:
+- För att hämta alla dependencies på servern, kör kommandot:</br>
         npm install
 
-- När installationen är klar, starta servern genom något av följande kommandon:
+- När installationen är klar, starta servern genom något av följande kommandon:</br>
 
         npm start för att dra igång servern mot node server.js
 
@@ -68,13 +68,13 @@ För att få igång projektet gör du följande:
 **Client**
 - Öppna en till Terminal
 
-- Navigera till client-mappen genom kommandot:
+- Navigera till client-mappen genom kommandot:</br>
         cd client
 
-- För att hämta alla dependencies på client, kör kommandot:
+- För att hämta alla dependencies på client, kör kommandot:</br>
         npm install
 
-- När installationen är klar, kör kommandot:
+- När installationen är klar, kör kommandot:</br>
         npm run dev
 
 Projektet är nu uppe och snurrar på localhost och du kan se applikationen i din webbläsare
