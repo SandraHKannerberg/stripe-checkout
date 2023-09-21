@@ -28,5 +28,11 @@
     "email": "pelle@minmail.com",
     "username": "Pelle",
     "password": "$2b$10$EzBIdeW7Ok017okzJwF32eG7QPzzKWEFZ319qWwkdaFIoBkr7/wR."
+  },
+  {
+    "id": "cus_Og6GHrjlfI3NNn",
+    "email": "sandra@minmail.com",
+    "username": "Sandra",
+    "password": "$2b$10$nxK1Y/E1S2zOMOnXG/By6OWUsaTbThziAna7BTmtSpqQnNOciVX5y"
   }
 ]
