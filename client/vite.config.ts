@@ -8,7 +8,7 @@ export default defineConfig({
       "/api": {
       target:
       // "http://localhost:3000",
-      "https://checkout-sandra-backend.netlify.app",
+      "https://stripe-checkout-sandra.onrender.com",
       }
     }
   },
