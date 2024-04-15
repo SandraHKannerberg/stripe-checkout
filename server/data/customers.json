@@ -34,5 +34,17 @@
     "email": "sandra@minmail.com",
     "username": "Sandra",
     "password": "$2b$10$nxK1Y/E1S2zOMOnXG/By6OWUsaTbThziAna7BTmtSpqQnNOciVX5y"
+  },
+  {
+    "id": "cus_PjgRPYvrSN15kT",
+    "email": "demo@mail.com",
+    "username": "demo",
+    "password": "$2b$10$gSrvY2OgL.aCO5STKdtPu.fsRAh0GOsndIQ4ijSBFWmKk8kHHzRBG"
+  },
+  {
+    "id": "cus_Pm1Oj12mjagz5J",
+    "email": "test@test.se",
+    "username": "Test",
+    "password": "$2b$10$M6Gs5sfsCXePV/Bd523kue8HGfAHUfEwhfb8B1AlbJy3Fj78ZOenW"
   }
 ]

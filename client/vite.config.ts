@@ -7,7 +7,8 @@ export default defineConfig({
     proxy: {
       "/api": {
       target:
-      "http://localhost:3000",
+      // "http://localhost:3000",
+      "https://checkout-sandra-backend.netlify.app",
       }
     }
   },
