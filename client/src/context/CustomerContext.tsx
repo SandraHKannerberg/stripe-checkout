@@ -82,10 +82,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   //CHECK IF SOMEONE IS LOGGED IN
   const authorization = async () => {
     try {
-      const response = await fetch("https://stripe-checkout-sandra.onrender.com/api/customers/authorize", 
-      {
-        mode: 'no-cors'
-      });
+      const response = await fetch("https://stripe-checkout-sandra.onrender.com/api/customers/authorize");
       const customerData = await response.json();
       if (response.status === 200 || response.status === 304) {
         setLoggedInCustomer(customerData);
