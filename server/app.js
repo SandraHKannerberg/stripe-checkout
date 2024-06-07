@@ -15,7 +15,7 @@ const app = express()
 // }))
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Byt ut mot din React-apps URL
+  origin: 'https://stripe-checkout-project.onrender.com/', // Frontend URL
   methods: 'GET,POST,PUT,DELETE',
   allowedHeaders: 'Content-Type,Authorization'
 }));
