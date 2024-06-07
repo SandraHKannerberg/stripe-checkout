@@ -10,10 +10,15 @@ const crypto = require("crypto");
 const app = express()
 
 //Middlewares
-app.use(cors({
-    origin: '*'
-}))
+// app.use(cors({
+//     origin: '*'
+// }))
 
+app.use(cors({
+  origin: 'http://localhost:5173', // Byt ut mot din React-apps URL
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization'
+}));
 
 const secretKey = process.env.COOKIE_SECRET_KEY;
 
@@ -30,6 +35,11 @@ app.use(
 
 app.use(express.json())
 //app.use(bodyParser.json()); 
+
+// Test
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
 
 // Add routers
 app.use("/api", productRouter);
