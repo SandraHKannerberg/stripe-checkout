@@ -14,11 +14,14 @@ const app = express()
 //     origin: '*'
 // }))
 
-app.use(cors({
+const corsOptions = {
   origin: 'https://stripe-checkout-project.onrender.com/', // Frontend URL
   methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type,Authorization'
-}));
+  allowedHeaders: 'Content-Type,Authorization',
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 
 const secretKey = process.env.COOKIE_SECRET_KEY;
 
