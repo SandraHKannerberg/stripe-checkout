@@ -16,6 +16,7 @@ const app = express()
 
 const corsOptions = {
   origin: 'https://stripe-checkout-project.onrender.com/', // Frontend URL
+  // origin: 'http://localhost:5173',
   methods: 'GET,POST,PUT,DELETE',
   allowedHeaders: 'Content-Type,Authorization',
   credentials: true
@@ -32,7 +33,7 @@ app.use(
       maxAge: 1000 * 60 * 60 * 24, // 24 Hours
       sameSite: "strict",
       httpOnly: true,
-      secure: false,
+      secure: true,
     })
   );
 
@@ -42,6 +43,12 @@ app.use(express.json())
 // Test
 app.get('/', (req, res) => {
   res.send('Hello, World!');
+});
+
+// Debugging
+app.use((req, res, next) => {
+  console.log('Received request:', req.method, req.url, req.headers);
+  next();
 });
 
 // Add routers
