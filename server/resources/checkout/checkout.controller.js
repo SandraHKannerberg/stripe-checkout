@@ -4,9 +4,8 @@ const fs = require("fs");
 const path = require("path");
 const filePath = path.join("data", "orders.json")
 
-
-//const CLIENT_URL = 'http://localhost:5173'
-const CLIENT_URL = 'https://checkout-sandra.netlify.app'
+const CLIENT_URL = 'http://localhost:5173'
+// const CLIENT_URL = 'https://stripe-checkout-project.onrender.com'
 
 //SEND CART TO STRIPE
 const createCheckOutSession = async (req,res) => {
