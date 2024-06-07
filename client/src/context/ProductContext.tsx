@@ -58,7 +58,10 @@ export const ProductProvider = ({ children }: PropsWithChildren<{}>) => {
     const fetchProducts = async () => {
         try {
           const response = await fetch(
-            "https://stripe-checkout-sandra.onrender.com/api/products"
+            "https://stripe-checkout-sandra.onrender.com/api/products",
+            {
+              mode: 'no-cors'
+            }
           );
           const data = await response.json();
 
