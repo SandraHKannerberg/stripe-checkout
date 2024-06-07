@@ -178,6 +178,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
   
       const response = await fetch("https://stripe-checkout-sandra.onrender.com/api/verify-session", {
         method: "POST",
+        mode: 'no-cors',
         headers: {
           "Content-Type": "application/json"
         },
