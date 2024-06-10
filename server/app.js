@@ -27,7 +27,7 @@ app.use(cors());
 app.use((req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://stripe-checkout-project.onrender.com/"
+    "https://checkout-sandra.netlify.app/"
   );
   res.setHeader(
     "Access-Control-Allow-Headers",
