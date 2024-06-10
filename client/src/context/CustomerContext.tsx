@@ -82,7 +82,14 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
   //CHECK IF SOMEONE IS LOGGED IN
   const authorization = async () => {
     try {
-      const response = await fetch("https://stripe-checkout-sandra.onrender.com/api/customers/authorize");
+      const response = await fetch("/api/customers/authorize", { 
+        // mode: 'no-cors' 
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', 
+      });
       const customerData = await response.json();
       if (response.status === 200 || response.status === 304) {
         setLoggedInCustomer(customerData);
@@ -107,6 +114,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
             headers: {
               "Content-Type": "application/json",
             },
+            credentials: 'include', 
             body: JSON.stringify(newCustomer),
           });
           await response.json();
@@ -135,6 +143,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: 'include', 
           body: JSON.stringify(customer),
         });
         const data = await response.json();
@@ -163,6 +172,7 @@ export const CustomerProvider = ({ children }: PropsWithChildren<{}>) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include', 
       });
 
       if (response.status === 204) {

@@ -157,6 +157,7 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
       headers: {
         "Content-Type": "application/json"
       },
+      credentials: 'include', 
       body: JSON.stringify({items: cartToStripe})
       })
 
@@ -176,12 +177,12 @@ export const CartProvider = ({ children }: PropsWithChildren<{}>) => {
     try {
       const sessionId = localStorage.getItem("session-id")
   
-      const response = await fetch("https://stripe-checkout-sandra.onrender.com/api/verify-session", {
+      const response = await fetch("/api/verify-session", {
         method: "POST",
-        mode: 'no-cors',
         headers: {
           "Content-Type": "application/json"
         },
+        credentials: 'include', 
         body: JSON.stringify({sessionId})
         })
 
